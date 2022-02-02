@@ -2,11 +2,14 @@
 
 ## Team members
 The members of the team are:
-- Jose Carneiro De Sousa
-- Zirui Ding
+- Mikolaj Gierak 
+- Igor Jasutowicz 
 - Nicolae-Marian Gartu
-- An (Ann) Hsu
-- Jacqueline Ilie
+- Abbenayan Jeyakumar 
+- Kavanan Karunakaran
+- Govighan (Govi) Krishnakumar
+- Flavio Melinte Citea 
+- Vakaris Paulavicius 
 
 ## Project structure
 The project is called `cycles`.
