@@ -1,3 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+from cycle_backend.cycle_api.models import Place
 
-# Register your models here.
+admin.site.register(Place)
