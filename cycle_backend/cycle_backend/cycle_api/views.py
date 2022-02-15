@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
-from cycle_backend.cycle_api.serializers import UserSerializer
+from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from django.http import HttpResponse
 import requests
@@ -14,6 +14,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class PlaceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows places to be viewed or edited.
+    """
+    queryset = Place.objects.all()
+    serializer_class = PlaceSerializer
 
 def get_all_bikepoints(request):
     Place.objects.all().delete()
