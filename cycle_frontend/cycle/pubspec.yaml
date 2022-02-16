@@ -38,6 +38,7 @@ dependencies:
   flutter_map_location_marker: ^3.0.2
   geolocator: ^8.1.1
   location: ^4.3.0
+  restart_app: ^1.1.0
 
 dev_dependencies:
   flutter_test:

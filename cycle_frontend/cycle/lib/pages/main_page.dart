@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _locationManager.run().then((value) => setState(() {}));
+    _locationManager.run().whenComplete(() => setState(() {}));
 
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     _centerCurrentLocationStreamController = StreamController<double?>();
