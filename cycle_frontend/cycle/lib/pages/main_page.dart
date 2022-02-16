@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:cycle/LocationManager.dart';
+import 'package:cycle/location_manager.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
