@@ -5,6 +5,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cycle/location_manager.dart';
+import 'package:cycle/pages/menu.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -40,7 +42,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      drawer: Menu(),
+      appBar: AppBar(
+        title: Text('Map',
+            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        backgroundColor: Colors.lightBlue,
+      ),
       body: Stack(
         children: [
           Map(
@@ -52,8 +59,8 @@ class _MainPageState extends State<MainPage> {
                         _centerOnLocationUpdate = CenterOnLocationUpdate.never,
                   )),
           Positioned(
-            right: 20,
-            bottom: 20,
+            right: 10,
+            bottom: 180,
             child: FloatingActionButton(
               onPressed: () async {
                 // Automatically center the location marker on the map when location updated until user interact with the map.
