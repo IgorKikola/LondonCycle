@@ -39,6 +39,8 @@ dependencies:
   geolocator: ^8.1.1
   location: ^4.3.0
   restart_app: ^1.1.0
+  sliding_up_panel: ^2.0.0+1
+  google_fonts: ^2.0.0
 
 dev_dependencies:
   flutter_test:
