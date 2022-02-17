@@ -10,6 +10,12 @@ class Menu extends StatelessWidget {
         padding: EdgeInsets.all(10),
         children: [
           buildProfileColumn(),
+          SizedBox(height: 10),
+          buildFavorites(),
+          SizedBox(height: 10),
+          buildHistory(),
+          SizedBox(height: 10),
+          buildSettings(),
         ],
       ),
     );
@@ -60,4 +66,64 @@ Widget buildProfileColumn() => Container(
         ),
       ),
     );
+
+Widget buildFavorites() => Container(
+  height: 50,
+  child: Material(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(15.0),
+    child: InkWell(
+      splashColor: Colors.lightBlue,
+      child: ListTile(
+        leading: Icon(Icons.favorite),
+        title: Text('Favorites',
+            style: GoogleFonts.lato(
+                fontStyle: FontStyle.normal, color: Colors.white)),
+        onTap: () {
+          print("Favorites");
+        },
+      ),
+    ),
+  ),
+);
+
+Widget buildHistory() => Container(
+  height: 50,
+  child: Material(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(15.0),
+    child: InkWell(
+      splashColor: Colors.lightBlue,
+      child: ListTile(
+        leading: Icon(Icons.history),
+        title: Text('Trip History',
+            style: GoogleFonts.lato(
+                fontStyle: FontStyle.normal, color: Colors.white)),
+        onTap: () {
+          print("Trip History");
+        },
+      ),
+    ),
+  ),
+);
+
+Widget buildSettings() => Container(
+  height: 50,
+  child: Material(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(15.0),
+    child: InkWell(
+      splashColor: Colors.lightBlue,
+      child: ListTile(
+        leading: Icon(Icons.settings),
+        title: Text('Settings',
+            style: GoogleFonts.lato(
+                fontStyle: FontStyle.normal, color: Colors.white)),
+        onTap: () {
+          print("Settings");
+        },
+      ),
+    ),
+  ),
+);
 
