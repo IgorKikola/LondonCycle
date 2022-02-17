@@ -10,9 +10,24 @@ class SlideUpWidget extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
         controller: controller,
         children: <Widget>[
+          buildSlidingHandle(),
+          SizedBox(height: 10),
           buildSearchBar(),
         ],
       );
+
+  Widget buildSlidingHandle() => GestureDetector(
+    child: Center(
+      child: Container(
+        width: 30,
+        height: 5,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    ),
+  );
 
   Widget buildSearchBar() => Container(
           child: Container(
