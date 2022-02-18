@@ -1,3 +1,4 @@
+import 'package:cycle/pages/Favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,9 +10,34 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(10),
         children: [
+          SizedBox(height:70),
           buildProfileColumn(),
           SizedBox(height: 10),
-          buildFavorites(),
+        Container(
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Favorites',
+                style: GoogleFonts.lato(
+                    fontStyle: FontStyle.normal, color: Colors.white)),
+            // onTap: () {
+            //   print("Favorites");
+            // },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Favorites()),
+              );
+            },
+          ),
+        ),
+      ),
+    ),
           SizedBox(height: 10),
           buildHistory(),
           SizedBox(height: 10),
@@ -79,9 +105,9 @@ Widget buildFavorites() => Container(
         title: Text('Favorites',
             style: GoogleFonts.lato(
                 fontStyle: FontStyle.normal, color: Colors.white)),
-        onTap: () {
-          print("Favorites");
-        },
+        // onTap: () {
+        //   print("Favorites");
+        // },
       ),
     ),
   ),
