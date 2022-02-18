@@ -42,12 +42,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
-      appBar: AppBar(
-        title: Text('Map',
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
-        backgroundColor: Colors.lightBlue,
-      ),
+      // drawer: Menu(),
+      // appBar: AppBar(
+      //   title: Text('Map',
+      //       style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+      //   backgroundColor: Colors.lightBlue,
+      // ),
       body: Stack(
         children: [
           Map(
@@ -60,7 +60,7 @@ class _MainPageState extends State<MainPage> {
                   )),
           Positioned(
             right: 10,
-            bottom: 180,
+            bottom: 260,
             child: FloatingActionButton(
               onPressed: () async {
                 // Automatically center the location marker on the map when location updated until user interact with the map.
