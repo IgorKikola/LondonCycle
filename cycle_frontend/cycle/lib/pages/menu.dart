@@ -25,7 +25,7 @@ class Menu extends StatelessWidget {
 Widget buildProfileColumn() => Container(
       height: 150,
       child: Material(
-        color: Colors.blue,
+        color: Colors.lightBlue[200],
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
@@ -70,7 +70,7 @@ Widget buildProfileColumn() => Container(
 Widget buildFavorites() => Container(
   height: 50,
   child: Material(
-    color: Colors.blue,
+    color: Colors.lightBlue[200],
     borderRadius: BorderRadius.circular(15.0),
     child: InkWell(
       splashColor: Colors.lightBlue,
@@ -90,7 +90,7 @@ Widget buildFavorites() => Container(
 Widget buildHistory() => Container(
   height: 50,
   child: Material(
-    color: Colors.blue,
+    color: Colors.lightBlue[200],
     borderRadius: BorderRadius.circular(15.0),
     child: InkWell(
       splashColor: Colors.lightBlue,
@@ -110,7 +110,7 @@ Widget buildHistory() => Container(
 Widget buildSettings() => Container(
   height: 50,
   child: Material(
-    color: Colors.blue,
+    color: Colors.lightBlue[200],
     borderRadius: BorderRadius.circular(15.0),
     child: InkWell(
       splashColor: Colors.lightBlue,

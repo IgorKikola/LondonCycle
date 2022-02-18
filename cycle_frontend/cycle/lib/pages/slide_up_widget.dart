@@ -42,7 +42,7 @@ class SlideUpWidget extends StatelessWidget {
               height: 120,
               width: 400,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
@@ -52,7 +52,7 @@ class SlideUpWidget extends StatelessWidget {
                     height: 30,
                     width: 250,
                     decoration: BoxDecoration(
-                        color: Colors.lightBlue,
+                        color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +71,7 @@ class SlideUpWidget extends StatelessWidget {
                     height: 30,
                     width: 250,
                     decoration: BoxDecoration(
-                        color: Colors.lightBlue,
+                        color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +120,7 @@ class SlideUpWidget extends StatelessWidget {
                           height: 230,
                           width: 190,
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Colors.lightBlueAccent,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           child: Column(
@@ -130,7 +130,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: Colors.lightBlueAccent,
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,12 +143,13 @@ class SlideUpWidget extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(2.0),
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,7 +168,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +188,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,7 +207,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,13 +239,13 @@ class SlideUpWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(1),
                         child: Container(
                           padding: EdgeInsets.all(20.0),
                           height: 230,
                           width: 190,
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Colors.lightBlueAccent,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           child: Column(
@@ -254,7 +255,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: Colors.lightBlueAccent,
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -267,12 +268,13 @@ class SlideUpWidget extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(2.0),
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment:
@@ -297,7 +299,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment:
@@ -322,7 +324,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment:
@@ -347,7 +349,7 @@ class SlideUpWidget extends StatelessWidget {
                                 height: 30,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.lightBlue[200],
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment:
