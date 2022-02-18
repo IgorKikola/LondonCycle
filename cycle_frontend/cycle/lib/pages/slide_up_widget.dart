@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SlideUpWidget extends StatelessWidget {
+class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
 
   SlideUpWidget({Key? key, required this.controller}) : super(key: key);
 
   @override
+  State<SlideUpWidget> createState() => _SlideUpWidgetState();
+}
+
+class _SlideUpWidgetState extends State<SlideUpWidget> {
+  Color star1Color = Colors.grey;
+  Color star2Color = Colors.grey;
+  Color star3Color = Colors.grey;
+  Color star4Color = Colors.grey;
+
+
+  @override
   Widget build(BuildContext context) => ListView(
-        controller: controller,
         children: <Widget>[
+          SizedBox(height: 10),
           buildSlidingHandle(),
           SizedBox(height: 10),
           buildSearchBar(),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           buildWidgetGrid(),
+          buildSearchBar(),
         ],
+        controller: widget.controller,
       );
 
   Widget buildSlidingHandle() => GestureDetector(
@@ -28,6 +41,7 @@ class SlideUpWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
+
     ),
   );
 
@@ -107,7 +121,7 @@ class SlideUpWidget extends StatelessWidget {
           widthFactor: 300,
           heightFactor: 400,
           child: Container(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.all(6.0),
               alignment: Alignment(1.0, 0.0),
               child: Container(
                   child: Column(
@@ -117,7 +131,7 @@ class SlideUpWidget extends StatelessWidget {
                         padding: EdgeInsets.all(1),
                         child: Container(
                           padding: EdgeInsets.all(20.0),
-                          height: 230,
+                          height: 250,
                           width: 190,
                           decoration: BoxDecoration(
                             color: Colors.lightBlueAccent,
@@ -145,81 +159,197 @@ class SlideUpWidget extends StatelessWidget {
                               ),
                               SizedBox(height: 10),
                               Container(
-                                padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                padding: EdgeInsets.only(left: 2),
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Big Ben',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Icon(Icons.star, color: Colors.yellow),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0)),
+
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  // children: [
+
+                                    child: Material(
+                                      color: Colors.lightBlue[200],
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      child: InkWell(
+                                        splashColor: Colors.lightBlue,
+                                        onTap: () {
+                                          print("London Eye");
+                                        },
+                                        child:
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                         Text('London Eye',
+                                             style: GoogleFonts.lato(
+                                                 fontStyle: FontStyle.normal,
+                                                color: Colors.white)),
+                                                new IconButton(
+                                                  alignment: Alignment(1.0,0),
+                                                  icon: Icon(Icons.star, color: star1Color),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if(star1Color == Colors.grey){
+                                                        star1Color = Colors.yellow;
+                                                      }else{
+                                                        star1Color = Colors.grey;
+                                                      }
+                                                    });
+                                                  },
+                                                ),
+                                        ],
+                                      ),
+                                      ),
+                                      ),
+
+                                  ),
+                                    // Text('Big Ben',
+                                    //     style: GoogleFonts.lato(
+                                    //         fontStyle: FontStyle.normal,
+                                    //         color: Colors.white)),
+                                    // Icon(Icons.star, color: Colors.yellow),
+                                  // ],
+                              SizedBox(height: 10),
+                              Container(
+                                padding: EdgeInsets.only(left: 2),
+                                height: 35,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.lightBlue[200],
+                                    borderRadius: BorderRadius.circular(20.0)),
+
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                // children: [
+
+                                child: Material(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: InkWell(
+                                    splashColor: Colors.lightBlue,
+                                    onTap: () {
+                                      print("Big Ben");
+                                    },
+                                    child:
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Big Ben',
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white)),
+                                        new IconButton(
+                                          alignment: Alignment(1.0,0),
+                                          icon: Icon(Icons.star, color: star2Color),
+                                          onPressed: () {
+                                            setState(() {
+                                              if(star2Color == Colors.grey){
+                                                star2Color = Colors.yellow;
+                                              }else{
+                                                star2Color = Colors.grey;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
+
                               ),
                               SizedBox(height: 10),
                               Container(
-                                padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                padding: EdgeInsets.only(left: 2),
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Tower Bridge',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Icon(Icons.star,
-                                        color: Colors.black.withOpacity(0.2)),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0)),
+
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                // children: [
+
+                                child: Material(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: InkWell(
+                                    splashColor: Colors.lightBlue,
+                                    onTap: () {
+                                      print("The Shard");
+                                    },
+                                    child:
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('The Shard',
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white)),
+                                        new IconButton(
+                                          alignment: Alignment(1.0,0),
+                                          icon: Icon(Icons.star, color: star3Color),
+                                          onPressed: () {
+                                            setState(() {
+                                              if(star3Color == Colors.grey){
+                                                star3Color = Colors.yellow;
+                                              }else{
+                                                star3Color = Colors.grey;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
+
                               ),
                               SizedBox(height: 10),
                               Container(
-                                padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                padding: EdgeInsets.only(left: 2),
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('London Eye',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Icon(Icons.star, color: Colors.yellow),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0)),
+
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                // children: [
+
+                                child: Material(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: InkWell(
+                                    splashColor: Colors.lightBlue,
+                                    onTap: () {
+                                      print("Tower Bridge");
+                                    },
+                                    child:
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Tower Bridge',
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white)),
+                                        new IconButton(
+                                          alignment: Alignment(1.0,0),
+                                          icon: Icon(Icons.star, color: star4Color),
+                                          onPressed: () {
+                                            setState(() {
+                                              if(star4Color == Colors.grey){
+                                                star4Color = Colors.yellow;
+                                              }else{
+                                                star4Color = Colors.grey;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Container(
-                                padding: EdgeInsets.all(2.0),
-                                height: 30,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('The Shard',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Icon(Icons.star,
-                                        color: Colors.black.withOpacity(0.2)),
-                                  ],
-                                ),
+
                               ),
                             ],
                           ),
@@ -239,10 +369,10 @@ class SlideUpWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(1),
+                        padding: EdgeInsets.all(6),
                         child: Container(
                           padding: EdgeInsets.all(20.0),
-                          height: 230,
+                          height: 250,
                           width: 190,
                           decoration: BoxDecoration(
                             color: Colors.lightBlueAccent,
@@ -260,9 +390,9 @@ class SlideUpWidget extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('Nearest Collection Points:',
+                                    Text('Bike Points:',
                                         style: GoogleFonts.lato(
-                                            fontSize: 13,
+                                            fontSize: 18,
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
                                   ],
@@ -271,11 +401,19 @@ class SlideUpWidget extends StatelessWidget {
                               SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Material(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: InkWell(
+                                    splashColor: Colors.lightBlue,
+                                    onTap: () {
+                                      print("Horseferry Road");
+                                    },
                                 child: Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
@@ -292,80 +430,112 @@ class SlideUpWidget extends StatelessWidget {
                                             color: Colors.white)),
                                   ],
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Container(
-                                padding: EdgeInsets.all(2.0),
-                                height: 30,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Westminister Pier',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Text('1.5 miles away',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                  ],
+                              )
                                 ),
                               ),
                               SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Vauxhall Bridge',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Text('2 miles away',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Material(
+                                    color: Colors.lightBlue[200],
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: InkWell(
+                                      splashColor: Colors.lightBlue,
+                                      onTap: () {
+                                        print("Westminister Pier");
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Westminister Pier',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                          Text('1.5 miles away',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                    )
                                 ),
                               ),
                               SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(2.0),
-                                height: 30,
+                                height: 35,
                                 width: 150,
                                 decoration: BoxDecoration(
                                     color: Colors.lightBlue[200],
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Milbank Tower',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    Text('2.5 miles away',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Material(
+                                    color: Colors.lightBlue[200],
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: InkWell(
+                                      splashColor: Colors.lightBlue,
+                                      onTap: () {
+                                        print("Vauxhall Bridge");
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Vauxhall Bridge',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                          Text('2 miles away',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                padding: EdgeInsets.all(2.0),
+                                height: 35,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.lightBlue[200],
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Material(
+                                    color: Colors.lightBlue[200],
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: InkWell(
+                                      splashColor: Colors.lightBlue,
+                                      onTap: () {
+                                        print("Milbank Tower");
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Milbank Tower',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                          Text('2.5 miles away',
+                                              style: GoogleFonts.lato(
+                                                  fontSize: 10,
+                                                  fontStyle: FontStyle.normal,
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                    )
                                 ),
                               ),
                             ],
