@@ -23,10 +23,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           SizedBox(height: 10),
           buildSlidingHandle(),
           SizedBox(height: 10),
-          buildSearchBar(),
+          buildSearchBar(context),
           SizedBox(height: 5),
           buildWidgetGrid(),
-          buildSearchBar(),
+
         ],
         controller: widget.controller,
       );
@@ -45,7 +45,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
     ),
   );
 
-  Widget buildSearchBar() => Container(
+  Widget buildSearchBar(BuildContext context) => Container(
           child: Container(
               child: Column(
         children: [
@@ -53,18 +53,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
             padding: EdgeInsets.all(1),
             child: Container(
               padding: EdgeInsets.all(20.0),
-              height: 120,
+              height: 150,
               width: 400,
               decoration: BoxDecoration(
                 color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 30,
-                    width: 250,
+                    width: 400,
                     decoration: BoxDecoration(
                         color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
@@ -83,7 +83,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                   SizedBox(height: 10),
                   Container(
                     height: 30,
-                    width: 250,
+                    width: 400,
                     decoration: BoxDecoration(
                         color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
@@ -98,8 +98,44 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         SizedBox(width: 32.0)
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                  Container(
+                    height: 30,
+                    width: 170,
+                    decoration: BoxDecoration(
+                        color: Colors.lightBlue[200],
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: Material(
+                      color: Colors.lightBlue[200],
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: InkWell(
+                        splashColor: Colors.lightBlue,
+                        onTap: () {
+                          print("Add Stops");
+                        },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.add_location_alt, color: Colors.red),
+                        Text('"Add stops"',
+                            style: GoogleFonts.lato(
+                                fontStyle: FontStyle.normal,
+                                color: Colors.white)),
+                        SizedBox(width: 32.0)
+                      ],
+                    ),
+                      ),
+                    ),
+                  ),
+                      // SizedBox(width: 50),
+
                 ],
+              ),
+            ],
               ),
             ),
           ),
