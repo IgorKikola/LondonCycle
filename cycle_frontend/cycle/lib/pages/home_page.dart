@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: SlidingUpPanel(
           color: Colors.lightBlue,
-          minHeight: 155,
+          minHeight: 185,
           maxHeight: 420,
           parallaxEnabled: true,
           parallaxOffset: 1.0,

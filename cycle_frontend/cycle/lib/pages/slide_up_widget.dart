@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'journey_stops.dart';
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
@@ -52,19 +53,22 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           Padding(
             padding: EdgeInsets.all(1),
             child: Container(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(15.0),
               height: 150,
               width: 400,
               decoration: BoxDecoration(
                 color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 30,
-                    width: 400,
+                    width: 300,
                     decoration: BoxDecoration(
                         color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
@@ -83,7 +87,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                   SizedBox(height: 10),
                   Container(
                     height: 30,
-                    width: 400,
+                    width: 300,
                     decoration: BoxDecoration(
                         color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
@@ -115,7 +119,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       child: InkWell(
                         splashColor: Colors.lightBlue,
                         onTap: () {
-                          print("Add Stops");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const JourneyStops()),
+                          );
                         },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,6 +143,31 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 ],
               ),
             ],
+              ),
+                Container(
+                  height: 55,
+                  width: 55,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(15.0)),
+                  child:
+                  Material(
+                color: Colors.red,
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: InkWell(
+                      splashColor: Colors.redAccent,
+                      onTap: () {
+                        print("Navigate");
+                      },
+                child:
+                    Transform.rotate(angle: -35 * 3.14 / 180,
+                      child: Icon(Icons.directions_bike_rounded, size: 40,
+                    ),
+                    ),
+                  ),
+                  ),
+                ),
+              ],
               ),
             ),
           ),

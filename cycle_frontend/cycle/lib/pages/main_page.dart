@@ -60,7 +60,7 @@ class _MainPageState extends State<MainPage> {
                   )),
           Positioned(
             right: 10,
-            bottom: 260,
+            bottom: 280,
             child: FloatingActionButton(
               onPressed: () async {
                 // Automatically center the location marker on the map when location updated until user interact with the map.
