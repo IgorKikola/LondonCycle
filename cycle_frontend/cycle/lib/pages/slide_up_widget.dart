@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
@@ -15,6 +16,15 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   Color star2Color = Colors.grey;
   Color star3Color = Colors.grey;
   Color star4Color = Colors.grey;
+
+  var numController = TextEditingController();
+  var num = 0;
+
+  changeText() {
+    setState(() {
+      num = int.parse(numController.text);
+    });
+  }
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -111,14 +121,70 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           borderRadius: BorderRadius.circular(15.0),
                           child: InkWell(
                             splashColor: Colors.lightBlue,
-                            onTap: () {
-                              print("Add Stops");
-                            },
+                            onTap: () => {},
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Icon(Icons.add_location_alt, color: Colors.red),
                                 Text('"Add stops"',
+                                    style: GoogleFonts.lato(
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.white)),
+                                SizedBox(width: 32.0),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 170,
+                        decoration: BoxDecoration(
+                            color: Colors.lightBlue[200],
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Material(
+                          color: Colors.lightBlue[200],
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: InkWell(
+                            splashColor: Colors.lightBlue,
+                            onTap: () => {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Add riders'),
+                                  content: new TextField(
+                                    controller: numController,
+                                    decoration: new InputDecoration(
+                                        labelText:
+                                            "Enter the number of riders."),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context, 'OK');
+                                        changeText();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              changeText(),
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.person_add, color: Colors.red),
+                                Text('Riders:',
                                     style: GoogleFonts.lato(
                                         fontStyle: FontStyle.normal,
                                         color: Colors.white)),
@@ -151,7 +217,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       style: GoogleFonts.lato(
                                           fontStyle: FontStyle.normal,
                                           color: Colors.white)),
-                                  SizedBox(width: 32.0)
+                                  SizedBox(width: 32.0),
                                 ],
                               ),
                             ),
