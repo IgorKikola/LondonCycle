@@ -1,3 +1,4 @@
+import 'package:cycle/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/main_page.dart';
@@ -16,28 +17,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        drawer: Menu(),
-        appBar: AppBar(
-          title: Text('Map',
-              style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
-          backgroundColor: Colors.lightBlue,
-        ),
-        body: SlidingUpPanel(
-          color: Colors.lightBlue,
-          minHeight: 155,
-          maxHeight: 420,
-          parallaxEnabled: true,
-          parallaxOffset: 1.0,
-          isDraggable: true,
-          body: MainPage(),
-          panelBuilder: (controller) => SlideUpWidget(
-            controller: controller,
-          ),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-        ),
-      ),
-    );
+    return HomePage();
   }
 }

@@ -1,4 +1,11 @@
-import 'package:cycle/pages/Favorites.dart';
+import 'package:cycle/main.dart';
+import 'package:cycle/pages/favorites.dart';
+import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/settings.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'trip_history.dart';
+import 'profile.dart';
+import 'package:cycle/pages/trip_history.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,53 +18,34 @@ class Menu extends StatelessWidget {
         padding: EdgeInsets.all(10),
         children: [
           SizedBox(height:70),
-          buildProfileColumn(),
+          buildProfileColumn(context),
           SizedBox(height: 10),
-        Container(
-      height: 50,
-      child: Material(
-        color: Colors.lightBlue[200],
-        borderRadius: BorderRadius.circular(15.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          child: ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorites',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
-            // onTap: () {
-            //   print("Favorites");
-            // },
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Favorites()),
-              );
-            },
-          ),
-        ),
-      ),
-    ),
+          buildMap(context),
           SizedBox(height: 10),
-          buildHistory(),
+          buildFavorites(context),
           SizedBox(height: 10),
-          buildSettings(),
+          buildHistory(context),
+          SizedBox(height: 10),
+          buildSettings(context),
         ],
       ),
     );
   }
 }
 
-Widget buildProfileColumn() => Container(
+Widget buildProfileColumn(BuildContext context) => Container(
       height: 150,
       child: Material(
         color: Colors.lightBlue[200],
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
-          onTap: () {
-            print("Profile");
-          },
+onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const Profile()),
+  );
+},
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -93,7 +81,7 @@ Widget buildProfileColumn() => Container(
       ),
     );
 
-Widget buildFavorites() => Container(
+Widget buildFavorites(BuildContext context) => Container(
   height: 50,
   child: Material(
     color: Colors.lightBlue[200],
@@ -105,15 +93,41 @@ Widget buildFavorites() => Container(
         title: Text('Favorites',
             style: GoogleFonts.lato(
                 fontStyle: FontStyle.normal, color: Colors.white)),
-        // onTap: () {
-        //   print("Favorites");
-        // },
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Favorites()),
+          );
+        },
       ),
     ),
   ),
 );
 
-Widget buildHistory() => Container(
+Widget buildMap(BuildContext context) => Container(
+  height: 50,
+  child: Material(
+    color: Colors.lightBlue[200],
+    borderRadius: BorderRadius.circular(15.0),
+    child: InkWell(
+      splashColor: Colors.lightBlue,
+      child: ListTile(
+        leading: Icon(Icons.map),
+        title: Text('Map',
+            style: GoogleFonts.lato(
+                fontStyle: FontStyle.normal, color: Colors.white)),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        },
+      ),
+    ),
+  ),
+);
+
+Widget buildHistory(BuildContext context) => Container(
   height: 50,
   child: Material(
     color: Colors.lightBlue[200],
@@ -126,14 +140,17 @@ Widget buildHistory() => Container(
             style: GoogleFonts.lato(
                 fontStyle: FontStyle.normal, color: Colors.white)),
         onTap: () {
-          print("Trip History");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const TripHistory()),
+          );
         },
       ),
     ),
   ),
 );
 
-Widget buildSettings() => Container(
+Widget buildSettings(BuildContext context) => Container(
   height: 50,
   child: Material(
     color: Colors.lightBlue[200],
@@ -146,7 +163,10 @@ Widget buildSettings() => Container(
             style: GoogleFonts.lato(
                 fontStyle: FontStyle.normal, color: Colors.white)),
         onTap: () {
-          print("Settings");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Settings()),
+          );
         },
       ),
     ),
