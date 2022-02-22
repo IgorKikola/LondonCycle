@@ -14,4 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('bikes/', views.get_all_bikepoints, name = 'bikes'),
+    path('landmarks/', views.get_all_landmarks, name = 'landmarks'),
 ]
