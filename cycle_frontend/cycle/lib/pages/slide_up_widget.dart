@@ -53,183 +53,166 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       );
 
   Widget buildSearchBar(BuildContext context) => Container(
-          child: Container(
-              child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(1),
-            child: Container(
-              padding: EdgeInsets.all(20.0),
-              height: 150,
-              width: 400,
-              decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 30,
-                    width: 400,
-                    decoration: BoxDecoration(
-                        color: Colors.lightBlue[200],
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.my_location_rounded, color: Colors.red),
-                        Text('"Current Location"',
-                            style: GoogleFonts.lato(
-                                fontStyle: FontStyle.normal,
-                                color: Colors.white)),
-                        SizedBox(width: 32.0)
-                      ],
-                    ),
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(1),
+                child: Container(
+                  padding: EdgeInsets.all(20.0),
+                  height: 150,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent,
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    height: 30,
-                    width: 400,
-                    decoration: BoxDecoration(
-                        color: Colors.lightBlue[200],
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.location_on_outlined, color: Colors.red),
-                        Text('"Destination"',
-                            style: GoogleFonts.lato(
-                                fontStyle: FontStyle.normal,
-                                color: Colors.white)),
-                        SizedBox(width: 32.0)
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         height: 30,
-                        width: 170,
+                        width: 400,
                         decoration: BoxDecoration(
                             color: Colors.lightBlue[200],
                             borderRadius: BorderRadius.circular(15.0)),
-                        child: Material(
-                          color: Colors.lightBlue[200],
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: InkWell(
-                            splashColor: Colors.lightBlue,
-                            onTap: () => {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(Icons.add_location_alt, color: Colors.red),
-                                Text('"Add stops"',
-                                    style: GoogleFonts.lato(
-                                        fontStyle: FontStyle.normal,
-                                        color: Colors.white)),
-                                SizedBox(width: 32.0),
-                              ],
-                            ),
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.my_location_rounded, color: Colors.red),
+                            Text('"Current Location"',
+                                style: GoogleFonts.lato(
+                                    fontStyle: FontStyle.normal,
+                                    color: Colors.white)),
+                            SizedBox(width: 32.0)
+                          ],
                         ),
                       ),
+                      SizedBox(height: 10),
                       Container(
                         height: 30,
-                        width: 170,
+                        width: 400,
                         decoration: BoxDecoration(
                             color: Colors.lightBlue[200],
                             borderRadius: BorderRadius.circular(15.0)),
-                        child: Material(
-                          color: Colors.lightBlue[200],
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: InkWell(
-                            splashColor: Colors.lightBlue,
-                            onTap: () => {
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Add riders'),
-                                  content: new TextField(
-                                    controller: numController,
-                                    decoration: new InputDecoration(
-                                        labelText:
-                                            "Enter the number of riders."),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'Cancel'),
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context, 'OK');
-                                        changeText();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.location_on_outlined, color: Colors.red),
+                            Text('"Destination"',
+                                style: GoogleFonts.lato(
+                                    fontStyle: FontStyle.normal,
+                                    color: Colors.white)),
+                            SizedBox(width: 32.0)
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 30,
+                            width: 170,
+                            decoration: BoxDecoration(
+                                color: Colors.lightBlue[200],
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.lightBlue[200],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () => {},
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.add_location_alt,
+                                        color: Colors.red),
+                                    Text('"Add stops"',
+                                        style: GoogleFonts.lato(
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white)),
+                                    SizedBox(width: 32.0),
                                   ],
                                 ),
                               ),
-                              changeText(),
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(Icons.person_add, color: Colors.red),
-                                Text('Riders:',
-                                    style: GoogleFonts.lato(
-                                        fontStyle: FontStyle.normal,
-                                        color: Colors.white)),
-                                SizedBox(width: 32.0)
-                              ],
                             ),
                           ),
-                        ),
-                      ),
-                      Container(
-                          height: 30,
-                          width: 170,
-                          decoration: BoxDecoration(
+                          Container(
+                            height: 30,
+                            width: 170,
+                            decoration: BoxDecoration(
+                                color: Colors.lightBlue[200],
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
                               color: Colors.lightBlue[200],
-                              borderRadius: BorderRadius.circular(15.0)),
-                          child: Material(
-                            color: Colors.lightBlue[200],
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: InkWell(
-                              splashColor: Colors.lightBlue,
-                              onTap: () {
-                                print("Add Riders");
-                              },
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(Icons.person_add, color: Colors.red),
-                                  Text('"Add Riders"',
-                                      style: GoogleFonts.lato(
-                                          fontStyle: FontStyle.normal,
-                                          color: Colors.white)),
-                                  SizedBox(width: 32.0),
-                                ],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Add riders'),
+                                      content: new TextField(
+                                        controller: numController,
+                                        decoration: new InputDecoration(
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            changeText();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  changeText(),
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.person_add, color: Colors.red),
+                                    Text('Riders:',
+                                        style: GoogleFonts.lato(
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white)),
+                                    Container(
+                                        padding: EdgeInsets.only(right: 70),
+                                        child: Text(num.toString(),
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white)))
+                                  ],
+                                ),
                               ),
                             ),
-                          ))
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      )));
+        ),
+      );
 
   Widget buildWidgetGrid() => Container(
         padding: EdgeInsets.all(1.0),
