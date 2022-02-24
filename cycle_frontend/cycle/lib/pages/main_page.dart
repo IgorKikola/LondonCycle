@@ -12,6 +12,8 @@ const String kAccessToken =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
 
 class MainPage extends StatefulWidget {
+  static const String id = 'main_page';
+
   @override
   _MainPageState createState() => _MainPageState();
 }
