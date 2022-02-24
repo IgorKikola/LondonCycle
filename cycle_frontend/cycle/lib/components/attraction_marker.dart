@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cycle/constants/attraction_constants.dart';
 
+/// Widget of this class represents a marker of a place in the map.
 class AttractionMarker extends StatelessWidget {
   final String title;
 
@@ -9,8 +11,8 @@ class AttractionMarker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       child: const Icon(
-        Icons.account_balance,
-        color: Color(0xFFFFC43D),
+        kAttractionMarkerIcon,
+        color: Color(kAttractionMarkerColourActive),
       ),
       message: title,
     );

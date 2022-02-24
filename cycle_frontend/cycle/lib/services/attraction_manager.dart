@@ -4,7 +4,7 @@ import 'package:cycle/services/user_location_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import '../constants.dart';
+import '../constants/attraction_constants.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cycle/components/attraction_marker.dart';
 
@@ -50,13 +50,13 @@ class AttractionManager {
     final networkHelper = NetworkHelper(url);
     dynamic featureCollection = await networkHelper.getData();
 
-    // Extract a list of 'features' discarding all the other data
-    // in the decoded JSON.
+    // Extract a list of 'features' (locations) discarding all the other data
+    // from the decoded JSON.
     return featureCollection['features'];
   }
 
   Future<List<Marker>> getMarkersAroundUsersCurrentPosition() async {
-    // Retrieve a list of locations around the users current location
+    // Retrieve a list of locations around the user's current location
     // For that the global getPosition() method is passed which returns
     // a Future<Position>.
     List<dynamic> locations = await getLocationsAroundPosition(getPosition());
