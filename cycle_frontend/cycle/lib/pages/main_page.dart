@@ -129,6 +129,7 @@ class Map extends StatelessWidget {
             centerOnLocationUpdate: _centerOnLocationUpdate,
           ),
         ),
+
         // Add a layer of Map markers.
         _attractionManager
             .getAttractionLayerWithMarkersAroundUsersCurrentPosition(),

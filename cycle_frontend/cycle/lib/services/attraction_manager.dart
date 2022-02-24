@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import '../constants.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:cycle/components/attraction_marker.dart';
 
 /// This class is responsible for creating markers on the map of interesting locations
 /// around the given Position and building a layer for displaying all the markers.
@@ -17,6 +18,7 @@ class AttractionManager {
   /// Retrieve a list of interesting locations to visit around the given position.
   Future<dynamic> getLocationsAroundPosition(Future<Position> position) async {
     // ======================
+
     // ERROR here
     // How to retrieve the Position object from the Future object?
     // It gets sent from the "getMarkersAroundUsersCurrentPosition" method.
@@ -32,6 +34,7 @@ class AttractionManager {
         }
       },
     );
+
     // ======================
 
     double latitude = newPosition.latitude;
@@ -69,12 +72,8 @@ class AttractionManager {
             location['geometry']['coordinates'][1],
             location['geometry']['coordinates'][0],
           ),
-          builder: (context) => Tooltip(
-            child: const Icon(
-              Icons.account_balance,
-              color: Color(0xFFFFC43D),
-            ),
-            message: '${location['properties']['name']}',
+          builder: (context) => AttractionMarker(
+            title: '${location['properties']['name']}',
           ),
         ),
       );
@@ -98,8 +97,7 @@ class AttractionManager {
     );
   }
 
-  // Future<AttractionLayer>
-  //     getAttractionLayerWithMarkersAroundUsersCurrentPosition() async {
+  // Future<AttractionLayer> getAttractionLayerWithMarkersAroundUsersCurrentPosition() async {
   //   List<Marker> markers = await getMarkersAroundUsersCurrentPosition();
   //   return AttractionLayer(markers: markers);
   // }
