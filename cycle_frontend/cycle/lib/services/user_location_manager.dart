@@ -48,7 +48,7 @@ Future<bool> isLocationServiceAllowed() async {
       permission == LocationPermission.always);
 }
 
-class LocationManager {
+class UserLocationManager {
   bool stopped = false;
 
   Future<void> run() async {

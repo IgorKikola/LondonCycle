@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cycle/services/locations_manager.dart';
+import 'package:cycle/services/attraction_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -9,7 +9,7 @@ import 'package:cycle/services/user_location_manager.dart';
 import 'package:cycle/pages/menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../components/places_layer.dart';
+import '../components/attraction_layer.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -22,17 +22,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final LocationManager _locationManager = LocationManager();
+  final UserLocationManager _locationManager = UserLocationManager();
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
 
   @override
   void initState() {
     super.initState();
-    _locationManager.run().whenComplete(() => setState(() {}));
-
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     _centerCurrentLocationStreamController = StreamController<double?>();
+    _locationManager.run().whenComplete(() => setState(() {}));
   }
 
   @override
@@ -57,7 +56,6 @@ class _MainPageState extends State<MainPage> {
               centerCurrentLocationStreamController:
                   _centerCurrentLocationStreamController,
               centerOnLocationUpdate: _centerOnLocationUpdate,
-              locationManager: _locationManager,
               action: () => setState(
                     () =>
                         _centerOnLocationUpdate = CenterOnLocationUpdate.never,
@@ -87,22 +85,20 @@ class _MainPageState extends State<MainPage> {
 }
 
 class Map extends StatelessWidget {
-  Map(
-      {Key? key,
-      required StreamController<double?> centerCurrentLocationStreamController,
-      required CenterOnLocationUpdate centerOnLocationUpdate,
-      required Function action,
-      required LocationManager locationManager})
-      : _centerCurrentLocationStreamController =
+  Map({
+    Key? key,
+    required StreamController<double?> centerCurrentLocationStreamController,
+    required CenterOnLocationUpdate centerOnLocationUpdate,
+    required this.action,
+  })  : _centerCurrentLocationStreamController =
             centerCurrentLocationStreamController,
         _centerOnLocationUpdate = centerOnLocationUpdate,
-        _locationManager = locationManager,
-        action = action,
         super(key: key);
-  final LocationManager _locationManager;
+
   final StreamController<double?> _centerCurrentLocationStreamController;
   final CenterOnLocationUpdate _centerOnLocationUpdate;
   final Function action;
+  final AttractionManager _attractionManager = AttractionManager();
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +128,8 @@ class Map extends StatelessWidget {
             centerOnLocationUpdate: _centerOnLocationUpdate,
           ),
         ),
-        PlacesLayer(
-          latitude: 54.674980,
-          longitude: 25.282351,
-        ),
+        _attractionManager
+            .getAttractionLayerWithMarkersAroundUsersCurrentPosition(),
       ],
     );
   }
