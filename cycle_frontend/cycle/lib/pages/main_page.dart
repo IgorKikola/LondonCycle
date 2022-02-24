@@ -98,6 +98,7 @@ class Map extends StatelessWidget {
   final StreamController<double?> _centerCurrentLocationStreamController;
   final CenterOnLocationUpdate _centerOnLocationUpdate;
   final Function action;
+  // Object which creates layers with markers of interesting places to visit.
   final AttractionManager _attractionManager = AttractionManager();
 
   @override
@@ -128,6 +129,7 @@ class Map extends StatelessWidget {
             centerOnLocationUpdate: _centerOnLocationUpdate,
           ),
         ),
+        // Add a layer of Map markers.
         _attractionManager
             .getAttractionLayerWithMarkersAroundUsersCurrentPosition(),
       ],

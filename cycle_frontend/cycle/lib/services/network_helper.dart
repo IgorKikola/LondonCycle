@@ -8,8 +8,10 @@ class NetworkHelper {
   NetworkHelper(this.url);
 
   Future getData() async {
+    // Retrieve JSON data using http GET call.
     http.Response response = await http.get(Uri.parse(url));
 
+    // If retrieval was successful, decode data and return it.
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

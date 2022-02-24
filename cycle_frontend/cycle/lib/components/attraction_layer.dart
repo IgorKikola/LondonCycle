@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
+/// A layer which contains Map markers.
 class AttractionLayer extends StatefulWidget {
   final List<Marker> markers;
 
