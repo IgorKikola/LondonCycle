@@ -39,6 +39,8 @@ dependencies:
   geolocator: ^8.1.1
   location: ^4.3.0
   restart_app: ^1.1.0
+  validators: 3.0.0
+  string_validator: ^0.3.0
 
 dev_dependencies:
   flutter_test:

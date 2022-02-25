@@ -17,19 +17,22 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(
         title: const Text('Sign-up form'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const <Widget>[
-          Expanded(
-            child: Text(
-              'Sign-up',
-              style: TextStyle(
-                color: Colors.black,
+      body: Center(
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const <Widget>[
+            Expanded(
+              child: Text(
+                'Sign-up',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40.0,
+                ),
               ),
             ),
-          ),
-          SignUpForm(),
-        ],
+            SignUpForm(),
+          ],
+        ),
       ),
     );
   }

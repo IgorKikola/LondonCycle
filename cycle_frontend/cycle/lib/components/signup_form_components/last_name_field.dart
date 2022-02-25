@@ -1,18 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:cycle/services/string_validator.dart';
 import 'package:cycle/services/validator_messages.dart';
-import 'package:flutter/material.dart';
 
 /// First name field used in the sign-up form.
-class FirstNameField extends StatefulWidget {
-  const FirstNameField({Key? key}) : super(key: key);
+class LastNameField extends StatefulWidget {
+  const LastNameField({Key? key}) : super(key: key);
 
   @override
-  FirstNameFieldState createState() {
-    return FirstNameFieldState();
+  LastNameFieldState createState() {
+    return LastNameFieldState();
   }
 }
 
-class FirstNameFieldState extends State<FirstNameField> {
+class LastNameFieldState extends State<LastNameField> {
   final _validator = StringValidator();
 
   @override
@@ -24,9 +24,9 @@ class FirstNameFieldState extends State<FirstNameField> {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        ValidatorMessage message = _validator.isFirstName(value!);
+        ValidatorMessage message = _validator.isLastName(value!);
         if (value.isEmpty) {
-          return 'Please enter your name';
+          return 'Please enter your surname';
         } else if (message != ValidatorMessage.defaultMessage) {
           return _validator.getText(message);
         } else {
@@ -34,8 +34,9 @@ class FirstNameFieldState extends State<FirstNameField> {
         }
       },
       decoration: const InputDecoration(
-        labelText: 'First name',
-        hintText: 'Enter your first name',
+        labelText: 'Last name',
+        hintText: 'Enter your last name',
+        //errorText: getErrorText(),
       ),
     );
   }

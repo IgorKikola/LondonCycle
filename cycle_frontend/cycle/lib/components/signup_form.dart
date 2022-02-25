@@ -1,4 +1,8 @@
+import 'package:cycle/components/signup_form_components/email_field.dart';
 import 'package:cycle/components/signup_form_components/first_name_field.dart';
+import 'package:cycle/components/signup_form_components/last_name_field.dart';
+import 'package:cycle/components/signup_form_components/password_field.dart';
+import 'package:cycle/components/signup_form_components/password_repeat_field.dart';
 import 'package:flutter/material.dart';
 
 /// Form for a sign-up.
@@ -27,8 +31,21 @@ class SignUpFormState extends State<SignUpForm> {
     return Form(
       key: _formKey,
       child: Column(
-        children: const <Widget>[
-          FirstNameField(),
+        children: <Widget>[
+          const FirstNameField(),
+          const LastNameField(),
+          const EmailField(),
+          const PasswordField(),
+          const PasswordRepeatField(),
+          ElevatedButton(
+            onPressed: () {
+              // Validate returns true if the form is valid, or false otherwise.
+              if (_formKey.currentState!.validate()) {
+                // SAVE TO A DATABASE
+              }
+            },
+            child: const Text('Submit'),
+          ),
         ],
       ),
     );
