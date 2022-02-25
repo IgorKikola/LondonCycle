@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/searchbox.dart';
+
 
 class JourneyStops extends StatefulWidget {
   const JourneyStops({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class _JourneyStopsState extends State<JourneyStops> {
             createStop("Strand Campus"),
             createStop("Waterloo Campus"),
             createStop("Guy's Campus"),
-            createStop("King's College London")
+            createStop("King's College London"),
           ],
         ),
       ),

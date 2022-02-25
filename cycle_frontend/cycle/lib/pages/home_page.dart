@@ -26,27 +26,7 @@ class _HomePageState extends State<HomePage> {
                   GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
           backgroundColor: Colors.lightBlue,
         ),
-        body: Column(
-          children: [
-            Container(
-              color: Colors.lightBlue,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SearchBox().getSearchBox(),
-                    MaterialButton(
-                      child: const Icon(Icons.search),
-                      minWidth: 150.0,
-                      color: Colors.red,
-                      onPressed: () {
-                        print('pressed');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        body:
             SlidingUpPanel(
               color: Colors.lightBlue,
               minHeight: 185,
@@ -60,9 +40,9 @@ class _HomePageState extends State<HomePage> {
               ),
               borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
             ),
-          ],
+
         ),
-      ),
+
     );
   }
 }
