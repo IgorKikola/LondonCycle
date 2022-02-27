@@ -1,7 +1,10 @@
+import 'package:cycle/components/searchbox.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../services/route.dart';
 import 'journey_stops.dart';
-import 'package:cycle/components/searchbox.dart';
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
@@ -13,10 +16,30 @@ class SlideUpWidget extends StatefulWidget {
 }
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
+  // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
+  MyRoute myRoute = MyRoute();
+
   Color star1Color = Colors.grey;
   Color star2Color = Colors.grey;
   Color star3Color = Colors.grey;
   Color star4Color = Colors.grey;
+
+  bool isRouteComplete() {
+    return myRoute.startingLocation != null &&
+        myRoute.finishingLocation != null;
+  }
+
+  void findRoute() {
+    print('finding route for...');
+    if (myRoute.startingLocation != null) {
+      print('starting point: ${myRoute.startingLocation}');
+    }
+    if (myRoute.finishingLocation != null) {
+      print('finishing point: ${myRoute.finishingLocation}');
+    }
+
+    print('route found.');
+  }
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -69,7 +92,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(Icons.my_location_rounded, color: Colors.red),
-                            SearchBox().getSearchBox(),
+                            SearchBox(
+                                    searchboxType: Waypoint.START,
+                                    myRoute: myRoute)
+                                .getSearchBox(),
                             SizedBox(width: 32.0)
                           ],
                         ),
@@ -85,11 +111,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(Icons.location_on_outlined, color: Colors.red),
-                            Text('"Destination"',
-                                style: GoogleFonts.lato(
-                                    fontStyle: FontStyle.normal,
-                                    color: Colors.white)),
-                            SizedBox(width: 32.0)
+                            SearchBox(
+                                    searchboxType: Waypoint.FINISH,
+                                    myRoute: myRoute)
+                                .getSearchBox(),
+                            SizedBox(width: 32.0),
                           ],
                         ),
                       ),
@@ -126,7 +152,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
-                                    SizedBox(width: 32.0)
+                                    SizedBox(width: 32.0),
                                   ],
                                 ),
 
@@ -240,6 +266,20 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 //   ],
                                 // ),
                               ),
+                            ),
+                          ),
+                          Container(
+                            height: 30,
+                            width: 170,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: IconButton(
+                              onPressed: findRoute,
+                              //disabledColor: Colors.grey,
+                              padding: EdgeInsets.all(5.0),
+                              color: Colors.white,
+                              icon: Icon(Icons.search),
                             ),
                           ),
                         ],
