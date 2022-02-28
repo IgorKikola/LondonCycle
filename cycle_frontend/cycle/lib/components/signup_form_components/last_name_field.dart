@@ -4,7 +4,9 @@ import 'package:cycle/services/validator_messages.dart';
 
 /// First name field used in the sign-up form.
 class LastNameField extends StatefulWidget {
-  const LastNameField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const LastNameField(this.controller, {Key? key}) : super(key: key);
 
   @override
   LastNameFieldState createState() {
@@ -24,15 +26,17 @@ class LastNameFieldState extends State<LastNameField> {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        ValidatorMessage message = _validator.isLastName(value!);
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           return 'Please enter your surname';
-        } else if (message != ValidatorMessage.defaultMessage) {
+        }
+        ValidatorMessage message = _validator.isLastName(value);
+        if (message != ValidatorMessage.defaultMessage) {
           return _validator.getText(message);
         } else {
           return null;
         }
       },
+      controller: widget.controller,
       decoration: const InputDecoration(
         labelText: 'Last name',
         hintText: 'Enter your last name',

@@ -1,12 +1,15 @@
 import 'package:string_validator/string_validator.dart';
 import 'validator_messages.dart';
 
+// Minimum eight characters, at least one letter, one number and
+// one special character.
+final RegExp passwordRegex =
+    RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$");
+
 class StringValidator {
   StringValidator();
 
   ValidatorMessage isFirstName(String toCheck) {
-    print(toCheck.substring(1) == toCheck.substring(1).toLowerCase());
-
     if (!isAlpha(toCheck)) {
       return ValidatorMessage.nameIsNotOnlyLetters;
     } else if (!isUppercase(toCheck[0])) {
@@ -30,6 +33,12 @@ class StringValidator {
     }
   }
 
+  ValidatorMessage isValidPassword(String toCheck) {
+    return !passwordRegex.hasMatch(toCheck)
+        ? ValidatorMessage.passwordIsOfWrongFormat
+        : ValidatorMessage.defaultMessage;
+  }
+
   String getText(ValidatorMessage string) {
     switch (string) {
       case ValidatorMessage.firstLetterOfNameMustBeCapital:
@@ -44,6 +53,9 @@ class StringValidator {
         return 'Name cannot contain numbers or special symbols';
       case ValidatorMessage.surnameIsNotOnlyLetters:
         return 'Surname cannot contain numbers or special symbols';
+      case ValidatorMessage.passwordIsOfWrongFormat:
+        return "Password must have at least 8 characters including 1 number, 1"
+            "letter and 1 special character [@\$!%*#?&]";
       default:
         return '';
     }

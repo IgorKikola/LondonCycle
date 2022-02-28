@@ -1,8 +1,13 @@
+import 'package:cycle/services/validator_messages.dart';
 import 'package:flutter/material.dart';
+
+import '../../services/string_validator.dart';
 
 /// Password field used in the sign-up form.
 class PasswordField extends StatefulWidget {
-  const PasswordField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const PasswordField(this.controller, {Key? key}) : super(key: key);
 
   @override
   PasswordFieldState createState() {
@@ -11,6 +16,8 @@ class PasswordField extends StatefulWidget {
 }
 
 class PasswordFieldState extends State<PasswordField> {
+  final _validator = StringValidator();
+
   @override
   void dispose() {
     super.dispose();
@@ -21,11 +28,17 @@ class PasswordFieldState extends State<PasswordField> {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       obscureText: true,
+      controller: widget.controller,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+          return 'Please enter your password';
         }
-        return null;
+        ValidatorMessage message = _validator.isValidPassword(value);
+        if (message != ValidatorMessage.defaultMessage) {
+          return _validator.getText(message);
+        } else {
+          return null;
+        }
       },
       decoration: const InputDecoration(
         labelText: 'Password',

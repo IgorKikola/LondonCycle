@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 /// First name field used in the sign-up form.
 class FirstNameField extends StatefulWidget {
-  const FirstNameField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const FirstNameField(this.controller, {Key? key}) : super(key: key);
 
   @override
   FirstNameFieldState createState() {
@@ -24,15 +26,17 @@ class FirstNameFieldState extends State<FirstNameField> {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        ValidatorMessage message = _validator.isFirstName(value!);
-        if (value.isEmpty) {
+        if (value == null || value.isEmpty) {
           return 'Please enter your name';
-        } else if (message != ValidatorMessage.defaultMessage) {
+        }
+        ValidatorMessage message = _validator.isFirstName(value);
+        if (message != ValidatorMessage.defaultMessage) {
           return _validator.getText(message);
         } else {
           return null;
         }
       },
+      controller: widget.controller,
       decoration: const InputDecoration(
         labelText: 'First name',
         hintText: 'Enter your first name',

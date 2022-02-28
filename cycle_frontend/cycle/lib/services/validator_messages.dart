@@ -5,5 +5,6 @@ enum ValidatorMessage {
   onlyFirstLetterOfSurnameCanBeCapital,
   nameIsNotOnlyLetters,
   surnameIsNotOnlyLetters,
+  passwordIsOfWrongFormat,
   defaultMessage,
 }

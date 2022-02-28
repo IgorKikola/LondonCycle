@@ -3,7 +3,9 @@ import 'package:validators/validators.dart';
 
 /// Email field used in the sign-up form.
 class EmailField extends StatefulWidget {
-  const EmailField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  const EmailField(this.controller, {Key? key}) : super(key: key);
 
   @override
   EmailFieldState createState() {
@@ -28,6 +30,7 @@ class EmailFieldState extends State<EmailField> {
           return "Your provided email is invalid.";
         }
       },
+      controller: widget.controller,
       decoration: const InputDecoration(
         labelText: 'Email',
         hintText: 'Enter your email address',

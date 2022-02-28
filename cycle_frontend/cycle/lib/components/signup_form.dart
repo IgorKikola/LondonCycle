@@ -18,11 +18,18 @@ class SignUpForm extends StatefulWidget {
 class SignUpFormState extends State<SignUpForm> {
   // Global key that uniquely identifies the SignUpForm widget.
   final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
+
+  // Controllers that keep track of the user's input.
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController repeatPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
-    _controller.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -32,16 +39,22 @@ class SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          const FirstNameField(),
-          const LastNameField(),
-          const EmailField(),
-          const PasswordField(),
-          const PasswordRepeatField(),
+          FirstNameField(firstNameController),
+          LastNameField(lastNameController),
+          EmailField(emailController),
+          PasswordField(passwordController),
+          PasswordRepeatField(passwordController, repeatPasswordController),
           ElevatedButton(
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
+                //_formKey.currentState.save();
                 // SAVE TO A DATABASE
+                print(firstNameController.text);
+                print(lastNameController.text);
+                print(emailController.text);
+                print(passwordController.text);
+                print(repeatPasswordController.text);
               }
             },
             child: const Text('Submit'),
