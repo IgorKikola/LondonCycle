@@ -15,23 +15,26 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign-up form'),
+        title: const Text('Sign-up'),
       ),
       body: Center(
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const <Widget>[
-            Expanded(
-              child: Text(
-                'Sign-up',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40.0,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Text(
+                  'Create your account',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40.0,
+                  ),
                 ),
-              ),
+                SignUpForm(),
+              ],
             ),
-            SignUpForm(),
-          ],
+          ),
         ),
       ),
     );

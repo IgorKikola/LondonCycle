@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cycle/services/string_validator.dart';
 import 'package:cycle/services/validator_messages.dart';
 
+import '../../constants.dart';
+
 /// First name field used in the sign-up form.
 class LastNameField extends StatefulWidget {
   final TextEditingController controller;
@@ -37,7 +39,7 @@ class LastNameFieldState extends State<LastNameField> {
         }
       },
       controller: widget.controller,
-      decoration: const InputDecoration(
+      decoration: kTextFieldDecoration.copyWith(
         labelText: 'Last name',
         hintText: 'Enter your last name',
         //errorText: getErrorText(),

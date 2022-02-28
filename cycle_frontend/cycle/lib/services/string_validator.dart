@@ -54,8 +54,7 @@ class StringValidator {
       case ValidatorMessage.surnameIsNotOnlyLetters:
         return 'Surname cannot contain numbers or special symbols';
       case ValidatorMessage.passwordIsOfWrongFormat:
-        return "Password must have at least 8 characters including 1 number, 1"
-            "letter and 1 special character [@\$!%*#?&]";
+        return "Password is of a wrong format";
       default:
         return '';
     }
