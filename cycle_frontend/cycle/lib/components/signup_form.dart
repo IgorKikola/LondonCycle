@@ -50,11 +50,18 @@ class SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 //_formKey.currentState.save();
                 // SAVE TO A DATABASE
-                print(firstNameController.text);
-                print(lastNameController.text);
-                print(emailController.text);
-                print(passwordController.text);
-                print(repeatPasswordController.text);
+                // print(firstNameController.text);
+                // print(lastNameController.text);
+                // print(emailController.text);
+                // print(passwordController.text);
+                // print(repeatPasswordController.text);
+
+                Map data = {
+                  'firstName': firstNameController.text,
+                  'lastName': lastNameController.text,
+                  'email': emailController.text,
+                  'password': passwordController.text,
+                };
               }
             },
             child: const Text('Submit'),
