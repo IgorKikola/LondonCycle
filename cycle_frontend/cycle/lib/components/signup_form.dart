@@ -3,6 +3,7 @@ import 'package:cycle/components/signup_form_components/first_name_field.dart';
 import 'package:cycle/components/signup_form_components/last_name_field.dart';
 import 'package:cycle/components/signup_form_components/password_field.dart';
 import 'package:cycle/components/signup_form_components/password_repeat_field.dart';
+import 'package:cycle/services/register_user.dart';
 import 'package:flutter/material.dart';
 
 /// Form for a sign-up.
@@ -45,23 +46,26 @@ class SignUpFormState extends State<SignUpForm> {
           PasswordField(passwordController),
           PasswordRepeatField(passwordController, repeatPasswordController),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
                 //_formKey.currentState.save();
-                // SAVE TO A DATABASE
-                // print(firstNameController.text);
-                // print(lastNameController.text);
-                // print(emailController.text);
-                // print(passwordController.text);
-                // print(repeatPasswordController.text);
-
                 Map data = {
                   'firstName': firstNameController.text,
                   'lastName': lastNameController.text,
                   'email': emailController.text,
                   'password': passwordController.text,
                 };
+                RegisterUser register = RegisterUser();
+                Map response = await register.registerUser(data);
+                if (response['statusCode'] == 200) {
+                  // User created successfully.
+                  // Redirect user to the main page.
+                } else {
+                  // Display response['body'] received from the server containing
+                  // the message of what went wrong.
+
+                }
               }
             },
             child: const Text('Submit'),
