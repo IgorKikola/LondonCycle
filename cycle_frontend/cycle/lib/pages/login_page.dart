@@ -1,21 +1,21 @@
-import 'package:cycle/components/signup_form.dart';
+import 'package:cycle/components/login_form.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatefulWidget {
-  static const String id = 'signup_page';
+class LoginPage extends StatefulWidget {
+  static const String id = 'login_page';
 
-  const SignupPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign-up'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Padding(
@@ -25,13 +25,13 @@ class _SignupPageState extends State<SignupPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
                 Text(
-                  'Create your account',
+                  'Login to your existing account',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40.0,
                   ),
                 ),
-                SignupForm(),
+                LoginForm(),
               ],
             ),
           ),

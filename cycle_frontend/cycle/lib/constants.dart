@@ -15,7 +15,7 @@ const kTextFieldDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
-  icon: Icon(Icons.person),
+  icon: null,
 );
 
 const kSubmitButtonTextStyle = TextStyle(
@@ -31,4 +31,15 @@ const kFormFieldTooltipDecoration = BoxDecoration(
 
 const kFormFieldTooltipTextStyle = TextStyle(
   color: Colors.white70,
+);
+
+ButtonStyle kSubmitButtonStyle = ButtonStyle(
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(32.0),
+      ),
+      side: BorderSide(color: Colors.white),
+    ),
+  ),
 );

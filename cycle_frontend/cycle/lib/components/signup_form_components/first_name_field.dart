@@ -42,6 +42,7 @@ class FirstNameFieldState extends State<FirstNameField> {
       decoration: kTextFieldDecoration.copyWith(
         labelText: 'First name',
         hintText: 'Enter your first name',
+        icon: const Icon(Icons.person),
       ),
     );
   }

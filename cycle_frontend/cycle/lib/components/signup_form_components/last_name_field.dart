@@ -42,7 +42,7 @@ class LastNameFieldState extends State<LastNameField> {
       decoration: kTextFieldDecoration.copyWith(
         labelText: 'Last name',
         hintText: 'Enter your last name',
-        //errorText: getErrorText(),
+        icon: const Icon(Icons.person),
       ),
     );
   }

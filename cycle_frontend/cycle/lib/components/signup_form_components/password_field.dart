@@ -33,7 +33,6 @@ class PasswordFieldState extends State<PasswordField> {
       textStyle: kFormFieldTooltipTextStyle,
       padding: const EdgeInsets.all(15.0),
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
         obscureText: true,
         controller: widget.controller,
         validator: (value) {

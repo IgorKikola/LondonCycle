@@ -1,3 +1,4 @@
+import 'package:cycle/pages/login_page.dart';
 import 'package:cycle/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: SignUpPage.id,
+      initialRoute: SignupPage.id,
       routes: {
-        SignUpPage.id: (context) => SignUpPage(),
+        SignupPage.id: (context) => SignupPage(),
+        LoginPage.id: (context) => LoginPage(),
         MainPage.id: (context) => MainPage(),
       },
     );

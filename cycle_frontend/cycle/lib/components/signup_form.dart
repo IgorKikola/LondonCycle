@@ -8,17 +8,17 @@ import 'package:cycle/services/register_user.dart';
 import 'package:flutter/material.dart';
 
 /// Form for a sign-up.
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({Key? key}) : super(key: key);
+class SignupForm extends StatefulWidget {
+  const SignupForm({Key? key}) : super(key: key);
 
   @override
-  SignUpFormState createState() {
-    return SignUpFormState();
+  SignupFormState createState() {
+    return SignupFormState();
   }
 }
 
-class SignUpFormState extends State<SignUpForm> {
-  // Global key that uniquely identifies the SignUpForm widget.
+class SignupFormState extends State<SignupForm> {
+  // Global key that uniquely identifies the SignupForm widget.
   final _formKey = GlobalKey<FormState>();
 
   // Controllers that keep track of the user's input.
@@ -31,7 +31,11 @@ class SignUpFormState extends State<SignUpForm> {
 
   @override
   void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
+    repeatPasswordController.dispose();
     super.dispose();
   }
 
@@ -84,16 +88,7 @@ class SignUpFormState extends State<SignUpForm> {
                     }
                   }
                 },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      side: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                ),
+                style: kSubmitButtonStyle,
                 child: const Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
