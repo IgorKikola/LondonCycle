@@ -1,4 +1,5 @@
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/services/directions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,6 +44,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${myRoute.finishingLocation}');
     }
 
+    DirectionsService.getInstructionsForRoute(myRoute);
     print('route found.');
   }
 

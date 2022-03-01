@@ -15,4 +15,11 @@ class MyRoute {
   setFinishingLocation(Coordinate location) {
     finishingLocation = location;
   }
+
+  String getRouteAsSemicolonSeparatedListWithLongLatOrder() {
+    String result =
+        '${startingLocation!.longitude},${startingLocation!.latitude};${finishingLocation!.longitude},${finishingLocation!.latitude}';
+
+    return result;
+  }
 }
