@@ -18,17 +18,19 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('Login'),
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
-                Text(
-                  'Login to your existing account',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40.0,
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                  child: Text(
+                    'Login to your account',
+                    style: TextStyle(
+                      fontFamily: 'Lobster',
+                      color: Colors.white,
+                      fontSize: 40.0,
+                    ),
                   ),
                 ),
                 LoginForm(),

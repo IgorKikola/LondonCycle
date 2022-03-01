@@ -35,10 +35,8 @@ class LoginFormState extends State<LoginForm> {
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: Wrap(
-                spacing: 20.0,
                 runSpacing: 20.0,
                 children: <Widget>[
                   // EMAIL FIELD
