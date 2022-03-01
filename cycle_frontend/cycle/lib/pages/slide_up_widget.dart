@@ -6,6 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../services/route.dart';
 import 'journey_stops.dart';
 
+final TextEditingController startingPointSearchboxTypeAheadController =
+    TextEditingController();
+final TextEditingController finishingPointSearchboxTypeAheadController =
+    TextEditingController();
+
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
 
@@ -93,9 +98,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           children: [
                             Icon(Icons.my_location_rounded, color: Colors.red),
                             SearchBox(
-                                    searchboxType: Waypoint.START,
-                                    myRoute: myRoute)
-                                .getSearchBox(),
+                                searchboxType: Waypoint.START,
+                                myRoute: myRoute,
+                                typeAheadController:
+                                    startingPointSearchboxTypeAheadController),
                             SizedBox(width: 32.0)
                           ],
                         ),
@@ -112,9 +118,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           children: [
                             Icon(Icons.location_on_outlined, color: Colors.red),
                             SearchBox(
-                                    searchboxType: Waypoint.FINISH,
-                                    myRoute: myRoute)
-                                .getSearchBox(),
+                              searchboxType: Waypoint.FINISH,
+                              myRoute: myRoute,
+                              typeAheadController:
+                                  finishingPointSearchboxTypeAheadController,
+                            ),
                             SizedBox(width: 32.0),
                           ],
                         ),

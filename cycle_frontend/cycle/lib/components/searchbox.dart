@@ -11,13 +11,11 @@ const kOutlineInputBorder = OutlineInputBorder(
   borderSide: BorderSide.none,
 );
 
-class SearchBox {
-  final TextEditingController _typeAheadController = TextEditingController();
+class SearchBox extends StatelessWidget {
+  final TextEditingController typeAheadController;
 
   static const int maxLocationStringLength = 30;
   final Waypoint searchboxType;
-
-  late Widget _searchBox;
 
   void onSelected(String suggestion) {
     String suggestionFullName = suggestion.toString().split('|').elementAt(0);
@@ -44,13 +42,16 @@ class SearchBox {
     print('A location has been picked for the $searchboxType of the journey.');
     print('Picked location coordinates: $selectedLocation');
 
-    _typeAheadController.text = suggestionFullName;
+    typeAheadController.text = suggestionFullName;
   }
 
   MyRoute myRoute;
   String hintText = '';
 
-  SearchBox({required this.searchboxType, required this.myRoute}) {
+  SearchBox(
+      {required this.searchboxType,
+      required this.myRoute,
+      required this.typeAheadController}) {
     switch (searchboxType) {
       case Waypoint.START:
         hintText = 'Starting location';
@@ -59,8 +60,11 @@ class SearchBox {
         hintText = 'Destination';
         break;
     }
+  }
 
-    _searchBox = Container(
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       height: 30,
       width: 300,
       decoration: BoxDecoration(
@@ -70,7 +74,7 @@ class SearchBox {
       // padding: const EdgeInsets.all(10.0),
       child: TypeAheadField(
         textFieldConfiguration: TextFieldConfiguration(
-          controller: _typeAheadController,
+          controller: typeAheadController,
           // autofocus: true,
           textAlign: TextAlign.center,
           textAlignVertical: TextAlignVertical.bottom,
@@ -108,9 +112,5 @@ class SearchBox {
       ),
       // ),
     );
-  }
-
-  Widget getSearchBox() {
-    return _searchBox;
   }
 }
