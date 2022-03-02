@@ -1,3 +1,4 @@
+import 'package:cycle/components/signup_form_components/checkbox_text.dart';
 import 'package:cycle/components/signup_form_components/email_field.dart';
 import 'package:cycle/components/signup_form_components/first_name_field.dart';
 import 'package:cycle/components/signup_form_components/last_name_field.dart';
@@ -9,6 +10,8 @@ import 'package:cycle/pages/terms_of_use_page.dart';
 import 'package:cycle/services/register_user.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'form_button.dart';
 
 /// Form for a sign-up.
 class SignupForm extends StatefulWidget {
@@ -79,66 +82,9 @@ class SignupFormState extends State<SignupForm> {
                               );
                             },
                           ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "I accept the ",
-                                  style: TextStyle(
-                                    color: termsAndPolicyWereNotChecked
-                                        ? Theme.of(context).errorColor
-                                        : Colors.white,
-                                    fontWeight: termsAndPolicyWereNotChecked
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "Terms of Use ",
-                                  style: TextStyle(
-                                    color: termsAndPolicyWereNotChecked
-                                        ? Theme.of(context).errorColor
-                                        : Colors.blueAccent,
-                                    fontWeight: termsAndPolicyWereNotChecked
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.pushNamed(
-                                          context, TermsOfUsePage.id);
-                                    },
-                                ),
-                                TextSpan(
-                                  text: "& ",
-                                  style: TextStyle(
-                                    color: termsAndPolicyWereNotChecked
-                                        ? Theme.of(context).errorColor
-                                        : Colors.white,
-                                    fontWeight: termsAndPolicyWereNotChecked
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "Privacy Policy",
-                                  style: TextStyle(
-                                    color: termsAndPolicyWereNotChecked
-                                        ? Theme.of(context).errorColor
-                                        : Colors.blueAccent,
-                                    fontWeight: termsAndPolicyWereNotChecked
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.pushNamed(
-                                          context, PrivacyPolicyPage.id);
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
+                          CheckboxText(
+                              termsAndPolicyWereNotChecked:
+                                  termsAndPolicyWereNotChecked),
                         ],
                       );
                     },
@@ -160,7 +106,8 @@ class SignupFormState extends State<SignupForm> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-              child: ElevatedButton(
+              child: FormButton(
+                text: 'Submit',
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
@@ -183,12 +130,6 @@ class SignupFormState extends State<SignupForm> {
                     }
                   }
                 },
-                style: kSubmitButtonStyle,
-                child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-                  child: Text('Submit', style: kSubmitButtonTextStyle),
-                ),
               ),
             ),
           ],

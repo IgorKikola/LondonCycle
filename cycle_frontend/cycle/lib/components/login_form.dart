@@ -1,3 +1,4 @@
+import 'package:cycle/components/form_button.dart';
 import 'package:cycle/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -61,17 +62,13 @@ class LoginFormState extends State<LoginForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: ElevatedButton(
-                style: kSubmitButtonStyle,
-                onPressed: () async {},
-                child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-                  child: Text('Login', style: kSubmitButtonTextStyle),
-                ),
-              ),
-            ),
+                padding: const EdgeInsets.only(top: 20.0),
+                child: FormButton(
+                  text: 'Login',
+                  onPressed: () {
+                    // Send user data to server and look for a user with provided details.
+                  },
+                )),
           ],
         ),
       ),

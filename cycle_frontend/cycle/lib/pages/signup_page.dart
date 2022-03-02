@@ -35,6 +35,14 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 5.0, right: 20.0, left: 20.0),
+                  child: Text('It\'s free and hardly takes more than a minute',
+                      style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                      )),
+                ),
                 const Divider(
                   height: 20,
                   thickness: 3,
