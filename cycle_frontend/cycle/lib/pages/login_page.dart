@@ -33,6 +33,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                Divider(
+                  height: 20,
+                  thickness: 3,
+                  indent: 30,
+                  endIndent: 30,
+                ),
                 LoginForm(),
               ],
             ),

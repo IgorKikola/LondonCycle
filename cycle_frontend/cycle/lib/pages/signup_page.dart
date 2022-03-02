@@ -1,4 +1,6 @@
 import 'package:cycle/components/signup_form.dart';
+import 'package:cycle/pages/login_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -21,8 +23,8 @@ class _SignupPageState extends State<SignupPage> {
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
-              children: const <Widget>[
-                Padding(
+              children: <Widget>[
+                const Padding(
                   padding: EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
                   child: Text(
                     'Create your account',
@@ -33,7 +35,40 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 ),
-                SignupForm(),
+                const Divider(
+                  height: 20,
+                  thickness: 3,
+                  indent: 30,
+                  endIndent: 30,
+                ),
+                const SignupForm(),
+                const Divider(
+                  height: 20,
+                  thickness: 3,
+                  indent: 30,
+                  endIndent: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: "Already have an account? ",
+                        ),
+                        TextSpan(
+                          text: "Sign in",
+                          style: const TextStyle(
+                              decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, LoginPage.id);
+                            },
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

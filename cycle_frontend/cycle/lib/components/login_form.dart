@@ -31,7 +31,7 @@ class LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
             Padding(
@@ -67,7 +67,7 @@ class LoginFormState extends State<LoginForm> {
                 onPressed: () async {},
                 child: const Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
                   child: Text('Login', style: kSubmitButtonTextStyle),
                 ),
               ),

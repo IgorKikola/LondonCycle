@@ -1,7 +1,8 @@
 import 'package:cycle/pages/login_page.dart';
+import 'package:cycle/pages/privacy_policy_page.dart';
 import 'package:cycle/pages/signup_page.dart';
+import 'package:cycle/pages/terms_of_use_page.dart';
 import 'package:flutter/material.dart';
-
 import 'pages/main_page.dart';
 
 void main() {
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
       initialRoute: SignupPage.id,
       routes: {
         SignupPage.id: (context) => SignupPage(),
+        TermsOfUsePage.id: (context) => TermsOfUsePage(),
+        PrivacyPolicyPage.id: (context) => PrivacyPolicyPage(),
         LoginPage.id: (context) => LoginPage(),
         MainPage.id: (context) => MainPage(),
       },

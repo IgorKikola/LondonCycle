@@ -4,7 +4,10 @@ import 'package:cycle/components/signup_form_components/last_name_field.dart';
 import 'package:cycle/components/signup_form_components/password_field.dart';
 import 'package:cycle/components/signup_form_components/password_repeat_field.dart';
 import 'package:cycle/constants.dart';
+import 'package:cycle/pages/privacy_policy_page.dart';
+import 'package:cycle/pages/terms_of_use_page.dart';
 import 'package:cycle/services/register_user.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 /// Form for a sign-up.
@@ -29,6 +32,9 @@ class SignupFormState extends State<SignupForm> {
   final TextEditingController repeatPasswordController =
       TextEditingController();
 
+  bool termsAndPolicyAccepted = false;
+  bool termsAndPolicyWereNotChecked = false;
+
   @override
   void dispose() {
     firstNameController.dispose();
@@ -44,7 +50,7 @@ class SignupFormState extends State<SignupForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
             Padding(
@@ -58,11 +64,102 @@ class SignupFormState extends State<SignupForm> {
                   PasswordField(passwordController),
                   PasswordRepeatField(
                       passwordController, repeatPasswordController),
+                  FormField<bool>(
+                    builder: (state) {
+                      return Row(
+                        children: <Widget>[
+                          Checkbox(
+                            activeColor: Colors.blueAccent,
+                            value: termsAndPolicyAccepted,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  termsAndPolicyAccepted = value!;
+                                },
+                              );
+                            },
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "I accept the ",
+                                  style: TextStyle(
+                                    color: termsAndPolicyWereNotChecked
+                                        ? Theme.of(context).errorColor
+                                        : Colors.white,
+                                    fontWeight: termsAndPolicyWereNotChecked
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Terms of Use ",
+                                  style: TextStyle(
+                                    color: termsAndPolicyWereNotChecked
+                                        ? Theme.of(context).errorColor
+                                        : Colors.blueAccent,
+                                    fontWeight: termsAndPolicyWereNotChecked
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(
+                                          context, TermsOfUsePage.id);
+                                    },
+                                ),
+                                TextSpan(
+                                  text: "& ",
+                                  style: TextStyle(
+                                    color: termsAndPolicyWereNotChecked
+                                        ? Theme.of(context).errorColor
+                                        : Colors.white,
+                                    fontWeight: termsAndPolicyWereNotChecked
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Privacy Policy",
+                                  style: TextStyle(
+                                    color: termsAndPolicyWereNotChecked
+                                        ? Theme.of(context).errorColor
+                                        : Colors.blueAccent,
+                                    fontWeight: termsAndPolicyWereNotChecked
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(
+                                          context, PrivacyPolicyPage.id);
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    validator: (value) {
+                      if (!termsAndPolicyAccepted) {
+                        setState(() {
+                          termsAndPolicyWereNotChecked = true;
+                        });
+                        return 'In order to create an account, '
+                            'you must accept our Terms of Use and Privacy Policy';
+                      } else {
+                        termsAndPolicyWereNotChecked = false;
+                        return null;
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
               child: ElevatedButton(
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
@@ -89,7 +186,7 @@ class SignupFormState extends State<SignupForm> {
                 style: kSubmitButtonStyle,
                 child: const Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
                   child: Text('Submit', style: kSubmitButtonTextStyle),
                 ),
               ),
