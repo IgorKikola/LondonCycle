@@ -30,6 +30,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
 
         ],
         controller: widget.controller,
+        physics: const NeverScrollableScrollPhysics(),
       );
 
   Widget buildSlidingHandle() => GestureDetector(
@@ -47,7 +48,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   );
 
   Widget buildSearchBar(BuildContext context) => Container(
-          child: Container(
+          child: Padding(
+              padding: EdgeInsets.zero,
               child: Column(
         children: [
           Padding(
@@ -60,11 +62,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child:
                 Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
                     height: 30,
@@ -109,7 +109,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                     children: [
                   Container(
                     height: 30,
-                    width: 170,
+                    width: 110,
                     decoration: BoxDecoration(
                         color: Colors.lightBlue[200],
                         borderRadius: BorderRadius.circular(15.0)),
@@ -128,47 +128,75 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(Icons.add_location_alt, color: Colors.red),
-                        Text('"Add stops"',
+                        Text('Stops',
                             style: GoogleFonts.lato(
                                 fontStyle: FontStyle.normal,
                                 color: Colors.white)),
-                        SizedBox(width: 32.0)
+                        SizedBox(width: 20.0)
                       ],
                     ),
                       ),
                     ),
                   ),
+                      Container(
+                        height: 30,
+                        width: 110,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Material(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: InkWell(
+                            splashColor: Colors.lightBlue,
+                            onTap: () {
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.search, color: Colors.white),
+                              ],
+                            ),
+
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 110,
+                        decoration: BoxDecoration(
+                            color: Colors.lightBlue[200],
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Material(
+                          color: Colors.lightBlue[200],
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: InkWell(
+                            splashColor: Colors.lightBlue,
+                            onTap: () {
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.directions_bike, color: Colors.red),
+                                Text('Riders',
+                                    style: GoogleFonts.lato(
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.white)),
+                                SizedBox(width: 20.0)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       // SizedBox(width: 50),
 
                 ],
               ),
             ],
               ),
-                Container(
-                  height: 55,
-                  width: 55,
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15.0)),
-                  child:
-                  Material(
-                color: Colors.red,
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: InkWell(
-                      splashColor: Colors.redAccent,
-                      onTap: () {
-                        print("Navigate");
-                      },
-                child:
-                    Transform.rotate(angle: -35 * 3.14 / 180,
-                      child: Icon(Icons.directions_bike_rounded, size: 40,
-                    ),
-                    ),
-                  ),
-                  ),
-                ),
-              ],
-              ),
+
+
+
             ),
           ),
         ],
@@ -177,9 +205,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   Widget buildWidgetGrid() => Container(
     padding: EdgeInsets.all(1.0),
     alignment: Alignment(-1.0, 0.0),
-    // constraints: BoxConstraints.tightForFinite(height: 400, width: 200),
-    height: 800,
-    width: 800,
+  constraints: BoxConstraints.tightForFinite(height: 400, width: 200),
+    height: 400,
+    width: 200,
     child: GridView.count(
       padding: EdgeInsets.all(1.0),
       crossAxisCount: 2,
@@ -191,7 +219,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           child: Container(
               padding: EdgeInsets.all(6.0),
               alignment: Alignment(1.0, 0.0),
-              child: Container(
+                    child: Container(
+
+                      child: InkWell(
+                        splashColor: Colors.lightBlue,
+                        onTap: () {
+                          print("Landmarks");
+                        },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -205,6 +239,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             color: Colors.lightBlueAccent,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
+
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -424,7 +459,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         ),
                       ),
                     ],
-                  ))),
+                  )))),
         ),
         Center(
           widthFactor: 300,
@@ -491,11 +526,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                             fontSize: 10,
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
-                                    Text('0.5 miles away',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 10,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
+                                    // Text('0.5 miles away',
+                                    //     style: GoogleFonts.lato(
+                                    //         fontSize: 10,
+                                    //         fontStyle: FontStyle.normal,
+                                    //         color: Colors.white)),
                                   ],
                                 ),
                               )
@@ -526,11 +561,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   fontSize: 10,
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
-                                          Text('1.5 miles away',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          // Text('1.5 miles away',
+                                          //     style: GoogleFonts.lato(
+                                          //         fontSize: 10,
+                                          //         fontStyle: FontStyle.normal,
+                                          //         color: Colors.white)),
                                         ],
                                       ),
                                     )
@@ -561,11 +596,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   fontSize: 10,
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
-                                          Text('2 miles away',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          // Text('2 miles away',
+                                          //     style: GoogleFonts.lato(
+                                          //         fontSize: 10,
+                                          //         fontStyle: FontStyle.normal,
+                                          //         color: Colors.white)),
                                         ],
                                       ),
                                     )
@@ -596,11 +631,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   fontSize: 10,
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
-                                          Text('2.5 miles away',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          // Text('2.5 miles away',
+                                          //     style: GoogleFonts.lato(
+                                          //         fontSize: 10,
+                                          //         fontStyle: FontStyle.normal,
+                                          //         color: Colors.white)),
                                         ],
                                       ),
                                     )

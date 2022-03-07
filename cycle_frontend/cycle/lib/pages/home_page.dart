@@ -28,10 +28,12 @@ class _HomePageState extends State<HomePage> {
         body: SlidingUpPanel(
           color: Colors.lightBlue,
           minHeight: 185,
-          maxHeight: 420,
+          maxHeight: 450,
           parallaxEnabled: true,
           parallaxOffset: 1.0,
           isDraggable: true,
+          backdropEnabled: true,
+          backdropTapClosesPanel: true,
           body: MainPage(),
           panelBuilder: (controller) =>
               SlideUpWidget(
