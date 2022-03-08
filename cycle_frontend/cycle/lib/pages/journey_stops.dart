@@ -10,6 +10,8 @@ class JourneyStops extends StatefulWidget {
 }
 
 class _JourneyStopsState extends State<JourneyStops> {
+  final List<String> stops = <String>[];
+  final TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,79 +22,96 @@ class _JourneyStopsState extends State<JourneyStops> {
         backgroundColor: Colors.lightBlue,
       ),
       backgroundColor: Colors.lightBlue,
+      body: ListView(children: getStops()),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        onPressed: () {addStops();},
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [SizedBox(height: 10),
-            createStop("Strand Campus"),
-            createStop("Waterloo Campus"),
-            createStop("Guy's Campus"),
-            createStop("King's College London")
-          ],
-        ),
-      ),
+          backgroundColor: Colors.red,
+          onPressed: () => addStopDialogBox(context),
+          tooltip: 'Add Stop',
+          child: Icon(Icons.add)),
     );
   }
 
-  Widget createStop(String stop) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(5),
-          child: Container(
+  void addStop(String location) {
+    setState(() {
+      stops.add(location);
+    });
+    textController.clear();
+  }
+
+  Widget createStopTile(String location) {
+    return Column(children: [
+      SizedBox(height: 5),
+      Padding(
+        padding: EdgeInsets.all(3),
+        child: Container(
             decoration: BoxDecoration(
                 color: Colors.lightBlue[200],
-                borderRadius: BorderRadius.circular(10.0)),
-            padding: EdgeInsets.all(5.0),
+                borderRadius: BorderRadius.circular(20)),
             child: ListTile(
-                title: Text("$stop",
-                    style: GoogleFonts.lato(
-                        fontStyle: FontStyle.normal, color: Colors.white)),
-                onLongPress: () {}),
-          ),
-        ),
-      ],
-    );
+              title: Text(location,
+                  style: GoogleFonts.lato(
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white,
+                      fontSize: 18)),
+              onLongPress: () {
+                // setState(() {
+                // stops.removeLast();
+                // });
+              },
+            )),
+      ),
+      SizedBox(height: 5)
+    ]);
   }
 
-  void addStops() {
-    showDialog(
+  void removeStop(String stop) {
+    stops.remove(stop);
+  }
+
+  List<Widget> getStops() {
+    final List<Widget> stopTiles = <Widget>[];
+    for (String stop in stops) {
+      stopTiles.add(createStopTile(stop));
+    }
+    return stopTiles;
+  }
+
+  Future<dynamic> addStopDialogBox(BuildContext context) async {
+    return showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          backgroundColor: Colors.lightBlue[200],
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          title: Text(
-            "Add Stop", style: GoogleFonts.lato(
-              fontStyle: FontStyle.normal, color: Colors.white)
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                  autofocus: true,
-                  style: GoogleFonts.lato(
-                  fontStyle: FontStyle.normal, color: Colors.white)),
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Add a stop',
+                style: GoogleFonts.lato(color: Colors.white)),
+            backgroundColor: Colors.lightBlue[200],
+            content: TextField(
+              autofocus: true,
+              controller: textController,
+              style: GoogleFonts.lato(color: Colors.white),
+              decoration: InputDecoration(
+                  hintText: 'Enter Stop',
+                  hintStyle: GoogleFonts.lato(color: Colors.white)),
+            ),
+            actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
                       ),
-                      onPressed: (){},
-
+                      onPressed: () {
+                        if (textController.text.isEmpty == false) {
+                          Navigator.of(context).pop();
+                          addStop(textController.text);
+                        }
+                      },
                       child: Icon(Icons.add_circle))
                 ],
               )
             ],
-          ),
-        ),
-    );
+          );
+        });
   }
 }
