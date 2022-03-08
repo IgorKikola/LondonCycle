@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from cycle_backend.cycle_api.models import Place
 from rest_framework import serializers
+from . import views
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -8,7 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email']
 
-class PlaceSerializer(serializers.HyperlinkedModelSerializer):
+class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ['id', 'name', 'lat', 'lon']
