@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:cycle/docking_station.dart';
 import 'package:http/http.dart' as http;
 
-const String kBackEndUrl = 'http://127.0.0.1:8000';
+const String kBackEndUrl = 'https://agile-citadel-13372.herokuapp.com/';
 
-const String kPlacesPath = 'places/';
+const String kPlacesPath = 'bikepoints/?format=json';
 
 Future<List<DockingStation>> getDockingStations() async {
   var dockingStationsAsJson = (await getData(kBackEndUrl, kPlacesPath));
@@ -13,7 +13,7 @@ Future<List<DockingStation>> getDockingStations() async {
     return List.empty();
   }
 
-  var dockingStationsAsJsonList = dockingStationsAsJson as List;
+  var dockingStationsAsJsonList = dockingStationsAsJson['results'] as List;
 
   List<DockingStation> dockingStations = dockingStationsAsJsonList
       .map((dockingStation) => DockingStation.fromJson(dockingStation))
@@ -23,8 +23,7 @@ Future<List<DockingStation>> getDockingStations() async {
 }
 
 Future<dynamic>? getData(String apiUri, String path) async {
-  http.Response response = await http.get(Uri.http(apiUri, path));
-
+  http.Response response = await http.get(Uri.parse(apiUri + path));
   if (response.statusCode == 200) {
     String data = response.body;
     return jsonDecode(data);

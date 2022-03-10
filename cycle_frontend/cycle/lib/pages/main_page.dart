@@ -6,7 +6,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cycle/location_manager.dart';
-import 'package:http/http.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -14,6 +13,8 @@ const String kAccessToken =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -22,15 +23,15 @@ class _MainPageState extends State<MainPage> {
   final LocationManager _locationManager = LocationManager();
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
+  late List<Marker> markers;
 
   @override
   void initState() {
     super.initState();
-    _locationManager.run().whenComplete(() => setState(() {}));
 
-    getDockingStations();
-    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
-    _centerCurrentLocationStreamController = StreamController<double?>();
+    _locationManager.run().whenComplete(() => setState(() {}));
+    loadMarkers().whenComplete(() => setState(() {}));
+    initUserLocationMarker();
   }
 
   @override
@@ -38,6 +39,19 @@ class _MainPageState extends State<MainPage> {
     _centerCurrentLocationStreamController.close();
     _locationManager.setStopped();
     super.dispose();
+  }
+
+  Future<void> loadMarkers() async {
+    markers = (await getDockingStations())
+        .map((dockingStation) => Marker(
+            point: LatLng(dockingStation.lat, dockingStation.lon),
+            builder: (ctx) => const FlutterLogo()))
+        .toList();
+  }
+
+  void initUserLocationMarker() {
+    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
+    _centerCurrentLocationStreamController = StreamController<double?>();
   }
 
   @override
@@ -122,6 +136,7 @@ class Map extends StatelessWidget {
             centerOnLocationUpdate: _centerOnLocationUpdate,
           ),
         ),
+        MarkerLayerWidget(options: MarkerLayerOptions())
       ],
     );
   }
