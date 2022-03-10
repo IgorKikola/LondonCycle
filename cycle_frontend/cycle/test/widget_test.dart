@@ -74,4 +74,25 @@ void main() {
     Text text = tester.firstWidget(riderValue);
     expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
   });
+
+  testWidgets('Testing the riderIcon is the correct design ',
+      (WidgetTester tester) async {
+    final riderIcon = find.byKey(ValueKey('RiderIcon'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Icon icon = tester.firstWidget(riderIcon);
+    expect(icon.icon, Icons.person_add);
+  });
+
+  testWidgets('Testing riderIcon colour ', (WidgetTester tester) async {
+    final riderIcon = find.byKey(ValueKey('RiderIcon'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Icon icon = tester.firstWidget(riderIcon);
+    expect(icon.color, Colors.red);
+  });
 }
