@@ -63,7 +63,7 @@ void main() {
   });
 
   //test widgets load correctly
-  testWidgets("test add stops widget load correctly",
+  testWidgets("test add stops widget loads correctly",
       (WidgetTester tester) async {
     final stopText = find.byKey(ValueKey('stoptext'));
     await tester.pumpWidget(
@@ -72,14 +72,51 @@ void main() {
     expect(stopText, findsOneWidget);
   });
 
-  //test the FontFamilys
-  testWidgets('Testing riderText FontFamily package',
+  testWidgets("test destination widget loads correctly",
       (WidgetTester tester) async {
+    final destText = find.byKey(ValueKey('destinationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(destText, findsOneWidget);
+  });
+
+  testWidgets("test add stops widget loads correctly",
+      (WidgetTester tester) async {
+    final locText = find.byKey(ValueKey('locationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(locText, findsOneWidget);
+  });
+
+  //test the FontFamilys
+  testWidgets('test add stops FontFamily package', (WidgetTester tester) async {
     final stopText = find.byKey(ValueKey('stoptext'));
     await tester.pumpWidget(
         MaterialApp(home: SlideUpWidget(controller: ScrollController())));
     await tester.pump();
     Text text = tester.firstWidget(stopText);
+    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
+  testWidgets('test destination FontFamily package',
+      (WidgetTester tester) async {
+    final destText = find.byKey(ValueKey('destinationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(destText);
+    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
+  testWidgets('test current location FontFamily package',
+      (WidgetTester tester) async {
+    final locText = find.byKey(ValueKey('locationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(locText);
     expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
   });
 
@@ -93,13 +130,52 @@ void main() {
     expect(text.style?.color, Colors.white);
   });
 
+  testWidgets('Testing "Destination" font colour', (WidgetTester tester) async {
+    final destText = find.byKey(ValueKey('destinationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(destText);
+    expect(text.style?.color, Colors.white);
+  });
+
+  testWidgets('Testing "Current Location" font colour',
+      (WidgetTester tester) async {
+    final locText = find.byKey(ValueKey('locationText'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(locText);
+    expect(text.style?.color, Colors.white);
+  });
+
   //test the colours of the icons
-  testWidgets('Testing stops icon is red', (WidgetTester tester) async {
+  testWidgets('test that the stops icon is red', (WidgetTester tester) async {
     final stopsIcon = find.byKey(ValueKey('stopIcon'));
     await tester.pumpWidget(
         MaterialApp(home: SlideUpWidget(controller: ScrollController())));
     await tester.pump();
     Icon icon = tester.firstWidget(stopsIcon);
+    expect(icon.color, Colors.red);
+  });
+
+  testWidgets('test that the destinations icon is red',
+      (WidgetTester tester) async {
+    final destIcon = find.byKey(ValueKey('destinationIcon'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Icon icon = tester.firstWidget(destIcon);
+    expect(icon.color, Colors.red);
+  });
+
+  testWidgets('test that the current locations icon is red',
+      (WidgetTester tester) async {
+    final locIcon = find.byKey(ValueKey('locationIcon'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Icon icon = tester.firstWidget(locIcon);
     expect(icon.color, Colors.red);
   });
 }

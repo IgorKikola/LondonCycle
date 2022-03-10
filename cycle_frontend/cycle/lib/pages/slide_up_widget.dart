@@ -75,9 +75,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           children: [
                             Expanded(
                                 child: Icon(Icons.my_location_rounded,
+                                    key: Key("locationIcon"),
                                     color: Colors.red)),
                             Expanded(
                               child: Text('"Current Location"',
+                                  key: Key("locationText"),
                                   style: GoogleFonts.lato(
                                       fontStyle: FontStyle.normal,
                                       color: Colors.white)),
@@ -98,9 +100,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           children: [
                             Expanded(
                                 child: Icon(Icons.location_on_outlined,
+                                    key: Key("destinationIcon"),
                                     color: Colors.red)),
                             Expanded(
                               child: Text('"Destination"',
+                                  key: Key("destinationText"),
                                   style: GoogleFonts.lato(
                                       fontStyle: FontStyle.normal,
                                       color: Colors.white)),
