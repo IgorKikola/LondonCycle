@@ -1,3 +1,4 @@
+import 'package:cycle/pages/edit_profile.dart';
 import 'package:cycle/pages/login_page.dart';
 import 'package:cycle/pages/privacy_policy_page.dart';
 import 'package:cycle/pages/signup_page.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         PrivacyPolicyPage.id: (context) => PrivacyPolicyPage(),
         LoginPage.id: (context) => LoginPage(),
         MainPage.id: (context) => MainPage(),
+        EditProfilePage.id: (context) => EditProfilePage(),
       },
     );
   }
