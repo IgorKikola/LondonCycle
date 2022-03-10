@@ -6,11 +6,14 @@ import '../../constants.dart';
 class PasswordRepeatField extends StatefulWidget {
   final TextEditingController passwordController;
   final TextEditingController repeatPasswordController;
+  final String label;
+  final String hint;
 
   const PasswordRepeatField(
-      this.passwordController, this.repeatPasswordController,
-      {Key? key})
-      : super(key: key);
+      {required this.passwordController,
+      required this.repeatPasswordController,
+      required this.label,
+      required this.hint});
 
   @override
   PasswordRepeatFieldState createState() {
@@ -43,8 +46,8 @@ class PasswordRepeatFieldState extends State<PasswordRepeatField> {
       obscureText: true,
       decoration: kTextFieldDecoration.copyWith(
         icon: const Icon(Icons.spellcheck),
-        labelText: 'Repeat password',
-        hintText: 'Repeat your password',
+        labelText: widget.label,
+        hintText: widget.hint,
       ),
     );
   }

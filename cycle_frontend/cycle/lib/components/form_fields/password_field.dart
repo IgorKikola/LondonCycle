@@ -7,8 +7,11 @@ import '../../services/string_validator.dart';
 /// Password field used in the sign-up form.
 class PasswordField extends StatefulWidget {
   final TextEditingController controller;
+  final String label;
+  final String hint;
 
-  const PasswordField(this.controller, {Key? key}) : super(key: key);
+  const PasswordField(
+      {required this.controller, required this.label, required this.hint});
 
   @override
   PasswordFieldState createState() {
@@ -48,8 +51,8 @@ class PasswordFieldState extends State<PasswordField> {
         },
         decoration: kTextFieldDecoration.copyWith(
           icon: const Icon(Icons.lock),
-          labelText: 'Password',
-          hintText: 'Enter your password',
+          labelText: widget.label,
+          hintText: widget.hint,
         ),
       ),
     );

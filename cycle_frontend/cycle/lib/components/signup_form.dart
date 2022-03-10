@@ -1,14 +1,10 @@
-import 'package:cycle/components/signup_form_components/checkbox_text.dart';
-import 'package:cycle/components/signup_form_components/email_field.dart';
-import 'package:cycle/components/signup_form_components/first_name_field.dart';
-import 'package:cycle/components/signup_form_components/last_name_field.dart';
-import 'package:cycle/components/signup_form_components/password_field.dart';
-import 'package:cycle/components/signup_form_components/password_repeat_field.dart';
-import 'package:cycle/constants.dart';
-import 'package:cycle/pages/privacy_policy_page.dart';
-import 'package:cycle/pages/terms_of_use_page.dart';
+import 'package:cycle/components/form_fields/checkbox_text.dart';
+import 'package:cycle/components/form_fields/email_field.dart';
+import 'package:cycle/components/form_fields/first_name_field.dart';
+import 'package:cycle/components/form_fields/last_name_field.dart';
+import 'package:cycle/components/form_fields/password_field.dart';
+import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/services/register_user.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'form_button.dart';
@@ -61,12 +57,35 @@ class SignupFormState extends State<SignupForm> {
               child: Wrap(
                 runSpacing: 20.0,
                 children: <Widget>[
-                  FirstNameField(firstNameController),
-                  LastNameField(lastNameController),
-                  EmailField(emailController),
-                  PasswordField(passwordController),
+                  FirstNameField(
+                    controller: firstNameController,
+                    initialText: '',
+                    label: 'First name',
+                    hint: 'Enter your first name',
+                  ),
+                  LastNameField(
+                    controller: lastNameController,
+                    initialText: '',
+                    label: 'Last name',
+                    hint: 'Enter your last name',
+                  ),
+                  EmailField(
+                    controller: emailController,
+                    initialText: '',
+                    label: 'Email',
+                    hint: 'Enter your email address',
+                  ),
+                  PasswordField(
+                    controller: passwordController,
+                    label: 'Password',
+                    hint: 'Enter your password',
+                  ),
                   PasswordRepeatField(
-                      passwordController, repeatPasswordController),
+                    passwordController: passwordController,
+                    repeatPasswordController: repeatPasswordController,
+                    label: 'Repeat your password',
+                    hint: 'Repeat your password',
+                  ),
                   FormField<bool>(
                     builder: (state) {
                       return Row(

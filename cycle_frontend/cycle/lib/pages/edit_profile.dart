@@ -1,4 +1,4 @@
-import 'package:cycle/components/login_form.dart';
+import 'package:cycle/components/edit_profile_form.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -11,6 +11,19 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  late Map userData;
+
+  void getUserData() {
+    // Get user data from back-end.
+    userData = {'firstName': 'John'};
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +34,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
-              children: const <Widget>[
-                Padding(
+              children: <Widget>[
+                const Padding(
                   padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                   child: Text(
                     'Edit your details',
@@ -33,13 +46,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 20,
                   thickness: 3,
                   indent: 30,
                   endIndent: 30,
                 ),
-                EditProfile(),
+                EditProfileForm(userData),
               ],
             ),
           ),
