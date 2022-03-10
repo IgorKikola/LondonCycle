@@ -32,4 +32,24 @@ void main() {
     await tester.pump();
     expect(riderValue, findsOneWidget);
   });
+
+  testWidgets('Testing riderText font colour', (WidgetTester tester) async {
+    final riderText = find.byKey(ValueKey('RiderText'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(riderText);
+    expect(text.style?.color, Colors.white);
+  });
+
+  testWidgets('Testing riderValue font colour', (WidgetTester tester) async {
+    final riderValue = find.byKey(ValueKey('RiderValue'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(riderValue);
+    expect(text.style?.color, Colors.white);
+  });
 }
