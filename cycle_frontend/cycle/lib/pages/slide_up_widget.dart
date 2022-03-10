@@ -141,6 +141,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           Container(
                             height: 30,
                             width: 170,
+                            key: Key('RiderContainer'),
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -187,17 +188,21 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.person_add, color: Colors.red),
+                                    Icon(Icons.person_add,
+                                        key: Key('RiderIcon'),
+                                        color: Colors.red),
                                     Text('Riders:',
+                                        key: Key('RiderText'),
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
                                     Container(
                                         padding: EdgeInsets.only(right: 70),
                                         child: Text(num.toString(),
+                                            key: Key('RiderValue'),
                                             style: GoogleFonts.lato(
                                                 fontStyle: FontStyle.normal,
-                                                color: Colors.white)))
+                                                color: Colors.white))),
                                   ],
                                 ),
                               ),
