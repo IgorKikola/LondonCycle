@@ -41,6 +41,7 @@ dependencies:
   restart_app: ^1.1.0
   sliding_up_panel: ^2.0.0+1
   google_fonts: ^2.0.0
+  latlng: any
 
 dev_dependencies:
   flutter_test:
