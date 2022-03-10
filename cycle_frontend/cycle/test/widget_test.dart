@@ -45,9 +45,8 @@ void main() {
     expect((tester.widget(towerbridgeIcon) as Icon).color, Colors.yellow);
   });
 
-  testWidgets("test that the grey stars become yellow when tapped",
+  testWidgets("test that the grey stars load correctly",
       (WidgetTester tester) async {
-    //finders for the landmarks
     final londoneyeIcon = find.byKey(ValueKey("londonEyeIcon"));
     final bigbenIcon = find.byKey(ValueKey("bigBenIcon"));
     final theshardIcon = find.byKey(ValueKey("theShardIcon"));
@@ -63,6 +62,16 @@ void main() {
   });
 
   //test widgets load correctly
+
+  testWidgets("test navigate button loads correctly",
+      (WidgetTester tester) async {
+    final navigateButton = find.byKey(ValueKey('navigateIcon'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(navigateButton, findsOneWidget);
+  });
+
   testWidgets("test add stops widget loads correctly",
       (WidgetTester tester) async {
     final stopText = find.byKey(ValueKey('stoptext'));
@@ -88,6 +97,66 @@ void main() {
         MaterialApp(home: SlideUpWidget(controller: ScrollController())));
     await tester.pump();
     expect(locText, findsOneWidget);
+  });
+
+  testWidgets("test landmark text fields load correctly",
+      (WidgetTester tester) async {
+    final londoneyeText = find.byKey(ValueKey("londonEyeText"));
+    final bigbenText = find.byKey(ValueKey("bigBenText"));
+    final theshardText = find.byKey(ValueKey("theShardText"));
+    final towerbridgeText = find.byKey(ValueKey("towerBridgeText"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(londoneyeText, findsOneWidget);
+    expect(bigbenText, findsOneWidget);
+    expect(theshardText, findsOneWidget);
+    expect(towerbridgeText, findsOneWidget);
+  });
+
+  testWidgets("test landmark icons load correctly",
+      (WidgetTester tester) async {
+    final londoneyeIcon = find.byKey(ValueKey("londonEyeIcon"));
+    final bigbenIcon = find.byKey(ValueKey("bigBenIcon"));
+    final theshardIcon = find.byKey(ValueKey("theShardIcon"));
+    final towerbridgeIcon = find.byKey(ValueKey("towerBridgeIcon"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(londoneyeIcon, findsOneWidget);
+    expect(bigbenIcon, findsOneWidget);
+    expect(theshardIcon, findsOneWidget);
+    expect(towerbridgeIcon, findsOneWidget);
+  });
+
+  testWidgets("test bike point name fields load correctly",
+      (WidgetTester tester) async {
+    final horseferryRd = find.byKey(ValueKey("horseferryName"));
+    final westministerPier = find.byKey(ValueKey("westministerName"));
+    final vauxhallBr = find.byKey(ValueKey("vauxhallName"));
+    final milbankTwr = find.byKey(ValueKey("milbankName"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(horseferryRd, findsOneWidget);
+    expect(westministerPier, findsOneWidget);
+    expect(vauxhallBr, findsOneWidget);
+    expect(milbankTwr, findsOneWidget);
+  });
+
+  testWidgets("test bike point distance fields load correctly",
+      (WidgetTester tester) async {
+    final horseferryDst = find.byKey(ValueKey("horseferryDistance"));
+    final westministerDst = find.byKey(ValueKey("westministerDistance"));
+    final vauxhallDst = find.byKey(ValueKey("vauxhallDistance"));
+    final milbankDst = find.byKey(ValueKey("milbankDistance"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    expect(horseferryDst, findsOneWidget);
+    expect(westministerDst, findsOneWidget);
+    expect(vauxhallDst, findsOneWidget);
+    expect(milbankDst, findsOneWidget);
   });
 
   //test the FontFamilys
@@ -120,6 +189,63 @@ void main() {
     expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
   });
 
+  testWidgets("test landmark text fields font family package",
+      (WidgetTester tester) async {
+    final londoneyeText = find.byKey(ValueKey("londonEyeText"));
+    final bigbenText = find.byKey(ValueKey("bigBenText"));
+    final theshardText = find.byKey(ValueKey("theShardText"));
+    final towerbridgeText = find.byKey(ValueKey("towerBridgeText"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(londoneyeText);
+    Text text2 = tester.widget(bigbenText);
+    Text text3 = tester.widget(theshardText);
+    Text text4 = tester.widget(towerbridgeText);
+    expect(text1.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text2.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text3.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text4.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
+  testWidgets("test bike point name fields font family package",
+      (WidgetTester tester) async {
+    final horseferryRd = find.byKey(ValueKey("horseferryName"));
+    final westministerPier = find.byKey(ValueKey("westministerName"));
+    final vauxhallBr = find.byKey(ValueKey("vauxhallName"));
+    final milbankTwr = find.byKey(ValueKey("milbankName"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(horseferryRd);
+    Text text2 = tester.widget(westministerPier);
+    Text text3 = tester.widget(vauxhallBr);
+    Text text4 = tester.widget(milbankTwr);
+    expect(text1.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text2.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text3.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text4.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
+  testWidgets("test bike point distance fields font family package",
+      (WidgetTester tester) async {
+    final horseferryDst = find.byKey(ValueKey("horseferryDistance"));
+    final westministerDst = find.byKey(ValueKey("westministerDistance"));
+    final vauxhallDst = find.byKey(ValueKey("vauxhallDistance"));
+    final milbankDst = find.byKey(ValueKey("milbankDistance"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(horseferryDst);
+    Text text2 = tester.widget(westministerDst);
+    Text text3 = tester.widget(vauxhallDst);
+    Text text4 = tester.widget(milbankDst);
+    expect(text1.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text2.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text3.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text4.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
   //test the font colours
   testWidgets('Testing "Add stops" font colour', (WidgetTester tester) async {
     final stopText = find.byKey(ValueKey('stoptext'));
@@ -147,6 +273,63 @@ void main() {
     await tester.pump();
     Text text = tester.firstWidget(locText);
     expect(text.style?.color, Colors.white);
+  });
+
+  testWidgets("test landmark text fields font colour",
+      (WidgetTester tester) async {
+    final londoneyeText = find.byKey(ValueKey("londonEyeText"));
+    final bigbenText = find.byKey(ValueKey("bigBenText"));
+    final theshardText = find.byKey(ValueKey("theShardText"));
+    final towerbridgeText = find.byKey(ValueKey("towerBridgeText"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(londoneyeText);
+    Text text2 = tester.widget(bigbenText);
+    Text text3 = tester.widget(theshardText);
+    Text text4 = tester.widget(towerbridgeText);
+    expect(text1.style?.color, Colors.white);
+    expect(text2.style?.color, Colors.white);
+    expect(text3.style?.color, Colors.white);
+    expect(text4.style?.color, Colors.white);
+  });
+
+  testWidgets("test bike point name fields font colour",
+      (WidgetTester tester) async {
+    final horseferryRd = find.byKey(ValueKey("horseferryName"));
+    final westministerPier = find.byKey(ValueKey("westministerName"));
+    final vauxhallBr = find.byKey(ValueKey("vauxhallName"));
+    final milbankTwr = find.byKey(ValueKey("milbankName"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(horseferryRd);
+    Text text2 = tester.widget(westministerPier);
+    Text text3 = tester.widget(vauxhallBr);
+    Text text4 = tester.widget(milbankTwr);
+    expect(text1.style?.color, Colors.white);
+    expect(text2.style?.color, Colors.white);
+    expect(text3.style?.color, Colors.white);
+    expect(text4.style?.color, Colors.white);
+  });
+
+  testWidgets("test bike point distance fields font colour",
+      (WidgetTester tester) async {
+    final horseferryDst = find.byKey(ValueKey("horseferryDistance"));
+    final westministerDst = find.byKey(ValueKey("westministerDistance"));
+    final vauxhallDst = find.byKey(ValueKey("vauxhallDistance"));
+    final milbankDst = find.byKey(ValueKey("milbankDistance"));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text1 = tester.widget(horseferryDst);
+    Text text2 = tester.widget(westministerDst);
+    Text text3 = tester.widget(vauxhallDst);
+    Text text4 = tester.widget(milbankDst);
+    expect(text1.style?.color, Colors.white);
+    expect(text2.style?.color, Colors.white);
+    expect(text3.style?.color, Colors.white);
+    expect(text4.style?.color, Colors.white);
   });
 
   //test the colours of the icons

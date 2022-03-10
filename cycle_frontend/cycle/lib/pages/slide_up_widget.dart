@@ -180,6 +180,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           angle: -35 * 3.14 / 180,
                           child: Icon(
                             Icons.directions_bike_rounded,
+                            key: Key("navigateIcon"),
                             size: 40,
                           ),
                         ),
@@ -272,6 +273,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       children: [
                                         Expanded(
                                           child: Text('London Eye',
+                                              key: Key("londonEyeText"),
                                               style: GoogleFonts.lato(
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
@@ -327,6 +329,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Big Ben',
+                                            key: Key("bigBenText"),
                                             style: GoogleFonts.lato(
                                                 fontStyle: FontStyle.normal,
                                                 color: Colors.white)),
@@ -376,6 +379,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       children: [
                                         Expanded(
                                           child: Text('The Shard',
+                                              key: Key("theShardText"),
                                               style: GoogleFonts.lato(
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
@@ -426,6 +430,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       children: [
                                         Expanded(
                                           child: Text('Tower Bridge',
+                                              key: Key("towerBridgeText"),
                                               style: GoogleFonts.lato(
                                                   fontStyle: FontStyle.normal,
                                                   color: Colors.white)),
@@ -521,6 +526,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         children: [
                                           Expanded(
                                             child: Text('Horseferry Road',
+                                                key: Key("horseferryName"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -528,6 +534,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                           Expanded(
                                             child: Text('0.5 miles away',
+                                                key: Key("horseferryDistance"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -559,6 +566,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         children: [
                                           Expanded(
                                             child: Text('Westminister Pier',
+                                                key: Key("westministerName"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -566,6 +574,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                           Expanded(
                                             child: Text('1.5 miles away',
+                                                key:
+                                                    Key("westministerDistance"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -597,6 +607,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         children: [
                                           Expanded(
                                             child: Text('Vauxhall Bridge',
+                                                key: Key("vauxhallName"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -604,6 +615,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                           Expanded(
                                             child: Text('2 miles away',
+                                                key: Key("vauxhallDistance"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -635,6 +647,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         children: [
                                           Expanded(
                                             child: Text('Milbank Tower',
+                                                key: Key("milbankName"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
@@ -642,6 +655,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                           Expanded(
                                             child: Text('2.5 miles away',
+                                                key: Key("milbankDistance"),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 10,
                                                     fontStyle: FontStyle.normal,
