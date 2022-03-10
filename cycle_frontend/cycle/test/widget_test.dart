@@ -52,4 +52,26 @@ void main() {
     Text text = tester.firstWidget(riderValue);
     expect(text.style?.color, Colors.white);
   });
+
+  testWidgets('Testing riderText FontFamily package',
+      (WidgetTester tester) async {
+    final riderText = find.byKey(ValueKey('RiderText'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(riderText);
+    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
+
+  testWidgets('Testing riderValue FontFamily package',
+      (WidgetTester tester) async {
+    final riderValue = find.byKey(ValueKey('RiderValue'));
+    //final riderContainer = find.byKey(ValueKey('RiderContainer'));
+    await tester.pumpWidget(
+        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pump();
+    Text text = tester.firstWidget(riderValue);
+    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+  });
 }
