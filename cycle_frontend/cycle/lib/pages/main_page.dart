@@ -127,6 +127,27 @@ class Map extends StatelessWidget {
           ),
         ),
       ],
+      layers: [
+        MarkerLayerOptions(
+          markers: [
+            new Marker(
+              width: 45.0,
+              height: 45.0,
+              point: LatLng(51.50, 0.12),
+              builder: (context) => Container(
+                child: IconButton(
+                  icon: Icon(Icons.location_on),
+                  color: Colors.red,
+                  iconSize: 45.0,
+                  onPressed: () {
+                    print('Marker tapped');
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
