@@ -76,7 +76,6 @@ class _MapWidgetState extends State<MapWidget> {
                   color: Colors.blue,
                 )))
         .toList();
-    print(markers);
   }
 
   void initUserLocationMarker() {
