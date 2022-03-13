@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
           parallaxEnabled: true,
           parallaxOffset: 1.0,
           isDraggable: true,
-          backdropEnabled: true,
           backdropTapClosesPanel: true,
           body: MainPage(),
           panelBuilder: (controller) =>

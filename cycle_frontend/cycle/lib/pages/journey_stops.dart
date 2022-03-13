@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
+import 'package:cycle/animations/animate.dart';
 
 class JourneyStops extends StatefulWidget {
   const JourneyStops({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class JourneyStops extends StatefulWidget {
 class _JourneyStopsState extends State<JourneyStops> {
   final List<String> stops = <String>[];
   final TextEditingController textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class _JourneyStopsState extends State<JourneyStops> {
       body: ListView(children: getStops()),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.red,
-          onPressed: () => addStopDialogBox(context),
+          onPressed: () => {addStopDialogBox(context)},
           tooltip: 'Add Stop',
           child: Icon(Icons.add)),
     );
@@ -77,9 +79,18 @@ class _JourneyStopsState extends State<JourneyStops> {
   }
 
   Future<dynamic> addStopDialogBox(BuildContext context) async {
-    return showDialog(
+    return showGeneralDialog(
         context: context,
-        builder: (BuildContext context) {
+        barrierLabel: '',
+        barrierDismissible: true,
+        transitionDuration: Duration(milliseconds: 300),
+        transitionBuilder: (context, _animation, _secondaryAnimation, _child) {
+          return Animations.grow(_animation, _secondaryAnimation, _child);
+        },
+        pageBuilder: (_animation, _secondaryAnimation, _child) {
+          // return showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Add a stop',
                 style: GoogleFonts.lato(color: Colors.white)),
