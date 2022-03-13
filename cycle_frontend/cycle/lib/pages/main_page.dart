@@ -71,7 +71,10 @@ class _MapWidgetState extends State<MapWidget> {
     markers = (await getDockingStations())
         .map((dockingStation) => Marker(
             point: LatLng(dockingStation.lat, dockingStation.lon),
-            builder: (ctx) => const FlutterLogo()))
+            builder: (ctx) => const Icon(
+                  Icons.pedal_bike,
+                  color: Colors.blue,
+                )))
         .toList();
     print(markers);
   }
