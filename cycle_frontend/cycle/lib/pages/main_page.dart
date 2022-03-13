@@ -20,10 +20,26 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    return const MapWidget();
+  }
+}
+
+class MapWidget extends StatefulWidget {
+  const MapWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<MapWidget> createState() => _MapWidgetState();
+}
+
+class _MapWidgetState extends State<MapWidget> {
   final LocationManager _locationManager = LocationManager();
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
-  late List<Marker> markers;
+  late List<Marker> markers = [];
 
   @override
   void initState() {
@@ -41,6 +57,20 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
+  void initUserLocationMarker() {
+    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
+    _centerCurrentLocationStreamController = StreamController<double?>();
+  }
+
+  void center() {
+    // Automatically center the location marker on the map when location updated until user interact with the map.
+    setState(
+      () => _centerOnLocationUpdate = CenterOnLocationUpdate.always,
+    );
+    // Center the location marker on the map and zoom the map to level 18.
+    _centerCurrentLocationStreamController.add(18);
+  }
+
   Future<void> loadMarkers() async {
     markers = (await getDockingStations())
         .map((dockingStation) => Marker(
@@ -49,37 +79,55 @@ class _MainPageState extends State<MainPage> {
         .toList();
   }
 
-  void initUserLocationMarker() {
-    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
-    _centerCurrentLocationStreamController = StreamController<double?>();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Stack(
         children: [
-          Map(
-              centerCurrentLocationStreamController:
-                  _centerCurrentLocationStreamController,
-              centerOnLocationUpdate: _centerOnLocationUpdate,
-              action: () => setState(
-                    () =>
-                        _centerOnLocationUpdate = CenterOnLocationUpdate.never,
-                  )),
+          FlutterMap(
+            options: MapOptions(
+              center: LatLng(51.50, 0.12),
+              zoom: 13,
+              maxZoom: 19,
+              // Stop centering the location marker on the map if user interacted with the map.
+              onPositionChanged: (MapPosition position, bool hasGesture) {
+                if (hasGesture) {
+                  action:
+                  () => setState(
+                        () => _centerOnLocationUpdate =
+                            CenterOnLocationUpdate.never,
+                      );
+                }
+              },
+            ),
+            layers: [
+              MarkerLayerOptions(markers: markers),
+            ],
+            children: [
+              TileLayerWidget(
+                options: TileLayerOptions(
+                  urlTemplate: '$kMapUrl?access_token=$kAccessToken',
+                  maxZoom: 19,
+                ),
+              ),
+              LocationMarkerLayerWidget(
+                plugin: LocationMarkerPlugin(
+                  centerCurrentLocationStream:
+                      _centerCurrentLocationStreamController.stream,
+                  centerOnLocationUpdate: _centerOnLocationUpdate,
+                ),
+              ),
+              MarkerLayerWidget(
+                options: MarkerLayerOptions(markers: markers),
+              ),
+            ],
+          ),
           Positioned(
             right: 20,
             bottom: 20,
             child: FloatingActionButton(
-              onPressed: () async {
-                // Automatically center the location marker on the map when location updated until user interact with the map.
-                setState(
-                  () => _centerOnLocationUpdate = CenterOnLocationUpdate.always,
-                );
-                // Center the location marker on the map and zoom the map to level 18.
-                _centerCurrentLocationStreamController.add(18);
-              },
+              onPressed: center,
               child: const Icon(
                 Icons.my_location,
                 color: Colors.white,
@@ -88,56 +136,6 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class Map extends StatelessWidget {
-  const Map({
-    Key? key,
-    required StreamController<double?> centerCurrentLocationStreamController,
-    required CenterOnLocationUpdate centerOnLocationUpdate,
-    required Function action,
-  })  : _centerCurrentLocationStreamController =
-            centerCurrentLocationStreamController,
-        _centerOnLocationUpdate = centerOnLocationUpdate,
-        action = action,
-        super(key: key);
-
-  final StreamController<double?> _centerCurrentLocationStreamController;
-  final CenterOnLocationUpdate _centerOnLocationUpdate;
-  final Function action;
-
-  @override
-  Widget build(BuildContext context) {
-    return FlutterMap(
-      options: MapOptions(
-        center: LatLng(51.50, 0.12),
-        zoom: 13,
-        maxZoom: 19,
-        // Stop centering the location marker on the map if user interacted with the map.
-        onPositionChanged: (MapPosition position, bool hasGesture) {
-          if (hasGesture) {
-            action();
-          }
-        },
-      ),
-      children: [
-        TileLayerWidget(
-          options: TileLayerOptions(
-            urlTemplate: '$kMapUrl?access_token=$kAccessToken',
-            maxZoom: 19,
-          ),
-        ),
-        LocationMarkerLayerWidget(
-          plugin: LocationMarkerPlugin(
-            centerCurrentLocationStream:
-                _centerCurrentLocationStreamController.stream,
-            centerOnLocationUpdate: _centerOnLocationUpdate,
-          ),
-        ),
-        MarkerLayerWidget(options: MarkerLayerOptions())
-      ],
     );
   }
 }
