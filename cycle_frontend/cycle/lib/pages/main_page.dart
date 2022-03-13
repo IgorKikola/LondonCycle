@@ -52,7 +52,7 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
-  late List<Marker> markers = [];
+  List<Marker> markers = [];
 
   @override
   void initState() {
@@ -73,10 +73,11 @@ class _MapWidgetState extends State<MapWidget> {
             point: LatLng(dockingStation.lat, dockingStation.lon),
             builder: (ctx) => const FlutterLogo()))
         .toList();
+    print(markers);
   }
 
   void initUserLocationMarker() {
-    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
+    _centerOnLocationUpdate = CenterOnLocationUpdate.once;
     _centerCurrentLocationStreamController = StreamController<double?>();
   }
 
@@ -98,9 +99,6 @@ class _MapWidgetState extends State<MapWidget> {
                 }
               },
             ),
-            layers: [
-              MarkerLayerOptions(markers: markers),
-            ],
             children: [
               TileLayerWidget(
                 options: TileLayerOptions(
@@ -108,15 +106,15 @@ class _MapWidgetState extends State<MapWidget> {
                   maxZoom: 19,
                 ),
               ),
+              MarkerLayerWidget(
+                options: MarkerLayerOptions(markers: markers),
+              ),
               LocationMarkerLayerWidget(
                 plugin: LocationMarkerPlugin(
                   centerCurrentLocationStream:
                       _centerCurrentLocationStreamController.stream,
                   centerOnLocationUpdate: _centerOnLocationUpdate,
                 ),
-              ),
-              MarkerLayerWidget(
-                options: MarkerLayerOptions(markers: markers),
               ),
             ],
           ),
@@ -139,7 +137,7 @@ class _MapWidgetState extends State<MapWidget> {
   void center() {
     // Automatically center the map on the location marker until user interacts with the map.
     setState(
-      () => _centerOnLocationUpdate = CenterOnLocationUpdate.always,
+      () => _centerOnLocationUpdate = CenterOnLocationUpdate.never,
     );
     // Center the the map on the location marker and zoom the map to level 18.
     _centerCurrentLocationStreamController.add(18);

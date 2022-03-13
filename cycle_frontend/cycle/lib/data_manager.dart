@@ -18,7 +18,6 @@ Future<List<DockingStation>> getDockingStations() async {
   List<DockingStation> dockingStations = dockingStationsAsJsonList
       .map((dockingStation) => DockingStation.fromJson(dockingStation))
       .toList();
-
   return dockingStations;
 }
 
