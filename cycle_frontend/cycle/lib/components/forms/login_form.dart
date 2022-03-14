@@ -84,6 +84,7 @@ class LoginFormState extends State<LoginForm> {
                     ],
                   ),
                 ),
+                // "I forgot my password" section
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Align(
@@ -92,7 +93,7 @@ class LoginFormState extends State<LoginForm> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: "Forgot password?",
+                            text: "I forgot my password",
                             style: const TextStyle(
                               decoration: TextDecoration.underline,
                             ),
@@ -107,27 +108,32 @@ class LoginFormState extends State<LoginForm> {
                     ),
                   ),
                 ),
+                // Login button section
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: FormButton(
                     text: 'Login',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        // If email and password fields are valid (not empty in this case)
+                        // then save the form and show the progress hud.
                         _formKey.currentState?.save();
                         final progress = ProgressHUD.of(context);
                         progress?.show();
-
+                        // Create a login request model which will be sent to the API.
                         LoginRequestModel model = LoginRequestModel(
                           email: emailController.text,
                           password: passwordController.text,
                         );
-
+                        // Try to log in the user and if the response is not null (login was
+                        // successful) open the main page of the application (save user details in cache).
                         APIService.login(model).then((response) {
                           progress?.dismiss();
                           if (response) {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, MainPage.id, (route) => false);
                           } else {
+                            // If login was unsuccessful, show a bar for the user at the bottom of the screen.
                             Flushbar(
                               icon: const Icon(Icons.warning_rounded),
                               title: 'Credentials are invalid.',

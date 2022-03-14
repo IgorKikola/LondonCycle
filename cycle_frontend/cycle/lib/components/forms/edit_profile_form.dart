@@ -5,7 +5,7 @@ import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:flutter/material.dart';
 
-import 'form_button.dart';
+import '../form_button.dart';
 
 /// Form for editing user profile.
 class EditProfileForm extends StatefulWidget {
@@ -93,8 +93,8 @@ class EditProfileFormState extends State<EditProfileForm> {
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    //_formKey.currentState.save();
-                    // Update user details in the server.
+                    // If all the input is of a valid format, update the database.
+                    // To be implemented.
                   }
                 },
               ),

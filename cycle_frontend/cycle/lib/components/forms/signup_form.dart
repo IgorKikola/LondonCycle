@@ -10,8 +10,8 @@ import 'package:cycle/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
-import '../services/api_service.dart';
-import 'form_button.dart';
+import '../../services/api_service.dart';
+import '../form_button.dart';
 
 /// Form for a sign-up.
 class SignupForm extends StatefulWidget {
@@ -92,6 +92,7 @@ class SignupFormState extends State<SignupForm> {
                         label: 'Repeat your password',
                         hint: 'Repeat your password',
                       ),
+                      // Checkbox part of the form.
                       FormField<bool>(
                         builder: (state) {
                           return Row(
@@ -129,6 +130,7 @@ class SignupFormState extends State<SignupForm> {
                     ],
                   ),
                 ),
+                // Submit button part.
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
                   child: FormButton(
@@ -136,24 +138,30 @@ class SignupFormState extends State<SignupForm> {
                     onPressed: () async {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
+                        // If all the inputs are of a valid format, save the form and show the
+                        // progress indicator to the user.
                         _formKey.currentState?.save();
                         final progress = ProgressHUD.of(context);
                         progress?.show();
-
+                        // Create a signup request model which will be sent to the API.
                         SignupRequestModel model = SignupRequestModel(
                           email: emailController.text,
                           password: passwordController.text,
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
                         );
-
+                        // Try to create a new user using the provided details.
                         APIService.signup(model).then((response) {
                           progress?.dismiss();
                           if (response.data != null) {
+                            // If body was not null, it means that the sign-up was successful.
+                            // Redirect user to the login page.
                             Navigator.pushNamedAndRemoveUntil(
                                 context, LoginPage.id, (route) => false);
                           } else {
                             Flushbar(
+                              // Otherwise display a message at the bottom of the screen with the message
+                              // received from the API about what went wrong.
                               icon: const Icon(Icons.warning_rounded),
                               title: 'Sign-up was rejected!',
                               message: response.message,
@@ -163,6 +171,8 @@ class SignupFormState extends State<SignupForm> {
                           }
                         });
                       } else {
+                        // If the program reaches this bit, it means that some of the user input was
+                        // not of a valid format.
                         Flushbar(
                           icon: const Icon(Icons.warning_rounded),
                           title: 'Oops... Something went wrong.',

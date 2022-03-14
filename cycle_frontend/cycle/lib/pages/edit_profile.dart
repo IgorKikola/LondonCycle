@@ -1,4 +1,4 @@
-import 'package:cycle/components/edit_profile_form.dart';
+import 'package:cycle/components/forms/edit_profile_form.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {

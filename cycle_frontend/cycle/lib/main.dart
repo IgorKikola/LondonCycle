@@ -4,7 +4,7 @@ import 'package:cycle/pages/login_page.dart';
 import 'package:cycle/pages/privacy_policy_page.dart';
 import 'package:cycle/pages/signup_page.dart';
 import 'package:cycle/pages/terms_of_use_page.dart';
-import 'package:cycle/shared_service.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'pages/main_page.dart';
 
@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Checks cache if user's credentials are still saved so that user does not need
   // to login every time the app is opened.
-  bool _isLoggedIn = await SharedService.isLoggedIn();
+  bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
   if (_isLoggedIn) {
     _defaultPageId = MainPage.id;
   }

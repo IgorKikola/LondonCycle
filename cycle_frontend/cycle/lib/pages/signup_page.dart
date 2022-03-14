@@ -1,4 +1,4 @@
-import 'package:cycle/components/signup_form.dart';
+import 'package:cycle/components/forms/signup_form.dart';
 import 'package:cycle/pages/login_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
