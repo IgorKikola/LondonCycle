@@ -5,8 +5,8 @@ import 'package:cycle/models/login_response_model.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/shared_service.dart';
 import 'package:http/http.dart' as http;
-import 'models/login_request_model.dart';
-import 'models/signup_response_model.dart';
+import '../models/login_request_model.dart';
+import '../models/signup_response_model.dart';
 
 class APIService {
   static var client = http.Client();

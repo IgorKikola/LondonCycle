@@ -10,7 +10,7 @@ import 'package:cycle/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
-import '../api_service.dart';
+import '../services/api_service.dart';
 import 'form_button.dart';
 
 /// Form for a sign-up.
