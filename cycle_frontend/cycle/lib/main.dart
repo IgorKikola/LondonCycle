@@ -4,10 +4,21 @@ import 'package:cycle/pages/login_page.dart';
 import 'package:cycle/pages/privacy_policy_page.dart';
 import 'package:cycle/pages/signup_page.dart';
 import 'package:cycle/pages/terms_of_use_page.dart';
+import 'package:cycle/shared_service.dart';
 import 'package:flutter/material.dart';
 import 'pages/main_page.dart';
 
-void main() {
+// Default page for users that are not logged in.
+String _defaultPageId = LoginPage.id;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Checks cache if user's credentials are still saved so that user does not need
+  // to login every time the app is opened.
+  bool _isLoggedIn = await SharedService.isLoggedIn();
+  if (_isLoggedIn) {
+    _defaultPageId = MainPage.id;
+  }
   runApp(const MyApp());
 }
 
@@ -20,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: SignupPage.id,
+      initialRoute: _defaultPageId,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),
