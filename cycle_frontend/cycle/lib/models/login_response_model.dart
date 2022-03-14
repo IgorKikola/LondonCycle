@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+LoginResponseModel loginResponseJson(String string) =>
+    LoginResponseModel.fromJson(json.decode(string));
+
 class LoginResponseModel {
   LoginResponseModel({
     required this.message,

@@ -1,20 +1,25 @@
+import 'dart:convert';
+
+SignupResponseModel signupResponseModel(String string) =>
+    SignupResponseModel.fromJson(json.decode(string));
+
 class SignupResponseModel {
   SignupResponseModel({
     required this.message,
     required this.data,
   });
   late final String message;
-  late final Data data;
+  late final Data? data;
 
   SignupResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = Data.fromJson(json['data']);
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['message'] = message;
-    _data['data'] = data.toJson();
+    _data['data'] = data!.toJson();
     return _data;
   }
 }
