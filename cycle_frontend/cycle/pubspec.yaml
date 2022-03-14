@@ -42,6 +42,7 @@ dependencies:
   validators: 3.0.0
   string_validator: ^0.3.0
   http: ^0.13.4
+  another_flushbar: ^1.10.28
 
 dev_dependencies:
   flutter_test:

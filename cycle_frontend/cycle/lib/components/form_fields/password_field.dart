@@ -21,6 +21,7 @@ class PasswordField extends StatefulWidget {
 
 class PasswordFieldState extends State<PasswordField> {
   final _validator = StringValidator();
+  bool hidePassword = true;
 
   @override
   void dispose() {
@@ -36,7 +37,7 @@ class PasswordFieldState extends State<PasswordField> {
       textStyle: kFormFieldTooltipTextStyle,
       padding: const EdgeInsets.all(15.0),
       child: TextFormField(
-        obscureText: true,
+        obscureText: hidePassword,
         controller: widget.controller,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -53,6 +54,16 @@ class PasswordFieldState extends State<PasswordField> {
           icon: const Icon(Icons.lock),
           labelText: widget.label,
           hintText: widget.hint,
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                hidePassword = !hidePassword;
+              });
+            },
+            icon: Icon(
+              hidePassword ? Icons.visibility_off : Icons.visibility,
+            ),
+          ),
         ),
       ),
     );

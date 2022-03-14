@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:cycle/components/form_fields/checkbox_text.dart';
 import 'package:cycle/components/form_fields/email_field.dart';
 import 'package:cycle/components/form_fields/first_name_field.dart';
@@ -147,6 +148,14 @@ class SignupFormState extends State<SignupForm> {
                       // Display response['body'] received from the server containing
                       // the message of what went wrong.
                     }
+                  } else {
+                    Flushbar(
+                      icon: const Icon(Icons.warning_rounded),
+                      title: 'Oops... Something went wrong.',
+                      message: 'Check if all the fields are filled correctly.',
+                      duration: const Duration(seconds: 5),
+                      flushbarStyle: FlushbarStyle.GROUNDED,
+                    ).show(context);
                   }
                 },
               ),

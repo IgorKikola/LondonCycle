@@ -1,5 +1,8 @@
 import 'package:cycle/components/form_button.dart';
 import 'package:cycle/constants.dart';
+import 'package:cycle/pages/forgot_password_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 /// Form for a login.
@@ -15,6 +18,7 @@ class LoginForm extends StatefulWidget {
 class LoginFormState extends State<LoginForm> {
   // Global key that uniquely identifies the LoginForm widget.
   final _formKey = GlobalKey<FormState>();
+  bool hidePassword = true;
 
   // Controllers that keep track of the user's input.
   final TextEditingController emailController = TextEditingController();
@@ -36,7 +40,7 @@ class LoginFormState extends State<LoginForm> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
               child: Wrap(
                 runSpacing: 20.0,
                 children: <Widget>[
@@ -51,14 +55,48 @@ class LoginFormState extends State<LoginForm> {
                   ),
                   // PASSWORD FIELD
                   TextFormField(
-                    obscureText: true,
+                    obscureText: hidePassword,
                     controller: passwordController,
                     decoration: kTextFieldDecoration.copyWith(
                       labelText: 'Password',
                       hintText: 'Enter your password',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            hidePassword = !hidePassword;
+                          });
+                        },
+                        icon: Icon(
+                          hidePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Forgot password?",
+                        style: const TextStyle(
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, ForgotPasswordPage.id);
+                          },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Padding(

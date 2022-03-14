@@ -22,6 +22,8 @@ class PasswordRepeatField extends StatefulWidget {
 }
 
 class PasswordRepeatFieldState extends State<PasswordRepeatField> {
+  bool hidePassword = true;
+
   @override
   void dispose() {
     super.dispose();
@@ -43,11 +45,21 @@ class PasswordRepeatFieldState extends State<PasswordRepeatField> {
         }
       },
       keyboardType: TextInputType.emailAddress,
-      obscureText: true,
+      obscureText: hidePassword,
       decoration: kTextFieldDecoration.copyWith(
         icon: const Icon(Icons.spellcheck),
         labelText: widget.label,
         hintText: widget.hint,
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              hidePassword = !hidePassword;
+            });
+          },
+          icon: Icon(
+            hidePassword ? Icons.visibility_off : Icons.visibility,
+          ),
+        ),
       ),
     );
   }
