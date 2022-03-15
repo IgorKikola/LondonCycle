@@ -7,14 +7,14 @@ from cycle_backend.cycle_api.models import Place
 class BikepointLandmarkTestCase(TestCase):
 
     def setUp(self):
-        self.BikeUrl = reverse('bikes')
-        self.LandmarkUrl = reverse('landmarks')
+        self.BikeUrl = reverse('bikepoints-list')
+        self.LandmarkUrl = reverse('landmarks-list')
         self.place = Place.objects.all()
 
     """Tests of the bikepoint view."""
 
     def test_get_bikepoint_url(self):
-        self.assertEqual(self.BikeUrl, '/bikes/')
+        self.assertEqual(self.BikeUrl, '/bikepoints/')
 
     def test_bike_id_must_not_be_blank(self):
         self.place.id = ''

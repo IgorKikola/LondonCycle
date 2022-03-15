@@ -3,8 +3,10 @@ from django.contrib import admin
 from rest_framework import routers
 from cycle_backend.cycle_api import views
 
+appname='cycleapi'
+
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'users', views.UserViewSet, basename='users')
 router.register(r'places', views.PlaceViewSet, basename='places')
 router.register(r'bikepoints', views.BikePointViewSet, basename='bikepoints')
 router.register(r'landmarks', views.LandmarkViewSet, basename='landmarks')
