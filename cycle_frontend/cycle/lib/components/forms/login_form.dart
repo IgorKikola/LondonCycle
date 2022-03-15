@@ -3,7 +3,7 @@ import 'package:cycle/services/api_service.dart';
 import 'package:cycle/components/form_button.dart';
 import 'package:cycle/constants.dart';
 import 'package:cycle/models/login_request_model.dart';
-import 'package:cycle/pages/forgot_password_page.dart';
+import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';

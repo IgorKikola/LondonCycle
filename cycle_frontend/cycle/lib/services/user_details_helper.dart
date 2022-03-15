@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:cycle/models/login_response_model.dart';
-import 'package:cycle/pages/login_page.dart';
+import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 
 /// This class is responsible to maintain the consistency of the cache when user logs-in, updates

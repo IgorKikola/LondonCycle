@@ -1,10 +1,10 @@
 import 'package:cycle/pages/home_page.dart';
-import 'package:cycle/pages/edit_profile.dart';
-import 'package:cycle/pages/forgot_password_page.dart';
-import 'package:cycle/pages/login_page.dart';
-import 'package:cycle/pages/privacy_policy_page.dart';
-import 'package:cycle/pages/signup_page.dart';
-import 'package:cycle/pages/terms_of_use_page.dart';
+import 'package:cycle/pages/edit_user_profile.dart';
+import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
+import 'package:cycle/pages/signup_login_pages/login_page.dart';
+import 'package:cycle/pages/terms_policy_pages/privacy_policy_page.dart';
+import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:cycle/pages/terms_policy_pages/terms_of_use_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'pages/main_page.dart';

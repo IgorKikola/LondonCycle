@@ -6,7 +6,7 @@ import 'package:cycle/components/form_fields/last_name_field.dart';
 import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/signup_request_model.dart';
-import 'package:cycle/pages/login_page.dart';
+import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
