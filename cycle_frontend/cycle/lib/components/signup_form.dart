@@ -4,11 +4,7 @@ import 'package:cycle/components/signup_form_components/first_name_field.dart';
 import 'package:cycle/components/signup_form_components/last_name_field.dart';
 import 'package:cycle/components/signup_form_components/password_field.dart';
 import 'package:cycle/components/signup_form_components/password_repeat_field.dart';
-import 'package:cycle/constants.dart';
-import 'package:cycle/pages/privacy_policy_page.dart';
-import 'package:cycle/pages/terms_of_use_page.dart';
 import 'package:cycle/services/register_user.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'form_button.dart';
