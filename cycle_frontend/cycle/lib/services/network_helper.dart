@@ -20,15 +20,4 @@ class NetworkHelper {
       return null;
     }
   }
-
-  Future<Map> postData(Map data) async {
-    http.Response response = await http.post(Uri.parse(url), body: data);
-    var responseData = jsonDecode(response.body);
-
-    // Returns a map that contains the status code of the POST action
-    // and the message received.
-    Map result = {'statusCode': responseData.statusCode, 'body': responseData};
-
-    return result;
-  }
 }

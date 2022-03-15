@@ -1,31 +1,44 @@
-import 'package:cycle/components/forms/login_form.dart';
+import 'package:cycle/components/forms/edit_profile_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String id = 'login_page';
+class EditProfilePage extends StatefulWidget {
+  static const String id = 'edit_profile';
 
-  const LoginPage({Key? key}) : super(key: key);
+  const EditProfilePage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _EditProfilePageState createState() => _EditProfilePageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _EditProfilePageState extends State<EditProfilePage> {
+  late Map userData;
+
+  void getUserData() {
+    // Get user data from back-end.
+    userData = {'firstName': 'John'};
+  }
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Edit profile'),
       ),
       body: Center(
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
-              children: const <Widget>[
-                Padding(
+              children: <Widget>[
+                const Padding(
                   padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                   child: Text(
-                    'Login to your account',
+                    'Edit your details',
                     style: TextStyle(
                       fontFamily: 'Lobster',
                       color: Colors.white,
@@ -33,13 +46,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 20,
                   thickness: 3,
                   indent: 30,
                   endIndent: 30,
                 ),
-                LoginForm(),
+                EditProfileForm(userData),
               ],
             ),
           ),
