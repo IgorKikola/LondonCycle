@@ -20,11 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: MainPage.id,
       routes: {
-        SignupPage.id: (context) => SignupPage(),
-        TermsOfUsePage.id: (context) => TermsOfUsePage(),
-        PrivacyPolicyPage.id: (context) => PrivacyPolicyPage(),
-        LoginPage.id: (context) => LoginPage(),
-        MainPage.id: (context) => MainPage(),
+        SignupPage.id: (context) => const SignupPage(),
+        TermsOfUsePage.id: (context) => const TermsOfUsePage(),
+        PrivacyPolicyPage.id: (context) => const PrivacyPolicyPage(),
+        LoginPage.id: (context) => const LoginPage(),
+        MainPage.id: (context) => const MainPage(),
       },
     );
   }
