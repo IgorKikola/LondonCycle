@@ -1,4 +1,3 @@
-import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,6 +27,12 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
     const CsvToListConverter().convert(_rawData);
     setState(() {
       data = _listData;
+  var numController = TextEditingController();
+  var num = 0;
+
+  changeText() {
+    setState(() {
+      num = int.parse(numController.text);
     });
   }
 
@@ -41,7 +46,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           buildSearchBar(context),
           SizedBox(height: 5),
           buildWidgetGrid(),
-
         ],
         controller: widget.controller,
         physics: const NeverScrollableScrollPhysics(),
