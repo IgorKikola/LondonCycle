@@ -9,7 +9,7 @@ import requests
 
 @api_view()
 def get_route(request, fromPlace, toPlace):
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?cyclePreference=cycleHire'))
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/cyclePreference=cycleHire'))
 
 class UserViewSet(viewsets.ModelViewSet):
     """
