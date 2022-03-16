@@ -1,9 +1,20 @@
 import 'package:csv/csv.dart';
+import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/services/directions.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../services/route.dart';
 import '../animations/animate.dart';
 import 'journey_stops.dart';
+
+final TextEditingController startingPointSearchboxTypeAheadController =
+    TextEditingController();
+final TextEditingController finishingPointSearchboxTypeAheadController =
+    TextEditingController();
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
@@ -15,6 +26,9 @@ class SlideUpWidget extends StatefulWidget {
 }
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
+  // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
+  MyRoute myRoute = MyRoute();
+
   Color star1Color = Colors.grey;
   Color star2Color = Colors.grey;
   Color star3Color = Colors.grey;
@@ -37,6 +51,24 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
     setState(() {
       data = _listData;
     });
+  }
+
+  bool isRouteComplete() {
+    return myRoute.startingLocation != null &&
+        myRoute.finishingLocation != null;
+  }
+
+  void findRoute() {
+    print('finding route for...');
+    if (myRoute.startingLocation != null) {
+      print('starting point: ${myRoute.startingLocation}');
+    }
+    if (myRoute.finishingLocation != null) {
+      print('finishing point: ${myRoute.finishingLocation}');
+    }
+
+    DirectionsService.getInstructionsForRoute(myRoute);
+    print('route found.');
   }
 
   @override
@@ -94,10 +126,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(Icons.my_location_rounded, color: Colors.red),
-                            Text('"Current Location"',
-                                style: GoogleFonts.lato(
-                                    fontStyle: FontStyle.normal,
-                                    color: Colors.white)),
+                            SearchBox(
+                                searchboxType: Waypoint.START,
+                                myRoute: myRoute,
+                                typeAheadController:
+                                    startingPointSearchboxTypeAheadController),
                             SizedBox(width: 32.0)
                           ],
                         ),
@@ -113,10 +146,12 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(Icons.location_on_outlined, color: Colors.red),
-                            Text('"Destination"',
-                                style: GoogleFonts.lato(
-                                    fontStyle: FontStyle.normal,
-                                    color: Colors.white)),
+                            SearchBox(
+                              searchboxType: Waypoint.FINISH,
+                              myRoute: myRoute,
+                              typeAheadController:
+                                  finishingPointSearchboxTypeAheadController,
+                            ),
                             SizedBox(width: 32.0)
                           ],
                         ),
