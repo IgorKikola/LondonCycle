@@ -7,6 +7,7 @@ import 'package:cycle/pages/menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
+  static const String id = 'home_page';
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -21,8 +22,8 @@ class _HomePageState extends State<HomePage> {
         drawer: Menu(),
         appBar: AppBar(
           title: Text('Map',
-              style: GoogleFonts.lato(
-                  fontWeight: FontWeight.bold, fontSize: 20)),
+              style:
+                  GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
           backgroundColor: Colors.lightBlue,
         ),
         body: SlidingUpPanel(
@@ -34,10 +35,9 @@ class _HomePageState extends State<HomePage> {
           isDraggable: true,
           backdropTapClosesPanel: true,
           body: MainPage(),
-          panelBuilder: (controller) =>
-              SlideUpWidget(
-                controller: controller,
-              ),
+          panelBuilder: (controller) => SlideUpWidget(
+            controller: controller,
+          ),
           borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
         ),
       ),
