@@ -99,7 +99,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       );
 
   Widget buildSearchBar(BuildContext context) => Container(
-      child: Padding(
+        child: Padding(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -162,7 +162,65 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         children: [
                           Container(
                             height: 30,
-                            width: 110,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.lightBlue[200],
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.lightBlue[200],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const JourneyStops()),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.add_location_alt,
+                                        color: Colors.red),
+                                    Text('Stops',
+                                        style: GoogleFonts.lato(
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white)),
+                                    SizedBox(width: 10.0)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            height: 30,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () {},
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.search, color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            height: 30,
+                            width: 130,
                             key: Key('RiderContainer'),
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
@@ -218,73 +276,20 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
+                                    SizedBox(width: 5),
                                     Container(
-                                        padding: EdgeInsets.only(right: 70),
+                                        //padding: EdgeInsets.only(right: 70),
                                         child: Text(num.toString(),
                                             key: Key('RiderValue'),
                                             style: GoogleFonts.lato(
                                                 fontStyle: FontStyle.normal,
                                                 color: Colors.white))),
-                                    Text('Stops',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    SizedBox(width: 20.0)
+                                    SizedBox(width: 10),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          Container(
-                            height: 30,
-                            width: 110,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                onTap: () {},
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.search, color: Colors.white),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 30,
-                            width: 110,
-                            decoration: BoxDecoration(
-                                color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.lightBlue[200],
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                onTap: () {},
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(Icons.directions_bike,
-                                        color: Colors.red),
-                                    Text('Riders',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
-                                    SizedBox(width: 20.0)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          // SizedBox(width: 50),
                         ],
                       ),
                     ],
@@ -292,7 +297,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 ),
               ),
             ],
-          )));
+          ),
+        ),
+      );
 
   Widget buildWidgetGrid() => Container(
         padding: EdgeInsets.all(1.0),
