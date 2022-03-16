@@ -163,6 +163,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           Container(
                             height: 30,
                             width: 110,
+                            key: Key('RiderContainer'),
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -171,20 +172,59 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const JourneyStops()),
-                                  );
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Add riders'),
+                                      content: new TextField(
+                                        controller: numController,
+                                        decoration: new InputDecoration(
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            changeText();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  changeText(),
                                 },
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.add_location_alt,
+                                    Icon(Icons.person_add,
+                                        key: Key('RiderIcon'),
                                         color: Colors.red),
+                                    Text('Riders:',
+                                        key: Key('RiderText'),
+                                        style: GoogleFonts.lato(
+                                            fontStyle: FontStyle.normal,
+                                            color: Colors.white)),
+                                    Container(
+                                        padding: EdgeInsets.only(right: 70),
+                                        child: Text(num.toString(),
+                                            key: Key('RiderValue'),
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white))),
                                     Text('Stops',
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
