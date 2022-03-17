@@ -15,6 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<MainPageState> _myMainPageState = GlobalKey<MainPageState>();
+
+  void myHomePageMapRefresh() {
+    _myMainPageState.currentState?.myMapRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,9 +40,10 @@ class _HomePageState extends State<HomePage> {
           parallaxOffset: 1.0,
           isDraggable: true,
           backdropTapClosesPanel: true,
-          body: MainPage(),
+          body: MainPage(key: _myMainPageState),
           panelBuilder: (controller) => SlideUpWidget(
             controller: controller,
+            mapRefreshCallback: myHomePageMapRefresh,
           ),
           borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
         ),
