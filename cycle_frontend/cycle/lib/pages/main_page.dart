@@ -27,7 +27,6 @@ class MainPageState extends State<MainPage> {
   final LocationManager _locationManager = LocationManager();
 
   void myMapRefresh() {
-    print('my myMapRefresh called.');
     _myMapWidgetState.currentState?._myMapWidgetRefresh();
   }
 
@@ -64,10 +63,7 @@ class _MapWidgetState extends State<MapWidget> {
   List<Marker> markers = [];
 
   void _myMapWidgetRefresh() {
-    print('my myMapWidget called.');
-    setState(() {
-      print('inside myMapWidget setstate.');
-    });
+    setState(() {});
   }
 
   @override
@@ -101,7 +97,6 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('main_page(map) build called.');
     return Scaffold(
       // drawer: Menu(),
       // appBar: AppBar(

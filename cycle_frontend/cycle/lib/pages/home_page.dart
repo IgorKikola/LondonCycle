@@ -18,16 +18,11 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<MainPageState> _myMainPageState = GlobalKey<MainPageState>();
 
   void myHomePageMapRefresh() {
-    print('my myHomePageMapRefresh called.');
-    print('now trying to call myMapRefresh() on _myMainPageState...');
     _myMainPageState.currentState?.myMapRefresh();
-    print('refreshed _myMainPageState.');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('home_page(app) build called.');
-
     return MaterialApp(
       home: Scaffold(
         drawer: Menu(),

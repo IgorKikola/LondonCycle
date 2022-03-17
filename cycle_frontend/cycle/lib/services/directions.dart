@@ -32,7 +32,6 @@ class DirectionsService {
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      print(response.body);
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       int responseLength = jsonResponse['routes'][0]['legs'][0]['steps'].length;
@@ -70,7 +69,6 @@ class DirectionsService {
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      print(response.body);
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       int responseLength =

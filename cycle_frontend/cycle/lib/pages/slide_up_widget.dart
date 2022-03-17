@@ -75,9 +75,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
 
     print('route found.');
 
-    print('trying to refresh map...');
     widget.mapRefreshCallback();
-    print('map refreshed.');
   }
 
   @override
@@ -217,7 +215,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
                                 onTap: () {
-                                  print('tapped.');
                                   findRoute();
                                 },
                                 child: Row(
