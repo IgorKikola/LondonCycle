@@ -9,6 +9,8 @@ import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/pages/menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../services/marker_location.dart';
+
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
 const String kAccessToken =
@@ -56,6 +58,7 @@ class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
+  MarkerLocation searchMarker = MarkerLocation();
 
   @override
   void initState() {
@@ -106,6 +109,7 @@ class _MapWidgetState extends State<MapWidget> {
               onPositionChanged: (MapPosition position, bool hasGesture) {
                 if (hasGesture) {
                   decenter;
+                  adjustMarker();
                 }
               },
             ),
@@ -127,6 +131,44 @@ class _MapWidgetState extends State<MapWidget> {
                 ),
               ),
             ],
+            layers: [
+              MarkerLayerOptions(
+                markers: [
+                  new Marker(
+                    width: 45.0,
+                    height: 45.0,
+                    point: LatLng(searchMarker.getStartingLocation().latitude,
+                        searchMarker.getStartingLocation().longitude),
+                    builder: (context) => Container(
+                      child: IconButton(
+                        icon: Icon(Icons.location_on),
+                        color: Colors.red[900],
+                        iconSize: 50.0,
+                        onPressed: () {
+                          print('This is the search location');
+                        },
+                      ),
+                    ),
+                  ),
+                  new Marker(
+                    width: 45.0,
+                    height: 45.0,
+                    point: LatLng(searchMarker.getEndingLocation().latitude,
+                        searchMarker.getEndingLocation().longitude),
+                    builder: (context) => Container(
+                      child: IconButton(
+                        icon: Icon(Icons.location_on),
+                        color: Colors.blue[900],
+                        iconSize: 50.0,
+                        onPressed: () {
+                          print('This is the destination location');
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
           Positioned(
             right: 10,
@@ -142,6 +184,13 @@ class _MapWidgetState extends State<MapWidget> {
         ],
       ),
     );
+  }
+
+  void adjustMarker() {
+    setState(() {
+      searchMarker.getStartingLocation();
+      searchMarker.getEndingLocation();
+    });
   }
 
   void center() {
