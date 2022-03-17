@@ -18,8 +18,12 @@ final TextEditingController finishingPointSearchboxTypeAheadController =
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
+  final mapRefreshCallback;
 
-  SlideUpWidget({Key? key, required this.controller}) : super(key: key);
+  SlideUpWidget(
+      {Key? key, required this.controller, required void mapRefreshCallback()})
+      : mapRefreshCallback = mapRefreshCallback,
+        super(key: key);
 
   @override
   State<SlideUpWidget> createState() => _SlideUpWidgetState();
@@ -58,7 +62,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         myRoute.finishingLocation != null;
   }
 
-  void findRoute() {
+  Future<void> findRoute() async {
     print('finding route for...');
     if (myRoute.startingLocation != null) {
       print('starting point: ${myRoute.startingLocation}');
@@ -67,8 +71,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${myRoute.finishingLocation}');
     }
 
-    DirectionsService.getInstructionsForRoute(myRoute);
+    await DirectionsService.getCoordinatesForRoute(myRoute);
+
     print('route found.');
+
+    print('trying to refresh map...');
+    widget.mapRefreshCallback();
+    print('map refreshed.');
   }
 
   @override
@@ -206,7 +215,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
-                                onTap: () {},
+                                onTap: () {
+                                  print('tapped.');
+                                  findRoute();
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

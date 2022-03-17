@@ -1,13 +1,12 @@
 import 'dart:async';
+
 import 'package:cycle/services/data_manager.dart';
+import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:cycle/services/location_manager.dart';
-import 'package:cycle/pages/menu.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -19,11 +18,18 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  MainPageState createState() => MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class MainPageState extends State<MainPage> {
+  final GlobalKey<_MapWidgetState> _myMapWidgetState =
+      GlobalKey<_MapWidgetState>();
   final LocationManager _locationManager = LocationManager();
+
+  void myMapRefresh() {
+    print('my myMapRefresh called.');
+    _myMapWidgetState.currentState?._myMapWidgetRefresh();
+  }
 
   @override
   void initState() {
@@ -39,12 +45,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const MapWidget();
+    return MapWidget(key: _myMapWidgetState);
   }
 }
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({
+  MapWidget({
     Key? key,
   }) : super(key: key);
 
@@ -56,6 +62,13 @@ class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
+
+  void _myMapWidgetRefresh() {
+    print('my myMapWidget called.');
+    setState(() {
+      print('inside myMapWidget setstate.');
+    });
+  }
 
   @override
   void initState() {
@@ -88,6 +101,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('main_page(map) build called.');
     return Scaffold(
       // drawer: Menu(),
       // appBar: AppBar(
@@ -125,6 +139,10 @@ class _MapWidgetState extends State<MapWidget> {
                       _centerCurrentLocationStreamController.stream,
                   centerOnLocationUpdate: _centerOnLocationUpdate,
                 ),
+              ),
+              PolylineLayerWidget(
+                options: PolylineLayerOptions(
+                    polylines: DirectionsService.getPolylines()),
               ),
             ],
           ),
