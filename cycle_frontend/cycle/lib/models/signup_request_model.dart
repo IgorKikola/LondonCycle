@@ -19,9 +19,9 @@ class SignupRequestModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['email'] = email;
     _data['first_name'] = firstName;
     _data['last_name'] = lastName;
-    _data['email'] = email;
     _data['password'] = password;
     return _data;
   }

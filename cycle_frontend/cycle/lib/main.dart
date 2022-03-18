@@ -2,6 +2,7 @@ import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/edit_user_profile.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
+import 'package:cycle/pages/starting_page.dart';
 import 'package:cycle/pages/terms_policy_pages/privacy_policy_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/terms_policy_pages/terms_of_use_page.dart';
@@ -14,7 +15,7 @@ import 'package:cycle/pages/menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Default page for users that are not logged in.
-String _defaultPageId = LoginPage.id;
+String _defaultPageId = StartingPage.id;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: HomePage.id,
+      initialRoute: _defaultPageId,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         EditProfilePage.id: (context) => EditProfilePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
+        StartingPage.id: (context) => StartingPage(),
       },
     );
   }
