@@ -44,13 +44,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
 
     """ Field which to identify the user by """
     USERNAME_FIELD = 'email'
+    
+    """ Field taht cannot be blank """
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):

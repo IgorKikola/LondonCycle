@@ -2,7 +2,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from .serializers import PlaceSerializer, UserSerializer, SignupSerializer
 from rest_framework.response import Response
-from knox.models import AuthToken
 from .models import Place, User
 
 class PlaceViewSet(viewsets.ModelViewSet):
@@ -33,7 +32,7 @@ def signup_view(request):
     response_data = {}
     if serializer.is_valid():
         user = serializer.save()
-        response_data['response'] = "Signup was successful."
+        response_data['response'] = "Signup was successful"
         response_data['email'] = user.email
     else:
         response_data = serializer.errors
