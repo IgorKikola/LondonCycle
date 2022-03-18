@@ -54,6 +54,6 @@ class UserDetailsHelper {
   static Future<void> logout(BuildContext context) async {
     await APICacheManager().deleteCache('login_details');
     await APICacheManager().deleteCache('auth_token');
-    Navigator.pushNamed(context, SignupPage.id);
+    Navigator.popUntil(context, (route) => route.isFirst);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/services/api_service.dart';
 import 'package:cycle/components/form_button.dart';
 import 'package:cycle/constants.dart';
@@ -124,7 +125,7 @@ class LoginFormState extends State<LoginForm> {
                     APIService.login(model).then((response) {
                       if (response) {
                         Navigator.pushNamedAndRemoveUntil(
-                            context, MainPage.id, (route) => false);
+                            context, HomePage.id, (route) => false);
                       } else {
                         // If login was unsuccessful, show a bar for the user at the bottom of the screen.
                         Flushbar(

@@ -28,8 +28,10 @@ class APIService {
       await UserDetailsHelper.saveAuthenticationToken(
           loginResponseJson(response.body, response.statusCode));
       await getUserProfile();
+      print("aaa");
       return true;
     } else {
+      print(response.body);
       return false;
     }
   }
