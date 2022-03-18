@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cycle/models/landmark.dart';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
@@ -80,12 +81,27 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> loadMarkers() async {
-    markers = (await getDockingStations())
+    markers = await loadLandmarkMarkers() + await loadDockingStationMarkers();
+  }
+
+  Future<List<Marker>> loadDockingStationMarkers() async {
+    return (await getDockingStations())
         .map((dockingStation) => Marker(
             point: LatLng(dockingStation.lat, dockingStation.lon),
             builder: (ctx) => const Icon(
                   Icons.pedal_bike,
                   color: Colors.blue,
+                )))
+        .toList();
+  }
+
+  Future<List<Marker>> loadLandmarkMarkers() async {
+    return (await getLandmarks())
+        .map((landmark) => Marker(
+            point: LatLng(landmark.lat, landmark.lon),
+            builder: (ctx) => const Icon(
+                  Icons.museum,
+                  color: Colors.amber,
                 )))
         .toList();
   }
