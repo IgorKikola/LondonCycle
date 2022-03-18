@@ -22,6 +22,18 @@ def get_n_closest_landmarks(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+@api_view()
+def bikepoint_number_of_bikes(request, bikepoint_id):
+    response = requests.get(f'https://api.tfl.gov.uk/BikePoint/{bikepoint_id}')
+    additionalProperties = response.json()['additionalProperties']
+    number_of_bikes = 0
+    for property in additionalProperties:
+        print(property['key'])
+        if property['key'] == "NbBikes":
+            number_of_bikes = property['value']
+    return Response({'Number of bikes' : number_of_bikes})
+
+    
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

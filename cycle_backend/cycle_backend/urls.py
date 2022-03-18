@@ -19,4 +19,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('closest/<int:n>/bikepoints/from/<str:lat>/<str:lon>/', views.get_n_closest_bikepoints),
     path('closest/<int:n>/landmarks/from/<str:lat>/<str:lon>/', views.get_n_closest_landmarks),
+    path('bikepoints/<str:bikepoint_id>/number_of_bikes', views.bikepoint_number_of_bikes),
 ]
