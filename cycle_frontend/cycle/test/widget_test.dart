@@ -17,8 +17,11 @@ void main() {
       (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     expect(riderText, findsOneWidget);
   });
@@ -27,8 +30,11 @@ void main() {
       (WidgetTester tester) async {
     final riderValue = find.byKey(ValueKey('RiderValue'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     expect(riderValue, findsOneWidget);
   });
@@ -36,8 +42,11 @@ void main() {
   testWidgets('Testing riderText font colour', (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Text text = tester.firstWidget(riderText);
     expect(text.style?.color, Colors.white);
@@ -46,8 +55,11 @@ void main() {
   testWidgets('Testing riderValue font colour', (WidgetTester tester) async {
     final riderValue = find.byKey(ValueKey('RiderValue'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Text text = tester.firstWidget(riderValue);
     expect(text.style?.color, Colors.white);
@@ -57,8 +69,11 @@ void main() {
       (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Text text = tester.firstWidget(riderText);
     expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
@@ -68,8 +83,11 @@ void main() {
       (WidgetTester tester) async {
     final riderValue = find.byKey(ValueKey('RiderValue'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Text text = tester.firstWidget(riderValue);
     expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
@@ -79,8 +97,11 @@ void main() {
       (WidgetTester tester) async {
     final riderIcon = find.byKey(ValueKey('RiderIcon'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Icon icon = tester.firstWidget(riderIcon);
     expect(icon.icon, Icons.person_add);
@@ -89,8 +110,11 @@ void main() {
   testWidgets('Testing riderIcon colour ', (WidgetTester tester) async {
     final riderIcon = find.byKey(ValueKey('RiderIcon'));
     //final riderContainer = find.byKey(ValueKey('RiderContainer'));
-    await tester.pumpWidget(
-        MaterialApp(home: SlideUpWidget(controller: ScrollController())));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
     await tester.pump();
     Icon icon = tester.firstWidget(riderIcon);
     expect(icon.color, Colors.red);
