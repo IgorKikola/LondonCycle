@@ -19,4 +19,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('signup', views.signup_view, name = "signup"),
     path('login', obtain_auth_token, name = "login"),
+    path('users/update', views.update_profile_view, name = "update_user"),
+    path('users/get', views.get_user_details_view, name = "get_user_details"),
 ]
