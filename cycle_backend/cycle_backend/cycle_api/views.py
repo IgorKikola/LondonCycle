@@ -47,7 +47,8 @@ def signup_view(request):
         response_data = {
                 "detail" : serializer.errors['email'][0]
             }
-    return Response(response_data, 400)
+        return Response(response_data, 400)
+    return Response(response_data)
 
 # Update user profile
 @api_view(['PUT'])
@@ -65,7 +66,8 @@ def update_profile_view(request):
             response_data = {
                 "detail" : serializer.errors['email'][0]
             }
-    return Response(response_data, 400)
+            return Response(response_data, 400)
+    return Response(response_data)
 
 # Get user details
 @api_view(['GET'])
@@ -101,7 +103,7 @@ def update_user(user, data) :
 # Each views that needs user to be authenticated to access it, MUST be stated as:
 #
 # @api_view([POST/GET/PUT])
-# @permission_classes((IsAuthenticated))
+# @permission_classes([IsAuthenticated])
 # def view_name(request):
 #   ...
 #
