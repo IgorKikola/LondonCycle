@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'cycle_backend.cycle_api',
+    'knox'
 ]
 
 MIDDLEWARE = [
