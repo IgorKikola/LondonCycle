@@ -1,8 +1,9 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets
-from rest_framework import permissions
-from cycle_backend.cycle_api.serializers import PlaceSerializer
-from cycle_backend.cycle_api.models import Place
+from rest_framework.decorators import api_view
+from .serializers import PlaceSerializer, UserSerializer, SignupSerializer
+from rest_framework.response import Response
+from knox.models import AuthToken
+from .models import Place, User
 
 class PlaceViewSet(viewsets.ModelViewSet):
     """
@@ -24,3 +25,17 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+
+# Signup view
+@api_view(['POST'])
+def signup_view(request):
+    serializer = SignupSerializer(data=request.data)
+    response_data = {}
+    if serializer.is_valid():
+        user = serializer.save()
+        response_data['response'] = "Signup was successful."
+        response_data['email'] = user.email
+    else:
+        response_data = serializer.errors
+    return Response(response_data)
+        
