@@ -1,6 +1,7 @@
 from django.urls import include, path
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
 from cycle_backend.cycle_api import views
 
 appname='cycleapi'
@@ -16,5 +17,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('signup', views.signup_view, name = "signup")
+    path('signup', views.signup_view, name = "signup"),
+    path('login', obtain_auth_token, name = "login"),
 ]
