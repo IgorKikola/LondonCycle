@@ -109,7 +109,6 @@ class _MapWidgetState extends State<MapWidget> {
               onPositionChanged: (MapPosition position, bool hasGesture) {
                 if (hasGesture) {
                   decenter;
-                  adjustMarker();
                 }
               },
             ),
