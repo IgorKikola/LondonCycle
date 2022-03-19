@@ -2,6 +2,7 @@ from geopy import distance
 from queue import PriorityQueue
 from cycle_backend.cycle_api.models import Place
 from cycle_backend.cycle_api.serializers import PlaceSerializer
+import requests
 
 def get_n_closest_places(n, queryset, lat, lon):
     """
@@ -23,3 +24,17 @@ def get_n_closest_places(n, queryset, lat, lon):
         for i in range(n):
             closest_places.append(queue.get()[1])
         return closest_places
+
+
+def bikepoint_get_property(bikepoint_id, property_key):
+    """
+    Retrieves the value of a specific property of a bikepoint.
+    Returns None if it doesn't exist.
+    """
+    response = requests.get(f'https://api.tfl.gov.uk/BikePoint/{bikepoint_id}')
+    additionalProperties = response.json()['additionalProperties']
+    value = None
+    for property in additionalProperties:
+        if property['key'] == property_key:
+            value = property['value']
+    return value
