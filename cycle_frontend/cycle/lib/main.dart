@@ -23,7 +23,7 @@ void main() async {
   // to login every time the app is opened.
   bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
   if (_isLoggedIn) {
-    _defaultPageId = MainPage.id;
+    _defaultPageId = HomePage.id;
   }
   runApp(const MyApp());
 }

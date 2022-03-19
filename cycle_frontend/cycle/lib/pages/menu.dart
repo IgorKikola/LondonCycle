@@ -2,6 +2,8 @@ import 'package:cycle/main.dart';
 import 'package:cycle/pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/settings.dart';
+import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:cycle/pages/starting_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'trip_history.dart';
@@ -29,7 +31,13 @@ class Menu extends StatelessWidget {
           SizedBox(height: 10),
           buildSettings(context),
           SizedBox(height: 50),
-          buildLogout(context),
+          ElevatedButton(
+              onPressed: () {
+                // Error here
+                UserDetailsHelper.logout(context);
+                Navigator.pushNamed(context, StartingPage.id);
+              },
+              child: const Text('Log out'))
         ],
       ),
     );
@@ -170,26 +178,6 @@ Widget buildSettings(BuildContext context) => Container(
                 context,
                 MaterialPageRoute(builder: (context) => const Settings()),
               );
-            },
-          ),
-        ),
-      ),
-    );
-
-Widget buildLogout(BuildContext context) => Container(
-      height: 50,
-      child: Material(
-        color: Colors.lightBlue[200],
-        borderRadius: BorderRadius.circular(15.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          child: ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Log out',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
-            onTap: () {
-              UserDetailsHelper.logout(context);
             },
           ),
         ),
