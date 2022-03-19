@@ -26,6 +26,10 @@ def get_n_closest_landmarks(request, n, lat, lon):
 def bikepoint_number_of_bikes(request, bikepoint_id):
     return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
 
+@api_view()
+def bikepoint_number_of_empty_docks(request, bikepoint_id):
+    return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
