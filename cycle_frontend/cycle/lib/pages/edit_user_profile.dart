@@ -1,29 +1,18 @@
 import 'package:cycle/components/forms/edit_profile_form.dart';
+import 'package:cycle/models/user_details_response_model.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {
   static const String id = 'edit_profile';
-
-  const EditProfilePage({Key? key}) : super(key: key);
+  final UserDetailsResponseModel userData;
+  EditProfilePage({required this.userData});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  late Map userData;
-
-  void getUserData() {
-    // Get user data from back-end.
-    userData = {'firstName': 'John'};
-  }
-
-  @override
-  void initState() {
-    getUserData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +41,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   indent: 30,
                   endIndent: 30,
                 ),
-                EditProfileForm(userData),
+                EditProfileForm(widget.userData),
               ],
             ),
           ),

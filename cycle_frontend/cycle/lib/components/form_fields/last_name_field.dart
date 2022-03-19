@@ -7,15 +7,11 @@ import '../../constants.dart';
 /// First name field used in the sign-up form.
 class LastNameField extends StatefulWidget {
   final TextEditingController controller;
-  final String initialText;
   final String label;
   final String hint;
 
   const LastNameField(
-      {required this.controller,
-      required this.initialText,
-      required this.label,
-      required this.hint});
+      {required this.controller, required this.label, required this.hint});
 
   @override
   LastNameFieldState createState() {
@@ -34,7 +30,6 @@ class LastNameFieldState extends State<LastNameField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: widget.initialText == '' ? null : widget.initialText,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter your surname';

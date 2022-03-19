@@ -35,7 +35,8 @@ class Menu extends StatelessWidget {
               onPressed: () {
                 // Error here
                 UserDetailsHelper.logout(context);
-                Navigator.pushNamed(context, StartingPage.id);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, StartingPage.id, (route) => false);
               },
               child: const Text('Log out'))
         ],

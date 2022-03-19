@@ -1,5 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cycle/pages/edit_user_profile.dart';
 import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/services/api_service.dart';
 import 'package:cycle/components/form_button.dart';
 import 'package:cycle/constants.dart';
@@ -124,8 +126,12 @@ class LoginFormState extends State<LoginForm> {
                     // successful) open the main page of the application (save user details in cache).
                     APIService.login(model).then((response) {
                       if (response) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, HomePage.id, (route) => false);
+                        //Navigator.pushNamedAndRemoveUntil(
+                        //context, HomePage.id, (route) => false);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditProfileLoadingScreen();
+                        }));
                       } else {
                         // If login was unsuccessful, show a bar for the user at the bottom of the screen.
                         Flushbar(

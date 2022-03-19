@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-GetUserDetailsResponseModel getUserDetailsResponseModel(String string) =>
-    GetUserDetailsResponseModel.fromJson(json.decode(string));
+UserDetailsResponseModel getUserDetailsResponseModel(String string) =>
+    UserDetailsResponseModel.fromJson(json.decode(string));
 
-class GetUserDetailsResponseModel {
+class UserDetailsResponseModel {
   late final String firstName;
   late final String lastName;
   late final String email;
 
-  GetUserDetailsResponseModel({
+  UserDetailsResponseModel({
     required this.firstName,
     required this.email,
     required this.lastName,
   });
 
-  GetUserDetailsResponseModel.fromJson(Map<String, dynamic> json) {
+  UserDetailsResponseModel.fromJson(Map<String, dynamic> json) {
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];

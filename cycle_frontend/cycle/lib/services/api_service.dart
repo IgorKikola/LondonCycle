@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:cycle/config.dart';
-import 'package:cycle/models/get_user_details_response_model.dart';
+import 'package:cycle/models/update_profile_request_model.dart';
+import 'package:cycle/models/update_profile_response_model.dart';
+import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/models/login_response_model.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/services/user_details_helper.dart';
@@ -46,6 +48,22 @@ class APIService {
         headers: requestHeaders, body: json.encode(model.toJson()));
 
     return signupResponseModel(response.body, response.statusCode);
+  }
+
+  /// Update user details in the database.
+  static Future<UpdateProfileResponseModel> updateProfile(
+      UpdateProfileRequestModel model) async {
+    var token = await UserDetailsHelper.authToken();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token $token'
+    };
+    var url = Uri.http(Config.apiURL, Config.updateUserProfileAPI);
+
+    var response = await client.put(url,
+        headers: requestHeaders, body: json.encode(model.toJson()));
+
+    return updateProfileResponseModel(response.body, response.statusCode);
   }
 
   /// Get logged in user details from the database.

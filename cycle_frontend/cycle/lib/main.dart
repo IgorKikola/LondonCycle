@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
         LoginPage.id: (context) => LoginPage(),
         MainPage.id: (context) => MainPage(),
         HomePage.id: (context) => HomePage(),
-        EditProfilePage.id: (context) => EditProfilePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
         StartingPage.id: (context) => StartingPage(),
       },

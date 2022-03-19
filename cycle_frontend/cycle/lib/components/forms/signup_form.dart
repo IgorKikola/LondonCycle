@@ -63,19 +63,16 @@ class SignupFormState extends State<SignupForm> {
                 children: <Widget>[
                   FirstNameField(
                     controller: firstNameController,
-                    initialText: '',
                     label: 'First name',
                     hint: 'Enter your first name',
                   ),
                   LastNameField(
                     controller: lastNameController,
-                    initialText: '',
                     label: 'Last name',
                     hint: 'Enter your last name',
                   ),
                   EmailField(
                     controller: emailController,
-                    initialText: '',
                     label: 'Email',
                     hint: 'Enter your email address',
                   ),

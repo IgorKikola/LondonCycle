@@ -1,15 +1,19 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:cycle/components/form_fields/email_field.dart';
 import 'package:cycle/components/form_fields/first_name_field.dart';
 import 'package:cycle/components/form_fields/last_name_field.dart';
 import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
+import 'package:cycle/models/update_profile_request_model.dart';
+import 'package:cycle/models/user_details_response_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/api_service.dart';
 import '../form_button.dart';
 
 /// Form for editing user profile.
 class EditProfileForm extends StatefulWidget {
-  final Map userData;
+  final UserDetailsResponseModel userData;
 
   const EditProfileForm(this.userData, {Key? key}) : super(key: key);
 
@@ -24,9 +28,9 @@ class EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
 
   // Controllers that keep track of the user's input.
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  late final TextEditingController firstNameController;
+  late final TextEditingController lastNameController;
+  late final TextEditingController emailController;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController repeatPasswordController =
       TextEditingController();
@@ -39,6 +43,15 @@ class EditProfileFormState extends State<EditProfileForm> {
     passwordController.dispose();
     repeatPasswordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController =
+        TextEditingController(text: widget.userData.firstName);
+    lastNameController = TextEditingController(text: widget.userData.lastName);
+    emailController = TextEditingController(text: widget.userData.email);
   }
 
   @override
@@ -56,19 +69,16 @@ class EditProfileFormState extends State<EditProfileForm> {
                 children: <Widget>[
                   FirstNameField(
                     controller: firstNameController,
-                    initialText: widget.userData['firstName'],
                     label: 'New first name',
                     hint: 'Enter your first name',
                   ),
                   LastNameField(
                     controller: lastNameController,
-                    initialText: widget.userData['lastName'],
                     label: 'New last name',
                     hint: 'Enter your last name',
                   ),
                   EmailField(
                     controller: emailController,
-                    initialText: widget.userData['email'],
                     label: 'New email',
                     hint: 'Enter your new email address',
                   ),
@@ -93,8 +103,31 @@ class EditProfileFormState extends State<EditProfileForm> {
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If all the input is of a valid format, update the database.
-                    // To be implemented.
+                    _formKey.currentState?.save();
+                    UpdateProfileRequestModel model = UpdateProfileRequestModel(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                    );
+                    // Try to update user profile details.
+                    APIService.updateProfile(model).then((response) {
+                      if (response.statusCode == 200) {
+                        // Update was successful.
+                        Navigator.pop(context);
+                      } else {
+                        Flushbar(
+                          // Otherwise display a message at the bottom of the screen with the message
+                          // received from the API about what went wrong.
+                          icon: const Icon(Icons.warning_rounded),
+                          title: 'Oops... Something went wrong.',
+                          message:
+                              "${response.response[0].toUpperCase()}${response.response.substring(1).toLowerCase()}",
+                          duration: const Duration(seconds: 5),
+                          flushbarStyle: FlushbarStyle.GROUNDED,
+                        ).show(context);
+                      }
+                    });
                   }
                 },
               ),

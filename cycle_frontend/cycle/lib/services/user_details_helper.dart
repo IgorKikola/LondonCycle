@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
-import 'package:cycle/models/get_user_details_response_model.dart';
+import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/models/login_response_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,7 +17,7 @@ class UserDetailsHelper {
   }
 
   /// Used to get user details from the cache.
-  static Future<GetUserDetailsResponseModel?> userDetails() async {
+  static Future<UserDetailsResponseModel?> userDetails() async {
     var isLoggedIn = await UserDetailsHelper.isLoggedIn();
     if (isLoggedIn) {
       var cacheData = await APICacheManager().getCacheData("user_details");
@@ -37,12 +37,13 @@ class UserDetailsHelper {
   }
 
   /// Used to save user details in the cache.
-  static Future<void> setUserDetails(GetUserDetailsResponseModel model) async {
+  static Future<void> setUserDetails(UserDetailsResponseModel model) async {
     APICacheDBModel cacheDBModel =
         APICacheDBModel(key: 'user_details', syncData: jsonEncode(model));
     await APICacheManager().addCacheData(cacheDBModel);
   }
 
+  /// Save the authentication token received during the log in.
   static Future<void> saveAuthenticationToken(LoginResponseModel model) async {
     APICacheDBModel cacheDBModel =
         APICacheDBModel(key: 'auth_token', syncData: jsonEncode(model.token));
