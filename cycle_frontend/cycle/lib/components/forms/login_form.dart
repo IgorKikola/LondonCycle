@@ -126,12 +126,12 @@ class LoginFormState extends State<LoginForm> {
                     // successful) open the main page of the application (save user details in cache).
                     APIService.login(model).then((response) {
                       if (response) {
-                        //Navigator.pushNamedAndRemoveUntil(
-                        //context, HomePage.id, (route) => false);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return EditProfileLoadingScreen();
-                        }));
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, HomePage.id, (route) => false);
+                        //Navigator.push(context,
+                        //    MaterialPageRoute(builder: (context) {
+                        //  return EditProfileLoadingScreen();
+                        //}));
                       } else {
                         // If login was unsuccessful, show a bar for the user at the bottom of the screen.
                         Flushbar(
