@@ -7,9 +7,8 @@ import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/api_service.dart';
-import '../form_button.dart';
+import '../custom_blue_button.dart';
 
 /// Form for editing user profile.
 class EditProfileForm extends StatefulWidget {
@@ -98,7 +97,7 @@ class EditProfileFormState extends State<EditProfileForm> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-              child: FormButton(
+              child: CustomBlueButton(
                 text: 'Update',
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.

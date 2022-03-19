@@ -7,11 +7,9 @@ import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
-import 'package:cycle/pages/starting_page.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/api_service.dart';
-import '../form_button.dart';
+import '../custom_blue_button.dart';
 
 /// Form for a sign-up.
 class SignupForm extends StatefulWidget {
@@ -128,7 +126,7 @@ class SignupFormState extends State<SignupForm> {
             // Submit button part.
             Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-              child: FormButton(
+              child: CustomBlueButton(
                 text: 'Submit',
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
@@ -144,24 +142,26 @@ class SignupFormState extends State<SignupForm> {
                       lastName: lastNameController.text,
                     );
                     // Try to create a new user using the provided details.
-                    APIService.signup(model).then((response) {
-                      if (response.statusCode == 200) {
-                        // Redirect user to the login page.
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                        Navigator.pushNamed(context, LoginPage.id);
-                      } else {
-                        Flushbar(
-                          // Otherwise display a message at the bottom of the screen with the message
-                          // received from the API about what went wrong.
-                          icon: const Icon(Icons.warning_rounded),
-                          title: 'Sign-up was rejected!',
-                          message:
-                              "${response.response[0].toUpperCase()}${response.response.substring(1).toLowerCase()}",
-                          duration: const Duration(seconds: 5),
-                          flushbarStyle: FlushbarStyle.GROUNDED,
-                        ).show(context);
-                      }
-                    });
+                    APIService.signup(model).then(
+                      (response) {
+                        if (response.statusCode == 200) {
+                          // Redirect user to the login page.
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.pushNamed(context, LoginPage.id);
+                        } else {
+                          Flushbar(
+                            // Otherwise display a message at the bottom of the screen with the message
+                            // received from the API about what went wrong.
+                            icon: const Icon(Icons.warning_rounded),
+                            title: 'Sign-up was rejected!',
+                            message:
+                                "${response.response[0].toUpperCase()}${response.response.substring(1).toLowerCase()}",
+                            duration: const Duration(seconds: 5),
+                            flushbarStyle: FlushbarStyle.GROUNDED,
+                          ).show(context);
+                        }
+                      },
+                    );
                   } else {
                     // If the program reaches this bit, it means that some of the user input was
                     // not of a valid format.

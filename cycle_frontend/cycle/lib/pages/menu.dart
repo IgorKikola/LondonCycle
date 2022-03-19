@@ -1,6 +1,7 @@
 import 'package:cycle/main.dart';
 import 'package:cycle/pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/settings.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
@@ -31,14 +32,17 @@ class Menu extends StatelessWidget {
           SizedBox(height: 10),
           buildSettings(context),
           SizedBox(height: 50),
+          // EDIT THIS PART ACCORDING TO YOUR DESIGN
+          buildEditProfile(context),
+
           ElevatedButton(
-              onPressed: () {
-                // Error here
-                UserDetailsHelper.logout(context);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, StartingPage.id, (route) => false);
-              },
-              child: const Text('Log out'))
+            onPressed: () {
+              UserDetailsHelper.logout(context);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, StartingPage.id, (route) => false);
+            },
+            child: const Text('Log out'),
+          )
         ],
       ),
     );
@@ -179,6 +183,28 @@ Widget buildSettings(BuildContext context) => Container(
                 context,
                 MaterialPageRoute(builder: (context) => const Settings()),
               );
+            },
+          ),
+        ),
+      ),
+    );
+
+Widget buildEditProfile(BuildContext context) => Container(
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Edit Profile',
+                style: GoogleFonts.lato(
+                    fontStyle: FontStyle.normal, color: Colors.white)),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EditProfileLoadingScreen();
+              }));
             },
           ),
         ),

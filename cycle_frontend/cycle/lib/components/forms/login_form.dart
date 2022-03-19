@@ -1,13 +1,10 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:cycle/pages/edit_user_profile.dart';
 import 'package:cycle/pages/home_page.dart';
-import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/services/api_service.dart';
-import 'package:cycle/components/form_button.dart';
+import 'package:cycle/components/custom_blue_button.dart';
 import 'package:cycle/constants.dart';
 import 'package:cycle/models/login_request_model.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
-import 'package:cycle/pages/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +107,7 @@ class LoginFormState extends State<LoginForm> {
             // Login button section
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: FormButton(
+              child: CustomBlueButton(
                 text: 'Login',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -124,26 +121,24 @@ class LoginFormState extends State<LoginForm> {
                     );
                     // Try to log in the user and if the response is not null (login was
                     // successful) open the main page of the application (save user details in cache).
-                    APIService.login(model).then((response) {
-                      if (response) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, HomePage.id, (route) => false);
-                        //Navigator.push(context,
-                        //    MaterialPageRoute(builder: (context) {
-                        //  return EditProfileLoadingScreen();
-                        //}));
-                      } else {
-                        // If login was unsuccessful, show a bar for the user at the bottom of the screen.
-                        Flushbar(
-                          icon: const Icon(Icons.warning_rounded),
-                          title: 'Credentials are invalid.',
-                          message:
-                              'Check if your email and password are correct.',
-                          duration: const Duration(seconds: 5),
-                          flushbarStyle: FlushbarStyle.GROUNDED,
-                        ).show(context);
-                      }
-                    });
+                    APIService.login(model).then(
+                      (response) {
+                        if (response) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, HomePage.id, (route) => false);
+                        } else {
+                          // If login was unsuccessful, show a bar for the user at the bottom of the screen.
+                          Flushbar(
+                            icon: const Icon(Icons.warning_rounded),
+                            title: 'Credentials are invalid.',
+                            message:
+                                'Check if your email and password are correct.',
+                            duration: const Duration(seconds: 5),
+                            flushbarStyle: FlushbarStyle.GROUNDED,
+                          ).show(context);
+                        }
+                      },
+                    );
                   }
                 },
               ),

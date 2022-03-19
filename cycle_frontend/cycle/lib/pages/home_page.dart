@@ -23,30 +23,27 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        drawer: Menu(),
-        appBar: AppBar(
-          title: Text('Map',
-              style:
-                  GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
-          backgroundColor: Colors.lightBlue,
+    return Scaffold(
+      drawer: Menu(),
+      appBar: AppBar(
+        title: Text('Map',
+            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        backgroundColor: Colors.lightBlue,
+      ),
+      body: SlidingUpPanel(
+        color: Colors.lightBlue,
+        minHeight: 185,
+        maxHeight: 450,
+        parallaxEnabled: true,
+        parallaxOffset: 1.0,
+        isDraggable: true,
+        backdropTapClosesPanel: true,
+        body: MainPage(key: _myMainPageState),
+        panelBuilder: (controller) => SlideUpWidget(
+          controller: controller,
+          mapRefreshCallback: myHomePageMapRefresh,
         ),
-        body: SlidingUpPanel(
-          color: Colors.lightBlue,
-          minHeight: 185,
-          maxHeight: 450,
-          parallaxEnabled: true,
-          parallaxOffset: 1.0,
-          isDraggable: true,
-          backdropTapClosesPanel: true,
-          body: MainPage(key: _myMainPageState),
-          panelBuilder: (controller) => SlideUpWidget(
-            controller: controller,
-            mapRefreshCallback: myHomePageMapRefresh,
-          ),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
     );
   }

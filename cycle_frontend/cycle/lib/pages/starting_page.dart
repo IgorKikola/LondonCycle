@@ -1,3 +1,4 @@
+import 'package:cycle/components/custom_blue_button.dart';
 import 'package:cycle/constants.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
@@ -18,40 +19,44 @@ class _StartingPageState extends State<StartingPage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-            child: Padding(
-          padding: const EdgeInsets.all(40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Cycles',
-                style: TextStyle(fontSize: 80.0),
-              ),
-              const SizedBox(
-                height: 40.0,
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, SignupPage.id),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text("Signup"),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/bicycle.png'),
+                const Text(
+                  'Cycles',
+                  style: TextStyle(
+                    fontSize: 90.0,
+                    fontFamily: 'Lobster',
+                  ),
                 ),
-                style: kSubmitButtonStyle,
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, LoginPage.id),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text("Login"),
+                const SizedBox(
+                  height: 20.0,
                 ),
-                style: kSubmitButtonStyle,
-              )
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomBlueButton(
+                      text: "Signup",
+                      onPressed: () =>
+                          Navigator.pushNamed(context, SignupPage.id),
+                    ),
+                    const SizedBox(
+                      width: 20.0,
+                    ),
+                    CustomBlueButton(
+                      text: "Login",
+                      onPressed: () =>
+                          Navigator.pushNamed(context, LoginPage.id),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
