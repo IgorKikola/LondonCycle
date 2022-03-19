@@ -1,5 +1,4 @@
 import 'package:cycle/components/custom_blue_button.dart';
-import 'package:cycle/constants.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,34 @@ class StartingPage extends StatefulWidget {
   _StartingPageState createState() => _StartingPageState();
 }
 
-class _StartingPageState extends State<StartingPage> {
+class _StartingPageState extends State<StartingPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+      upperBound: 1.0,
+    );
+    animation =
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+    controller.forward();
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +50,13 @@ class _StartingPageState extends State<StartingPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/images/bicycle.png'),
+                Hero(
+                  tag: 'logo',
+                  child: SizedBox(
+                    child: Image.asset('assets/images/bicycle.png'),
+                    height: animation.value * 80,
+                  ),
+                ),
                 const Text(
                   'Cycles',
                   style: TextStyle(
