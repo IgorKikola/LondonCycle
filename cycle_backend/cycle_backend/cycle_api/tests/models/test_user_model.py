@@ -9,8 +9,8 @@ class UserModelTestCase(TestCase):
     """ Set up """
 
     fixtures = [
-        'cycle_backend/cycle_api/tests/fixtures/user.json',
-        'cycle_backend/cycle_api/tests/fixtures/other_users.json'
+        'cycle_backend/cycle_backend/cycle_api/tests/fixtures/user.json',
+        'cycle_backend/cycle_backend/cycle_api/tests/fixtures/other_users.json'
     ]
 
     def setUp(self):
