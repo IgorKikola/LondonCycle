@@ -34,3 +34,12 @@ class Place(models.Model):
                                      landmark[2],
                                      landmark[3])
                 place.save()
+
+class Stop(models.Model):
+    name = models.TextField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created']
