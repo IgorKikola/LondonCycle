@@ -7,7 +7,46 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
 from .models import Place
 
+from rest_framework import permissions
+from .helpers import get_n_closest_places, bikepoint_get_property
+import requests
 
+
+@api_view()
+def get_n_closest_bikepoints(request, n, lat, lon):
+    """
+    Retrieve the n closest bikepoints from the given location.
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_places = get_n_closest_places(n, bikepoints, float(lat), float(lon))
+    serializer = PlaceSerializer(closest_places, many=True)
+    return Response(serializer.data)
+
+@api_view()
+def get_n_closest_landmarks(request, n, lat, lon):
+    """
+    Retrieve the n closest bikepoints from the given location.
+    """
+    landmarks = Place.objects.filter(id__startswith='Landmark')
+    closest_places = get_n_closest_places(n, landmarks, float(lat), float(lon))
+    serializer = PlaceSerializer(closest_places, many=True)
+    return Response(serializer.data)
+
+@api_view()
+def bikepoint_number_of_bikes(request, bikepoint_id):
+    """
+    Retrieve the number of available bikes a certain bikepoint has
+    """
+    return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
+
+@api_view()
+def bikepoint_number_of_empty_docks(request, bikepoint_id):
+    """
+    Retrieve the number of empty docks a certain bikepoint has
+    """
+    return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+
+  
 class PlaceViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows places to be viewed or edited.
