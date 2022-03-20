@@ -1,10 +1,10 @@
 import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/route.dart';
+import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:cycle/services/search_suggestions.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../services/marker_location.dart';
 
@@ -84,11 +84,7 @@ class SearchBox extends StatelessWidget {
           textAlign: TextAlign.center,
           textAlignVertical: TextAlignVertical.bottom,
           // style: const TextStyle(fontSize: 12.0, color: Colors.black),
-          style: GoogleFonts.lato(
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontSize: 14.0,
-          ),
+          style: kSearchBoxTextStyle,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.white),
@@ -104,13 +100,14 @@ class SearchBox extends StatelessWidget {
               child: Icon(Icons.location_on),
             ),
             tileColor: Colors.lightBlueAccent,
-            title: Text(suggestion.toString().split('|').first,
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal,
-                    color: Colors.white)), //suggestion['name']
-            subtitle: Text(suggestion.toString().split('|').elementAt(1),
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              suggestion.toString().split('|').first,
+              style: kSearchBoxSuggestionTitleTextStyle,
+            ), //suggestion['name']
+            subtitle: Text(
+              suggestion.toString().split('|').elementAt(1),
+              style: kSearchBoxSuggestionSubtitleTextStyle,
+            ),
           );
         },
         onSuggestionSelected: onSelected,

@@ -12,7 +12,6 @@ import 'pages/main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:cycle/pages/slide_up_widget.dart';
 import 'package:cycle/pages/menu.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // Default page for users that are not logged in.
 String _defaultPageId = StartingPage.id;
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: _defaultPageId,
+      initialRoute: HomePage.id,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),

@@ -1,5 +1,5 @@
+import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
 
 class Favorites extends StatefulWidget {
@@ -16,7 +16,7 @@ class _FavoritesState extends State<Favorites> {
         drawer: Menu(),
         appBar: AppBar(
           title: Text('Favorites',
-              style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+              style: kAppBarTextStyle),
           backgroundColor: Colors.lightBlue,
         ),
 

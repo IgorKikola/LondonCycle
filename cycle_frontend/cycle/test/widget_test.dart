@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:cycle/main.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   testWidgets('Testing riderText widget is present',
@@ -76,7 +75,7 @@ void main() {
     )));
     await tester.pump();
     Text text = tester.firstWidget(riderText);
-    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text.style?.fontFamily, 'Lato');
   });
 
   testWidgets('Testing riderValue FontFamily package',
@@ -90,7 +89,7 @@ void main() {
     )));
     await tester.pump();
     Text text = tester.firstWidget(riderValue);
-    expect(text.style?.fontFamily, GoogleFonts.lato().fontFamily);
+    expect(text.style?.fontFamily, 'Lato');
   });
 
   testWidgets('Testing the riderIcon is the correct design ',

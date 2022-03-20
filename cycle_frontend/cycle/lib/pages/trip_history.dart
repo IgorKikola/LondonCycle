@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
+
+import '../utilities/constants.dart';
 
 class TripHistory extends StatefulWidget {
   const TripHistory({Key? key}) : super(key: key);
@@ -15,11 +16,12 @@ class _TripHistoryState extends State<TripHistory> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text('Trip History',
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: Text(
+          'Trip History',
+          style: kAppBarTextStyle,
+        ),
         backgroundColor: Colors.lightBlue,
       ),
-
     );
   }
 }

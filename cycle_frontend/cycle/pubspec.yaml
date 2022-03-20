@@ -37,7 +37,6 @@ dependencies:
   # location: ^4.3.0
   restart_app: ^1.1.0
   sliding_up_panel: ^2.0.0+1
-  google_fonts: ^2.0.0
   flutter_typeahead: ^3.2.4
   http: ^0.13.4
   csv: ^5.0.0
@@ -80,6 +79,10 @@ flutter:
     - family: Lobster
       fonts:
         - asset: fonts/Lobster-Regular.ttf
+
+    - family: Lato
+      fonts:
+        - asset: fonts/Lato-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   assets:

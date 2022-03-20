@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/constants.dart';
 import 'main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:cycle/pages/slide_up_widget.dart';
 import 'package:cycle/pages/menu.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';
@@ -26,8 +26,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text('Map',
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: Text(
+          'Map',
+          style: kAppBarTextStyle,
+        ),
         backgroundColor: Colors.lightBlue,
       ),
       body: SlidingUpPanel(
