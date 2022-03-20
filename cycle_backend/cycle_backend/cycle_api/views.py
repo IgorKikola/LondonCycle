@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
-from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
-from cycle_backend.cycle_api.models import Place
+from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer, StopSerializer
+from cycle_backend.cycle_api.models import Place, Stop
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,3 +33,10 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+
+class StopViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows stops to be viewed or edited.
+    """
+    queryset = Stop.objects.all()
+    serializer_class = StopSerializer

@@ -10,6 +10,7 @@ router.register(r'users', views.UserViewSet, basename='users')
 router.register(r'places', views.PlaceViewSet, basename='places')
 router.register(r'bikepoints', views.BikePointViewSet, basename='bikepoints')
 router.register(r'landmarks', views.LandmarkViewSet, basename='landmarks')
+router.register(r'stops', views.StopViewSet, basename='stops')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
