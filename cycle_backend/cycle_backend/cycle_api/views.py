@@ -5,7 +5,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
-from .models import Place, User
+from .models import Place
+
 
 class PlaceViewSet(viewsets.ModelViewSet):
     """
@@ -14,6 +15,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
 
+
 class BikePointViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows bikepoints to be viewed or edited.
@@ -21,12 +23,14 @@ class BikePointViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.filter(id__startswith='BikePoints')
     serializer_class = PlaceSerializer
 
+
 class LandmarkViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows landmarks to be viewed or edited.
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+
 
 # Signup view
 @api_view(['POST'])
@@ -45,10 +49,11 @@ def signup_view(request):
         response_data['token'] = token
     else:
         response_data = {
-                "detail" : serializer.errors['email'][0]
-            }
+            "detail": serializer.errors['email'][0]
+        }
         return Response(response_data, 400)
     return Response(response_data)
+
 
 # Update user profile
 @api_view(['PUT'])
@@ -56,7 +61,6 @@ def signup_view(request):
 def update_profile_view(request):
     serializer = UserSerializer(data=request.data)
     user = request.user
-    response_data = {}
     if serializer.is_valid():
         response_data = update_user(user, serializer.data)
     else:
@@ -64,10 +68,11 @@ def update_profile_view(request):
             response_data = update_user(user, serializer.data)
         else:
             response_data = {
-                "detail" : serializer.errors['email'][0]
+                "detail": serializer.errors['email'][0]
             }
             return Response(response_data, 400)
     return Response(response_data)
+
 
 # Get user details
 @api_view(['GET'])
@@ -76,15 +81,18 @@ def get_user_details_view(request):
     user = request.user
 
     response_data = {
-        'first_name' : user.first_name,
-        'last_name' : user.last_name,
-        'email' : user.email
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email
     }
 
     return Response(response_data)
 
+
 """ Used to update user and return a response containing his updated information """
-def update_user(user, data) :
+
+
+def update_user(user, data):
     user.first_name = data['first_name']
     user.last_name = data['last_name']
     user.email = data['email']
@@ -92,19 +100,18 @@ def update_user(user, data) :
     user.save()
 
     response_data = {
-        'response' : "Edit was successful",
-        'first_name' : user.first_name,
-        'last_name' : user.last_name,
-        'email' : user.email,
+        'response': "Update was successful",
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
     }
     return response_data
 
-
-# Each views that needs user to be authenticated to access it, MUST be stated as:
+# Each restful view that needs user to be authenticated to access it, MUST be stated as:
 #
 # @api_view([POST/GET/PUT])
 # @permission_classes([IsAuthenticated])
 # def view_name(request):
 #   ...
 #
-# Each call to the api view must have a header of the form: "Authorization" : "Token 4245eccsEcsdc..."
+# Each call to the api view must have a  token in the header: "Authorization" : "Token {actual_token}"
