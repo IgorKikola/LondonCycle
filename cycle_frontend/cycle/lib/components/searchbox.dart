@@ -6,6 +6,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../services/marker_location.dart';
+
 const kOutlineInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(10.0)),
   borderSide: BorderSide.none,
@@ -16,6 +18,7 @@ class SearchBox extends StatelessWidget {
 
   static const int maxLocationStringLength = 30;
   final Waypoint searchboxType;
+  MarkerLocation marker = MarkerLocation();
 
   void onSelected(String suggestion) {
     String suggestionFullName = suggestion.toString().split('|').elementAt(0);
@@ -33,9 +36,11 @@ class SearchBox extends StatelessWidget {
     switch (searchboxType) {
       case Waypoint.START:
         myRoute.setStartingLocation(selectedLocation);
+        marker.setStartingLocation(selectedLocation);
         break;
       case Waypoint.FINISH:
         myRoute.setFinishingLocation(selectedLocation);
+        marker.setEndingLocation(selectedLocation);
         break;
     }
 

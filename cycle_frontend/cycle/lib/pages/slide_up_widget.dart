@@ -18,8 +18,12 @@ final TextEditingController finishingPointSearchboxTypeAheadController =
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
+  final mapRefreshCallback;
 
-  SlideUpWidget({Key? key, required this.controller}) : super(key: key);
+  SlideUpWidget(
+      {Key? key, required this.controller, required void mapRefreshCallback()})
+      : mapRefreshCallback = mapRefreshCallback,
+        super(key: key);
 
   @override
   State<SlideUpWidget> createState() => _SlideUpWidgetState();
@@ -58,7 +62,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         myRoute.finishingLocation != null;
   }
 
-  void findRoute() {
+  Future<void> findRoute() async {
     print('finding route for...');
     if (myRoute.startingLocation != null) {
       print('starting point: ${myRoute.startingLocation}');
@@ -67,8 +71,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${myRoute.finishingLocation}');
     }
 
-    DirectionsService.getInstructionsForRoute(myRoute);
+    await DirectionsService.getCoordinatesForRoute(myRoute);
+
     print('route found.');
+
+    widget.mapRefreshCallback();
   }
 
   @override
@@ -99,7 +106,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       );
 
   Widget buildSearchBar(BuildContext context) => Container(
-      child: Padding(
+        child: Padding(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -162,7 +169,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         children: [
                           Container(
                             height: 30,
-                            width: 110,
+                            width: 130,
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -189,15 +196,16 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
-                                    SizedBox(width: 20.0)
+                                    SizedBox(width: 10.0)
                                   ],
                                 ),
                               ),
                             ),
                           ),
+                          SizedBox(width: 10),
                           Container(
                             height: 30,
-                            width: 110,
+                            width: 80,
                             decoration: BoxDecoration(
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -206,7 +214,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
-                                onTap: () {},
+                                onTap: () {
+                                  findRoute();
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -216,9 +226,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               ),
                             ),
                           ),
+                          SizedBox(width: 10),
                           Container(
                             height: 30,
-                            width: 110,
+                            width: 130,
+                            key: Key('RiderContainer'),
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -227,24 +239,66 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
-                                onTap: () {},
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Add riders'),
+                                      content: new TextField(
+                                        controller: numController,
+                                        decoration: new InputDecoration(
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            changeText();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  changeText(),
+                                },
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.directions_bike,
+                                    Icon(Icons.person_add,
+                                        key: Key('RiderIcon'),
                                         color: Colors.red),
-                                    Text('Riders',
+                                    Text('Riders:',
+                                        key: Key('RiderText'),
                                         style: GoogleFonts.lato(
                                             fontStyle: FontStyle.normal,
                                             color: Colors.white)),
-                                    SizedBox(width: 20.0)
+                                    SizedBox(width: 5),
+                                    Container(
+                                        //padding: EdgeInsets.only(right: 70),
+                                        child: Text(num.toString(),
+                                            key: Key('RiderValue'),
+                                            style: GoogleFonts.lato(
+                                                fontStyle: FontStyle.normal,
+                                                color: Colors.white))),
+                                    SizedBox(width: 10),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          // SizedBox(width: 50),
                         ],
                       ),
                     ],
@@ -252,7 +306,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 ),
               ),
             ],
-          )));
+          ),
+        ),
+      );
 
   Widget buildWidgetGrid() => Container(
         padding: EdgeInsets.all(1.0),

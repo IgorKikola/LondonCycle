@@ -1,5 +1,5 @@
-class SignupRequestModel {
-  SignupRequestModel({
+class UpdateProfileRequestModel {
+  UpdateProfileRequestModel({
     required this.firstName,
     required this.lastName,
     required this.email,
