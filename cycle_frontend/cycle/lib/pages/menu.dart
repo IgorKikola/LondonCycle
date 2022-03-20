@@ -7,11 +7,11 @@ import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../utilities/constants.dart';
 import 'trip_history.dart';
 import 'profile.dart';
 import 'package:cycle/pages/trip_history.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Menu extends StatelessWidget {
   @override
@@ -81,12 +81,10 @@ Widget buildProfileColumn(BuildContext context) => Container(
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("John Doe",
-                          style: GoogleFonts.lato(
-                            fontStyle: FontStyle.normal,
-                            color: Colors.white,
-                            fontSize: 30,
-                          )),
+                      Text(
+                        "John Doe",
+                        style: kMenuProfileTextStyle,
+                      ),
                     ],
                   ),
                 ],
@@ -106,9 +104,10 @@ Widget buildFavorites(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           child: ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Favorites',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              'Favorites',
+              style: kMenuItemTextStyle,
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -129,9 +128,10 @@ Widget buildMap(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           child: ListTile(
             leading: Icon(Icons.map),
-            title: Text('Map',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              'Map',
+              style: kMenuItemTextStyle,
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -152,9 +152,10 @@ Widget buildHistory(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           child: ListTile(
             leading: Icon(Icons.history),
-            title: Text('Trip History',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              'Trip History',
+              style: kMenuItemTextStyle,
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -175,9 +176,10 @@ Widget buildSettings(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           child: ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              'Settings',
+              style: kMenuItemTextStyle,
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -198,9 +200,10 @@ Widget buildEditProfile(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           child: ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Edit Profile',
-                style: GoogleFonts.lato(
-                    fontStyle: FontStyle.normal, color: Colors.white)),
+            title: Text(
+              'Edit Profile',
+              style: kMenuItemTextStyle,
+            ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfileLoadingScreen();

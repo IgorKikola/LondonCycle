@@ -1,11 +1,11 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
+import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../services/route.dart';
 import '../animations/animate.dart';
@@ -192,10 +192,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   children: [
                                     Icon(Icons.add_location_alt,
                                         color: Colors.red),
-                                    Text('Stops',
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
+                                    Text(
+                                      'Stops',
+                                      style: kSlideUpWidgetLabelTextStyle,
+                                    ),
                                     SizedBox(width: 10.0)
                                   ],
                                 ),
@@ -280,19 +280,20 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                     Icon(Icons.person_add,
                                         key: Key('RiderIcon'),
                                         color: Colors.red),
-                                    Text('Riders:',
-                                        key: Key('RiderText'),
-                                        style: GoogleFonts.lato(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
+                                    Text(
+                                      'Riders:',
+                                      key: Key('RiderText'),
+                                      style: kSlideUpWidgetLabelTextStyle,
+                                    ),
                                     SizedBox(width: 5),
                                     Container(
-                                        //padding: EdgeInsets.only(right: 70),
-                                        child: Text(num.toString(),
-                                            key: Key('RiderValue'),
-                                            style: GoogleFonts.lato(
-                                                fontStyle: FontStyle.normal,
-                                                color: Colors.white))),
+                                      //padding: EdgeInsets.only(right: 70),
+                                      child: Text(
+                                        num.toString(),
+                                        key: Key('RiderValue'),
+                                        style: kSlideUpWidgetLabelTextStyle,
+                                      ),
+                                    ),
                                     SizedBox(width: 10),
                                   ],
                                 ),
@@ -364,11 +365,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text('Landmarks:',
-                                                style: GoogleFonts.lato(
-                                                    fontStyle: FontStyle.normal,
-                                                    color: Colors.white,
-                                                    fontSize: 18)),
+                                            Text(
+                                              'Landmarks:',
+                                              style:
+                                                  kSlideUpWidgetBottomSectionLabelTextStyle,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -399,11 +400,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('London Eye',
-                                                    style: GoogleFonts.lato(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        color: Colors.white)),
+                                                Text(
+                                                  'London Eye',
+                                                  style:
+                                                      kSlideUpWidgetLeftBottomSectionItemTextStyle,
+                                                ),
                                                 new IconButton(
                                                   alignment: Alignment(1.0, 0),
                                                   icon: Icon(Icons.star,
@@ -459,11 +460,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('Big Ben',
-                                                    style: GoogleFonts.lato(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        color: Colors.white)),
+                                                Text(
+                                                  'Big Ben',
+                                                  style:
+                                                      kSlideUpWidgetLeftBottomSectionItemTextStyle,
+                                                ),
                                                 new IconButton(
                                                   alignment: Alignment(1.0, 0),
                                                   icon: Icon(Icons.star,
@@ -513,11 +514,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('The Shard',
-                                                    style: GoogleFonts.lato(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        color: Colors.white)),
+                                                Text(
+                                                  'The Shard',
+                                                  style:
+                                                      kSlideUpWidgetLeftBottomSectionItemTextStyle,
+                                                ),
                                                 new IconButton(
                                                   alignment: Alignment(1.0, 0),
                                                   icon: Icon(Icons.star,
@@ -567,11 +568,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('Tower Bridge',
-                                                    style: GoogleFonts.lato(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        color: Colors.white)),
+                                                Text(
+                                                  'Tower Bridge',
+                                                  style:
+                                                      kSlideUpWidgetLeftBottomSectionItemTextStyle,
+                                                ),
                                                 new IconButton(
                                                   alignment: Alignment(1.0, 0),
                                                   icon: Icon(Icons.star,
@@ -633,11 +634,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('Bike Points:',
-                                        style: GoogleFonts.lato(
-                                            fontSize: 18,
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white)),
+                                    Text(
+                                      'Bike Points:',
+                                      style:
+                                          kSlideUpWidgetBottomSectionLabelTextStyle,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -661,11 +662,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('Horseferry Road',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          Text(
+                                            'Horseferry Road',
+                                            style:
+                                                kSlideUpWidgetRightBottomSectionItemTextStyle,
+                                          ),
                                           // Text('0.5 miles away',
                                           //     style: GoogleFonts.lato(
                                           //         fontSize: 10,
@@ -695,11 +696,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('Westminister Pier',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          Text(
+                                            'Westminister Pier',
+                                            style:
+                                                kSlideUpWidgetRightBottomSectionItemTextStyle,
+                                          ),
                                           // Text('1.5 miles away',
                                           //     style: GoogleFonts.lato(
                                           //         fontSize: 10,
@@ -729,11 +730,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('Vauxhall Bridge',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          Text(
+                                            'Vauxhall Bridge',
+                                            style:
+                                                kSlideUpWidgetRightBottomSectionItemTextStyle,
+                                          ),
                                           // Text('2 miles away',
                                           //     style: GoogleFonts.lato(
                                           //         fontSize: 10,
@@ -763,11 +764,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('Milbank Tower',
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 10,
-                                                  fontStyle: FontStyle.normal,
-                                                  color: Colors.white)),
+                                          Text(
+                                            'Milbank Tower',
+                                            style:
+                                                kSlideUpWidgetRightBottomSectionItemTextStyle,
+                                          ),
                                           // Text('2.5 miles away',
                                           //     style: GoogleFonts.lato(
                                           //         fontSize: 10,
@@ -806,8 +807,10 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
               return AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
-                title: Text("Landmarks",
-                    style: GoogleFonts.lato(color: Colors.white)),
+                title: Text(
+                  "Landmarks",
+                  style: kSlideUpWidgetLandmarksAlertDialogTitleTextStyle,
+                ),
                 backgroundColor: Colors.lightBlueAccent,
                 content: SingleChildScrollView(
                   child: Container(
@@ -827,11 +830,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 margin: const EdgeInsets.all(3),
                                 color: Colors.lightBlue[200],
                                 child: ListTile(
-                                  title: Text(data[index][1],
-                                      style: GoogleFonts.lato(
-                                          fontSize: 15,
-                                          fontStyle: FontStyle.normal,
-                                          color: Colors.white)),
+                                  title: Text(
+                                    data[index][1],
+                                    style:
+                                        kSlideUpWidgetLandmarksAlertDialogListTileTextStyle,
+                                  ),
                                 ),
                               );
                             },
