@@ -474,7 +474,7 @@ class _LandmarkItemWidgetState extends State<LandmarkItemWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.landmarkName,
+                sanitiseString(widget.landmarkName, 5),
                 style: kSlideUpWidgetLeftBottomSectionItemTextStyle,
               ),
               IconButton(
@@ -530,7 +530,7 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.bikeStationName,
+                sanitiseString(widget.bikeStationName, 5),
                 style: kSlideUpWidgetRightBottomSectionItemTextStyle,
               ),
               Text(
@@ -565,7 +565,7 @@ class BottomSectionLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            labelText,
+            sanitiseString(labelText, 5),
             style: kSlideUpWidgetBottomSectionLabelTextStyle,
           ),
         ],
@@ -692,3 +692,9 @@ class StopsWidget extends StatelessWidget {
     );
   }
 }
+
+//TODO: make string somehow adaptable to the available space
+String sanitiseString(String string, int maxLength) =>
+    string.length >= maxLength
+        ? string.substring(0, maxLength - 1) + '...'
+        : string;
