@@ -269,6 +269,18 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  void zoomIn() {
+    setState(() {
+      mapController.move(mapController.center, (mapController.zoom + 1));
+    });
+  }
+
+  void zoomOut() {
+    setState(() {
+      mapController.move(mapController.center, (mapController.zoom - 1));
+    });
+  }
+
   void center() {
     // Automatically center the map on the location marker until user interacts with the map.
     setState(
