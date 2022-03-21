@@ -244,10 +244,21 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                      title: const Text('Add riders'),
+                                      backgroundColor: Colors.lightBlue[200],
+                                      title: const Text(
+                                        'Add riders',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                       content: new TextField(
                                         controller: numController,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
                                         decoration: new InputDecoration(
+                                            labelStyle:
+                                                TextStyle(color: Colors.white),
                                             labelText:
                                                 "Enter the number of riders."),
                                         keyboardType: TextInputType.number,
@@ -259,14 +270,24 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context, 'Cancel'),
-                                          child: const Text('Cancel'),
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
                                         TextButton(
                                           onPressed: () {
                                             Navigator.pop(context, 'OK');
                                             changeText();
                                           },
-                                          child: const Text('OK'),
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
