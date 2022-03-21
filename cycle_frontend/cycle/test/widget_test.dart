@@ -12,6 +12,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:cycle/main.dart';
 
 void main() {
+  testWidgets('Sanity checks for some widgets inside SlideUpWidget',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SlideUpWidget(
+          controller: ScrollController(),
+          mapRefreshCallback: () {},
+        ),
+      ),
+    );
+    await tester.pump();
+
+    // Verify that some core widgets are displayed on the SlideUp widget.
+    expect(find.text('Starting location'), findsOneWidget);
+    expect(find.text('Destination'), findsOneWidget);
+    expect(find.text('Stops'), findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('Land...'), findsOneWidget);
+    expect(find.text('Bike...'), findsOneWidget);
+    expect(find.text('abcd'), findsNothing);
+    expect(find.text('1'), findsNothing);
+  });
+
   testWidgets('Testing riderText widget is present',
       (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
