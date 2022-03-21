@@ -188,6 +188,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 280,
             child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: center,
               child: const Icon(
                 Icons.my_location,
@@ -199,6 +200,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 330,
             child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: moveToStart,
               child: const Icon(
                 Icons.pin_drop,
@@ -210,6 +212,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 380,
             child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: moveToDestination,
               child: const Icon(
                 Icons.sports_score,
@@ -221,6 +224,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 430,
             child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: zoomIn,
               child: const Icon(
                 Icons.zoom_in,
@@ -232,6 +236,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 480,
             child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: zoomOut,
               child: const Icon(
                 Icons.zoom_out,
