@@ -251,6 +251,24 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  void moveToDestination() {
+    setState(() {
+      mapController.move(
+          LatLng(searchMarker.getDestination().latitude,
+              searchMarker.getDestination().longitude),
+          13);
+    });
+  }
+
+  void moveToStart() {
+    setState(() {
+      mapController.move(
+          LatLng(searchMarker.getStartingLocation().latitude,
+              searchMarker.getStartingLocation().longitude),
+          13);
+    });
+  }
+
   void center() {
     // Automatically center the map on the location marker until user interacts with the map.
     setState(
