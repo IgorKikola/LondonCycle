@@ -15,7 +15,7 @@ class StopProvider with ChangeNotifier {
   }
 
   void addStop(JourneyStop stop) async {
-    final url = 'http://10.0.2.2:8000/stops/';
+    final url = 'https://agile-citadel-13372.herokuapp.com/stops/';
     final response = await http.post(Uri.parse(url),
         headers: {"Content-Type": "application/json"}, body: json.encode(stop));
     if (response.statusCode == 201) {
@@ -25,7 +25,7 @@ class StopProvider with ChangeNotifier {
   }
 
   void deleteStop(JourneyStop stop) async {
-    final url = 'http://10.0.2.2:8000/stops/${stop.id}/';
+    final url = 'https://agile-citadel-13372.herokuapp.com/stops/${stop.id}/';
     final response = await http.delete(Uri.parse(url),
         headers: {"Content-Type": "application/json"}, body: json.encode(stop));
     if (response.statusCode == 204) {
@@ -35,7 +35,7 @@ class StopProvider with ChangeNotifier {
   }
 
   getStops() async {
-    final url = 'http://10.0.2.2:8000/stops/?format=json';
+    final url = 'https://agile-citadel-13372.herokuapp.com/stops/?format=json';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body)['results'] as List;
