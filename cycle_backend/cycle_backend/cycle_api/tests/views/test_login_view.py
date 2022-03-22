@@ -8,12 +8,6 @@ from django.urls import reverse
 class LoginViewTestCase(APITestCase):
     """ Tests of the login view """
 
-    """ Set up """
-
-    fixtures = [
-        'cycle_backend/cycle_api/tests/fixtures/other_users.json'
-    ]
-
     def setUp(self):
         self.request_body = {
             "username": "jimmypage@gmail.com",
