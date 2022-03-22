@@ -73,6 +73,26 @@ def get_closest_available_bikepoint(request, min_bikes, lat, lon):
     serializer = PlaceSerializer(closest_bikepoint)
     return Response(serializer.data)
 
+@api_view()
+@permission_classes([])
+def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+    """
+    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+
+    coordinates = (lat, lon)
+    queue = get_places_by_distance(bikepoints, lat, lon)
+    closest_bikepoint = None
+    while (not queue.empty()) and closest_bikepoint is None:
+        bikepoint = queue.get()[1]
+        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
+        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
+            closest_bikepoint = bikepoint
+
+    serializer = PlaceSerializer(closest_bikepoint)
+    return Response(serializer.data)
+
 class PlaceViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows places to be viewed or edited.

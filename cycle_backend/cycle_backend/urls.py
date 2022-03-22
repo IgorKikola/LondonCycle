@@ -17,6 +17,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('closest/bikepoint/with/<int:min_empty_docks>/empty_docks/from/<str:lat>/<str:lon>/', views.get_closest_bikepoint_with_empty_docks, name = "closest_bikepoint_with_empty_docks"),
     path('closest/bikepoint/with/<int:min_bikes>/bikes/from/<str:lat>/<str:lon>/', views.get_closest_available_bikepoint, name = "closest_available_bikepoint"),
     path('closest/<int:n>/bikepoints/from/<str:lat>/<str:lon>/', views.get_n_closest_bikepoints, name = "closest_bikepoints"),
     path('closest/<int:n>/landmarks/from/<str:lat>/<str:lon>/', views.get_n_closest_landmarks, name = "closest_landmarks"),
