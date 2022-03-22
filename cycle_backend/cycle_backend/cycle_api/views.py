@@ -3,13 +3,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-
+from django.http import JsonResponse
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
 from .models import Place
-
-from rest_framework import permissions
 from .helpers import get_n_closest_places, bikepoint_get_property
-import requests
 
 
 @api_view()
@@ -91,7 +88,7 @@ def signup_view(request):
             "detail": serializer.errors['email'][0]
         }
         return Response(response_data, 400)
-    return Response(response_data)
+    return JsonResponse(response_data)
 
 
 # Update user profile
@@ -110,7 +107,7 @@ def update_profile_view(request):
                 "detail": serializer.errors['email'][0]
             }
             return Response(response_data, 400)
-    return Response(response_data)
+    return JsonResponse(response_data)
 
 
 # Get user details
@@ -125,7 +122,7 @@ def get_user_details_view(request):
         'email': user.email
     }
 
-    return Response(response_data)
+    return JsonResponse(response_data)
 
 
 """ Used to update user and return a response containing his updated information """
