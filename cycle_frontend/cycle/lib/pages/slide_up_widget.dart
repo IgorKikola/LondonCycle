@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 import '../services/route.dart';
 import '../animations/animate.dart';
-import 'journey_stops.dart';
+import 'journey_stop_pages/journey_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -673,7 +673,7 @@ class StopsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const JourneyStops()),
+              MaterialPageRoute(builder: (context) => JourneyStops()),
             );
           },
           child: Row(

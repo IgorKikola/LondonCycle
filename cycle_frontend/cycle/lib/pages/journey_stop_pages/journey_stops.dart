@@ -62,7 +62,7 @@ class StopTiles extends StatelessWidget {
                     ),
                   )),
             ),
-            const SizedBox(height: 5)
+            const SizedBox(height: 5),
           ]);
         },
       ),
