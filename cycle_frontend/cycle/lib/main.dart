@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: HomePage.id,
+      initialRoute: NavigationPage.id,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),
