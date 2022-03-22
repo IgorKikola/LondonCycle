@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-from django.http import JsonResponse
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
 from .models import Place
 from .helpers import get_n_closest_places, bikepoint_get_property
@@ -19,6 +18,7 @@ def get_n_closest_bikepoints(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 def get_n_closest_landmarks(request, n, lat, lon):
     """
@@ -29,21 +29,23 @@ def get_n_closest_landmarks(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 def bikepoint_number_of_bikes(request, bikepoint_id):
     """
     Retrieve the number of available bikes a certain bikepoint has
     """
-    return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
+    return Response({'Number of bikes': bikepoint_get_property(bikepoint_id, 'NbBikes')})
+
 
 @api_view()
 def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     Retrieve the number of empty docks a certain bikepoint has
     """
-    return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+    return Response({'Number of empty docks': bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
 
-  
+
 class PlaceViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows places to be viewed or edited.
@@ -87,8 +89,8 @@ def signup_view(request):
         response_data = {
             "detail": serializer.errors['email'][0]
         }
-        return Response(response_data, 400)
-    return JsonResponse(response_data)
+        return Response(response_data, status=400)
+    return Response(response_data)
 
 
 # Update user profile
@@ -106,8 +108,8 @@ def update_profile_view(request):
             response_data = {
                 "detail": serializer.errors['email'][0]
             }
-            return Response(response_data, 400)
-    return JsonResponse(response_data)
+            return Response(response_data, status=400, content_type="application/json")
+    return Response(response_data, content_type="application/json")
 
 
 # Get user details
@@ -122,7 +124,7 @@ def get_user_details_view(request):
         'email': user.email
     }
 
-    return JsonResponse(response_data)
+    return Response(response_data, content_type="application/json")
 
 
 """ Used to update user and return a response containing his updated information """
