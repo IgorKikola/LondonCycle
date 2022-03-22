@@ -41,6 +41,8 @@ def bikepoint_get_property(bikepoint_id, property_key):
     Returns None if it doesn't exist.
     """
     response = requests.get(f'https://api.tfl.gov.uk/BikePoint/{bikepoint_id}')
+    if response.status_code != 200:
+        return None
     additionalProperties = response.json()['additionalProperties']
     value = None
     for property in additionalProperties:
