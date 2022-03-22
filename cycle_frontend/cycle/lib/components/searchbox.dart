@@ -1,5 +1,6 @@
 import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/route.dart';
+import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -19,6 +20,7 @@ class SearchBox extends StatelessWidget {
   static const int maxLocationStringLength = 30;
   final Waypoint searchboxType;
   MarkerLocation marker = MarkerLocation();
+  StopLocation stop = StopLocation();
 
   void onSelected(String suggestion) {
     String suggestionFullName = suggestion.toString().split('|').elementAt(0);
@@ -42,6 +44,9 @@ class SearchBox extends StatelessWidget {
         myRoute.setFinishingLocation(selectedLocation);
         marker.setEndingLocation(selectedLocation);
         break;
+      case Waypoint.MIDPOINT:
+        stop.setStopLocation(selectedLocation);
+        break;
     }
 
     print('A location has been picked for the $searchboxType of the journey.');
@@ -63,6 +68,9 @@ class SearchBox extends StatelessWidget {
         break;
       case Waypoint.FINISH:
         hintText = 'Destination';
+        break;
+      case Waypoint.MIDPOINT:
+        hintText = 'Enter Stop';
         break;
     }
   }
