@@ -1,13 +1,14 @@
 import 'dart:async';
+
 import 'package:cycle/services/data_manager.dart';
+import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:cycle/services/location_manager.dart';
-import 'package:cycle/pages/menu.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../services/marker_location.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -19,11 +20,17 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  MainPageState createState() => MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class MainPageState extends State<MainPage> {
+  final GlobalKey<_MapWidgetState> _myMapWidgetState =
+      GlobalKey<_MapWidgetState>();
   final LocationManager _locationManager = LocationManager();
+
+  void myMapRefresh() {
+    _myMapWidgetState.currentState?._myMapWidgetRefresh();
+  }
 
   @override
   void initState() {
@@ -39,12 +46,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const MapWidget();
+    return MapWidget(key: _myMapWidgetState);
   }
 }
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({
+  MapWidget({
     Key? key,
   }) : super(key: key);
 
@@ -56,6 +63,11 @@ class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
+  MarkerLocation searchMarker = MarkerLocation();
+
+  void _myMapWidgetRefresh() {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -126,6 +138,48 @@ class _MapWidgetState extends State<MapWidget> {
                   centerOnLocationUpdate: _centerOnLocationUpdate,
                 ),
               ),
+              PolylineLayerWidget(
+                options: PolylineLayerOptions(
+                    polylines: DirectionsService.getPolylines()),
+              ),
+            ],
+            layers: [
+              MarkerLayerOptions(
+                markers: [
+                  new Marker(
+                    width: 45.0,
+                    height: 45.0,
+                    point: LatLng(searchMarker.getStartingLocation().latitude,
+                        searchMarker.getStartingLocation().longitude),
+                    builder: (context) => Container(
+                      child: IconButton(
+                        icon: Icon(Icons.location_on),
+                        color: Colors.red[900],
+                        iconSize: 50.0,
+                        onPressed: () {
+                          print('This is the search location');
+                        },
+                      ),
+                    ),
+                  ),
+                  new Marker(
+                    width: 45.0,
+                    height: 45.0,
+                    point: LatLng(searchMarker.getEndingLocation().latitude,
+                        searchMarker.getEndingLocation().longitude),
+                    builder: (context) => Container(
+                      child: IconButton(
+                        icon: Icon(Icons.location_on),
+                        color: Colors.blue[900],
+                        iconSize: 50.0,
+                        onPressed: () {
+                          print('This is the destination location');
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
           Positioned(
@@ -142,6 +196,13 @@ class _MapWidgetState extends State<MapWidget> {
         ],
       ),
     );
+  }
+
+  void adjustMarker() {
+    setState(() {
+      searchMarker.getStartingLocation();
+      searchMarker.getEndingLocation();
+    });
   }
 
   void center() {

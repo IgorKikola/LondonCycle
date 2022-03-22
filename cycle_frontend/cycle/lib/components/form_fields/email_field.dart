@@ -6,15 +6,11 @@ import '../../constants.dart';
 /// Email field used in the sign-up form.
 class EmailField extends StatefulWidget {
   final TextEditingController controller;
-  final String initialText;
   final String label;
   final String hint;
 
   const EmailField(
-      {required this.controller,
-      required this.initialText,
-      required this.label,
-      required this.hint});
+      {required this.controller, required this.label, required this.hint});
 
   @override
   EmailFieldState createState() {
@@ -32,7 +28,6 @@ class EmailFieldState extends State<EmailField> {
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      initialValue: widget.initialText == '' ? null : widget.initialText,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter your email';

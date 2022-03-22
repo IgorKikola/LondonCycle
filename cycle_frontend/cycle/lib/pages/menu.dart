@@ -1,13 +1,17 @@
 import 'package:cycle/main.dart';
 import 'package:cycle/pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/settings.dart';
+import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:cycle/pages/starting_page.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../utilities/constants.dart';
 import 'trip_history.dart';
 import 'profile.dart';
 import 'package:cycle/pages/trip_history.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Menu extends StatelessWidget {
   @override
@@ -17,7 +21,7 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(10),
         children: [
-          SizedBox(height:70),
+          SizedBox(height: 70),
           buildProfileColumn(context),
           SizedBox(height: 10),
           buildMap(context),
@@ -27,6 +31,18 @@ class Menu extends StatelessWidget {
           buildHistory(context),
           SizedBox(height: 10),
           buildSettings(context),
+          SizedBox(height: 50),
+          // EDIT THIS PART ACCORDING TO YOUR DESIGN
+          buildEditProfile(context),
+
+          ElevatedButton(
+            onPressed: () {
+              UserDetailsHelper.logout(context);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, StartingPage.id, (route) => false);
+            },
+            child: const Text('Log out'),
+          )
         ],
       ),
     );
@@ -40,12 +56,12 @@ Widget buildProfileColumn(BuildContext context) => Container(
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
-onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const Profile()),
-  );
-},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Profile()),
+            );
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -65,12 +81,10 @@ onTap: () {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("John Doe",
-                          style: GoogleFonts.lato(
-                            fontStyle: FontStyle.normal,
-                            color: Colors.white,
-                            fontSize: 30,
-                          )),
+                      Text(
+                        "John Doe",
+                        style: kMenuProfileTextStyle,
+                      ),
                     ],
                   ),
                 ],
@@ -82,94 +96,120 @@ onTap: () {
     );
 
 Widget buildFavorites(BuildContext context) => Container(
-  height: 50,
-  child: Material(
-    color: Colors.lightBlue[200],
-    borderRadius: BorderRadius.circular(15.0),
-    child: InkWell(
-      splashColor: Colors.lightBlue,
-      child: ListTile(
-        leading: Icon(Icons.favorite),
-        title: Text('Favorites',
-            style: GoogleFonts.lato(
-                fontStyle: FontStyle.normal, color: Colors.white)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Favorites()),
-          );
-        },
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(
+              'Favorites',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Favorites()),
+              );
+            },
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
 
 Widget buildMap(BuildContext context) => Container(
-  height: 50,
-  child: Material(
-    color: Colors.lightBlue[200],
-    borderRadius: BorderRadius.circular(15.0),
-    child: InkWell(
-      splashColor: Colors.lightBlue,
-      child: ListTile(
-        leading: Icon(Icons.map),
-        title: Text('Map',
-            style: GoogleFonts.lato(
-                fontStyle: FontStyle.normal, color: Colors.white)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
-        },
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.map),
+            title: Text(
+              'Map',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
 
 Widget buildHistory(BuildContext context) => Container(
-  height: 50,
-  child: Material(
-    color: Colors.lightBlue[200],
-    borderRadius: BorderRadius.circular(15.0),
-    child: InkWell(
-      splashColor: Colors.lightBlue,
-      child: ListTile(
-        leading: Icon(Icons.history),
-        title: Text('Trip History',
-            style: GoogleFonts.lato(
-                fontStyle: FontStyle.normal, color: Colors.white)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TripHistory()),
-          );
-        },
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.history),
+            title: Text(
+              'Trip History',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TripHistory()),
+              );
+            },
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
 
 Widget buildSettings(BuildContext context) => Container(
-  height: 50,
-  child: Material(
-    color: Colors.lightBlue[200],
-    borderRadius: BorderRadius.circular(15.0),
-    child: InkWell(
-      splashColor: Colors.lightBlue,
-      child: ListTile(
-        leading: Icon(Icons.settings),
-        title: Text('Settings',
-            style: GoogleFonts.lato(
-                fontStyle: FontStyle.normal, color: Colors.white)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Settings()),
-          );
-        },
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.settings),
+            title: Text(
+              'Settings',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Settings()),
+              );
+            },
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
 
+Widget buildEditProfile(BuildContext context) => Container(
+      height: 50,
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          child: ListTile(
+            leading: Icon(Icons.settings),
+            title: Text(
+              'Edit Profile',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EditProfileLoadingScreen();
+              }));
+            },
+          ),
+        ),
+      ),
+    );

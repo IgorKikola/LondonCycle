@@ -1,50 +1,37 @@
 import 'dart:convert';
 
-SignupResponseModel signupResponseModel(String string) =>
-    SignupResponseModel.fromJson(json.decode(string));
+SignupResponseModel signupResponseModel(String string, int statusCode) =>
+    SignupResponseModel.fromJson(json.decode(string), statusCode);
 
 class SignupResponseModel {
-  SignupResponseModel({
-    required this.message,
-    required this.data,
-  });
-  late final String message;
-  late final Data? data;
-
-  SignupResponseModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['message'] = message;
-    _data['data'] = data!.toJson();
-    return _data;
-  }
-}
-
-class Data {
-  Data({
-    required this.email,
-    required this.date,
-    required this.id,
-  });
+  late final String response;
+  late final String firstName;
+  late final String lastName;
   late final String email;
-  late final String date;
-  late final String id;
+  late final String token;
+  late final int statusCode;
 
-  Data.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    date = json['date'];
-    id = json['id'];
-  }
+  SignupResponseModel({
+    required this.response,
+    required this.firstName,
+    required this.email,
+    required this.lastName,
+    required this.token,
+  });
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['email'] = email;
-    _data['date'] = date;
-    _data['id'] = id;
-    return _data;
+  SignupResponseModel.fromJson(Map<String, dynamic> json, this.statusCode) {
+    if (statusCode == 200) {
+      response = json['response'];
+      firstName = json['first_name'];
+      lastName = json['last_name'];
+      email = json['email'];
+      token = json['token'];
+    } else {
+      response = json['detail'];
+      firstName = '';
+      lastName = '';
+      email = '';
+      token = '';
+    }
   }
 }

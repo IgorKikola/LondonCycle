@@ -1,0 +1,12 @@
+[
+  {
+    "model": "cycle_api.user",
+    "fields": {
+      "email": "jimmypage@gmail.com",
+      "first_name": "Jimmy",
+      "last_name": "Page",
+      "password": "pbkdf2_sha256$320000$iX3oXDlrSm3vIOfV4sXg5b$roBWzGepC1v+QWjGUZbXSvR0AnDVDGPsf+hyny8lkbM=",
+      "created_at": "2022-03-20T10:47:52+00:00"
+    }
+  }
+]

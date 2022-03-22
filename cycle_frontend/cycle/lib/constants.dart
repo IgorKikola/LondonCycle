@@ -18,9 +18,10 @@ const kTextFieldDecoration = InputDecoration(
   icon: null,
 );
 
-const kSubmitButtonTextStyle = TextStyle(
+const kCustomBlueButtonTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 18.0,
+  fontFamily: 'Lobster',
 );
 
 const kFormFieldTooltipDecoration = BoxDecoration(
@@ -33,7 +34,7 @@ const kFormFieldTooltipTextStyle = TextStyle(
   color: Colors.white70,
 );
 
-ButtonStyle kSubmitButtonStyle = ButtonStyle(
+ButtonStyle kCustomBlueButtonStyle = ButtonStyle(
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
