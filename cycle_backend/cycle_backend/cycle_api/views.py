@@ -7,8 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
 from .models import Place
 
+from geopy import distance
+from queue import PriorityQueue
+
 from rest_framework import permissions
-from .helpers import get_n_closest_places, bikepoint_get_property
+from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
 import requests
 
 
@@ -50,6 +53,25 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
 
+@api_view()
+@permission_classes([])
+def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+    """
+    Retrieve the closest bikepoint with at least min_bikes available bikes
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+
+    coordinates = (lat, lon)
+    queue = get_places_by_distance(bikepoints, lat, lon)
+    closest_bikepoint = None
+    while (not queue.empty()) and closest_bikepoint is None:
+        bikepoint = queue.get()[1]
+        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
+        if NbBikes is not None and int(NbBikes) >= min_bikes:
+            closest_bikepoint = bikepoint
+
+    serializer = PlaceSerializer(closest_bikepoint)
+    return Response(serializer.data)
 
 class PlaceViewSet(viewsets.ModelViewSet):
     """
