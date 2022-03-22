@@ -4,6 +4,21 @@ from cycle_backend.cycle_api.models import Place
 from cycle_backend.cycle_api.serializers import PlaceSerializer
 import requests
 
+def get_places_by_distance(queryset, lat, lon):
+    """
+    Returns a priority queue of places, with their distance from a
+    given point as keys.
+    """
+    coordinates = (lat, lon)
+    queue = PriorityQueue()
+    for place in queryset:
+        dist = distance.distance(
+            (place.lat, place.lon),
+            coordinates
+        )
+        queue.put((dist, place))
+    return queue
+
 def get_n_closest_places(n, queryset, lat, lon):
     """
     Get the n closest places from the place with coordinates (lat, lon),
@@ -13,13 +28,7 @@ def get_n_closest_places(n, queryset, lat, lon):
         return queryset
     else:
         coordinates = (lat, lon)
-        queue = PriorityQueue()
-        for place in queryset:
-            dist = distance.distance(
-                (place.lat, place.lon),
-                coordinates
-            )
-            queue.put((dist, place))
+        queue = get_places_by_distance(queryset, lat, lon)
         closest_places = []
         for i in range(n):
             closest_places.append(queue.get()[1])
