@@ -21,7 +21,7 @@ class LoginViewTestCase(APITestCase):
     """ Test that only POST method is valid """
 
     def test_login_with_get_method_is_not_allowed(self):
-        response = self.client.get(self.url, format="json")
+        response = self.client.get(self.url)
         expected_response_body_detail = "Method \"GET\" not allowed."
         # Method not allowed
         self.assertEqual(response.status_code, 405)
