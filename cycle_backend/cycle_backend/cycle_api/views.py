@@ -13,6 +13,7 @@ import requests
 
 
 @api_view()
+@permission_classes([])
 def get_n_closest_bikepoints(request, n, lat, lon):
     """
     Retrieve the n closest bikepoints from the given location.
@@ -23,6 +24,7 @@ def get_n_closest_bikepoints(request, n, lat, lon):
     return Response(serializer.data)
 
 @api_view()
+@permission_classes([])
 def get_n_closest_landmarks(request, n, lat, lon):
     """
     Retrieve the n closest bikepoints from the given location.
@@ -33,6 +35,7 @@ def get_n_closest_landmarks(request, n, lat, lon):
     return Response(serializer.data)
 
 @api_view()
+@permission_classes([])
 def bikepoint_number_of_bikes(request, bikepoint_id):
     """
     Retrieve the number of available bikes a certain bikepoint has
@@ -40,13 +43,14 @@ def bikepoint_number_of_bikes(request, bikepoint_id):
     return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
 
 @api_view()
+@permission_classes([])
 def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     Retrieve the number of empty docks a certain bikepoint has
     """
     return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
 
-  
+
 class PlaceViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows places to be viewed or edited.
