@@ -15,12 +15,10 @@ class _NavigationPageState extends State<NavigationPage> {
       WayPoint(name: "Home", latitude: 51.458060, longitude: -0.371500);
 
   final _store =
-      WayPoint(name: "Store", latitude: 51.459996, longitude: -0.369394);
+      WayPoint(name: "Store", latitude: 51.469613, longitude: -0.357147);
 
   late MapBoxNavigation _directions;
   late MapBoxOptions _options;
-
-  MapBoxNavigationViewController? _controller;
 
   @override
   void initState() {
@@ -73,7 +71,7 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  Future<void> _onEmbeddedRouteEvent(e) async {
+  Future<void> _onEmbeddedRouteEvent(RouteEvent e) async {
     switch (e.eventType) {
       case MapBoxEvent.progress_change:
       case MapBoxEvent.route_building:
@@ -87,10 +85,8 @@ class _NavigationPageState extends State<NavigationPage> {
         setState(() {});
         break;
       case MapBoxEvent.on_arrival:
-        print(
-            "AM TERMINAt" + (await _controller!.finishNavigation()).toString());
-        await Future.delayed(const Duration(seconds: 3));
-        // await _controller!.finishNavigation();
+        await Future.delayed(const Duration(seconds: 6));
+        await _directions.finishNavigation();
         setState(() {});
         break;
       case MapBoxEvent.navigation_finished:
