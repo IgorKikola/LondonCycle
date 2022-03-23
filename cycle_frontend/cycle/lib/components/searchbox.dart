@@ -1,12 +1,13 @@
 import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/route.dart';
+import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:cycle/services/search_suggestions.dart';
-
 import '../services/marker_location.dart';
+
 
 const kOutlineInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -18,6 +19,7 @@ class SearchBox extends StatelessWidget {
 
   static const int maxLocationStringLength = 30;
   final Waypoint searchboxType;
+  StopLocation stop = StopLocation();
   MarkerLocation marker = MarkerLocation();
 
   void onSelected(String suggestion) {
@@ -44,6 +46,7 @@ class SearchBox extends StatelessWidget {
         break;
       case Waypoint.MIDPOINT:
         myRoute.addWaypoint(selectedLocation);
+        stop.setStopLocation(selectedLocation);
         break;
     }
 

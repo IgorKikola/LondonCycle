@@ -53,6 +53,7 @@ class StopTiles extends StatelessWidget {
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           //TODO: call myRoute.removeWaypointAt(index)
+                          MyRouteProvider.myRoute.removeWaypointAt(index);
                           stopsP.deleteStop(stopsP.stops[index]);
                         }),
                     title: Text(stopsP.stops[index].name,
