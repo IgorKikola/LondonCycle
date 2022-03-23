@@ -167,7 +167,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             SizedBox(width: 10),
                             Container(
                               height: 30,
-                              width: 60,
+                              width: 130,
                               key: Key('RiderContainer'),
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue[200],
@@ -237,15 +237,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.person_add,
-                                          key: Key('RiderIcon'),
-                                          color: Colors.red),
-                                      // Text(
-                                      //   'Riders:',
-                                      //   key: Key('RiderText'),
-                                      //   style: kSlideUpWidgetLabelTextStyle,
-                                      // ),
-                                      // SizedBox(width: 5),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Icon(Icons.person_add,
+                                            key: Key('RiderIcon'),
+                                            color: Colors.red),
+                                      ),
+                                      Text(
+                                        'Riders:',
+                                        key: Key('RiderText'),
+                                        style: kSlideUpWidgetLabelTextStyle,
+                                      ),
+                                      SizedBox(width: 5),
                                       Container(
                                         //padding: EdgeInsets.only(right: 70),
                                         child: Text(
