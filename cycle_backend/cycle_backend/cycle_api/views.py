@@ -5,27 +5,36 @@ from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from jsonmerge import Merger
 import requests
 
 @api_view()
 def get_route(request, fromPlace, toPlace):
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/cyclePreference=CycleHire'))
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
 
 @api_view()
 def get_route_single_stop(request, fromPlace, firstStop, toPlace):
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&cyclePreference=CycleHire'))
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
 
 @api_view()
-def get_route_multiple_stop(request, fromPlace, listStops, toPlace):
+def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
+    schema = {
+                "properties": {
+                        "mergeStrategy": "append"     
+                 }
+             }
+    merger=Merger(schema)
+    listStops = stringOfStops.split(";")
     i = 0
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/cyclePreference=CycleHire'))
+    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
     while i+1 <= len(listStops):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
-        return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/cyclePreference=CycleHire'))
+        result= merger.merge(base,Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle')))
         i+=1
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/cyclePreference=CycleHire'))
-
+    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
+    result=merger.merge(result,end)
+    return result
 
 class UserViewSet(viewsets.ModelViewSet):
     """
