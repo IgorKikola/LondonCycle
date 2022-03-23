@@ -1,5 +1,5 @@
+import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
 
 class Profile extends StatefulWidget {
@@ -15,11 +15,12 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text('Profile',
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: Text(
+          'Profile',
+          style: kAppBarTextStyle,
+        ),
         backgroundColor: Colors.lightBlue,
       ),
-
     );
   }
 }

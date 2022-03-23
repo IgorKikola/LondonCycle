@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 from cycle_backend.cycle_api.models import Place
@@ -11,7 +10,7 @@ class BikepointLandmarkTestCase(TestCase):
         self.LandmarkUrl = reverse('landmarks-list')
         self.place = Place.objects.all()
 
-    """Tests of the bikepoint view."""
+    """Tests of the bikepoint model."""
 
     def test_get_bikepoint_url(self):
         self.assertEqual(self.BikeUrl, '/bikepoints/')
