@@ -39,9 +39,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   var riderNumController = TextEditingController();
   var numOfRiders = 0;
 
-  updateNumberOfRiders() {
+  void updateNumberOfRiders() {
     setState(() {
-      numOfRiders = int.parse(riderNumController.text);
+      if (int.parse(riderNumController.text) > 5) {
+        numOfRiders = 5;
+      } else {
+        numOfRiders = int.parse(riderNumController.text);
+      }
     });
   }
 
