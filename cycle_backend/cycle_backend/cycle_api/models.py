@@ -47,12 +47,12 @@ class Place(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, blank=False)
     first_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
-            regex=r'^[A-Z][-a-zA-Z]+$',
+            regex=r'^[A-Z][-a-z]+$',
             message='First name must start with a capital letter and contain only letters.'
         )]
     )
     last_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
-            regex=r'^[A-Z][-a-zA-Z]+$',
+            regex=r'^[A-Z][-a-z]+$',
             message='Last name must start with a capital letter and contain only letters.'
         )]
     )

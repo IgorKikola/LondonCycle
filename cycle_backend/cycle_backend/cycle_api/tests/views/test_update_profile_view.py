@@ -117,3 +117,81 @@ class UpdateProfileViewTestCase(APITestCase):
         response = self.api_client.put(self.url, self.request_body)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data['detail']['email'][0], expected_response_detail)
+
+    def test_authorized_update_profile_is_unsuccessful_if_all_the_fields_are_missing(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "This field is required."
+        response = self.api_client.put(self.url)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['email'][0], expected_response_detail_message)
+        self.assertEqual(response.data['detail']['password'][0], expected_response_detail_message)
+        self.assertEqual(response.data['detail']['first_name'][0], expected_response_detail_message)
+        self.assertEqual(response.data['detail']['last_name'][0], expected_response_detail_message)
+
+    def test_authorized_update_profile_is_unsuccessful_if_the_first_name_field_is_missing(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "This field is required."
+        request_body = {
+            "email": "jimmypage@gmail.com",
+            "last_name": "Page",
+            "password": "Led@Zeppelin428"
+        }
+        response = self.api_client.put(self.url, request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['first_name'][0], expected_response_detail_message)
+
+    def test_authorized_update_profile_is_unsuccessful_if_the_email_field_is_missing(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "This field is required."
+        request_body = {
+            "first_name": "Jimmy",
+            "last_name": "Page",
+            "password": "Led@Zeppelin428"
+        }
+        response = self.api_client.put(self.url, request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['email'][0], expected_response_detail_message)
+
+    def test_authorized_update_profile_is_unsuccessful_if_the_last_name_field_is_missing(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "This field is required."
+        request_body = {
+            "email": "jimmypage@gmail.com",
+            "first_name": "Jimmy",
+            "password": "Led@Zeppelin428"
+        }
+        response = self.api_client.put(self.url, request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['last_name'][0], expected_response_detail_message)
+
+    def test_authorized_update_profile_is_unsuccessful_if_the_password_field_is_missing(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "This field is required."
+        request_body = {
+            "email": "jimmypage@gmail.com",
+            "last_name": "Page",
+            "first_name": "Jimmy",
+        }
+        response = self.api_client.put(self.url, request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['password'][0], expected_response_detail_message)
+
+    """ Test that invalid input is not accepted """
+    def test_authorized_update_profile_is_unsuccessful_if_the_first_name_is_of_invalid_format(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "First name must start with a capital letter and contain only letters."
+        self.request_body["first_name"] = "wrong5Name"
+        response = self.api_client.put(self.url, self.request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['first_name'][0], expected_response_detail_message)
+
+    """ Test that invalid input is not accepted """
+
+    def test_authorized_update_profile_is_unsuccessful_if_the_last_name_is_of_invalid_format(self):
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        expected_response_detail_message = "Last name must start with a capital letter and contain only letters."
+        self.request_body["last_name"] = "Wrong5amE"
+        response = self.api_client.put(self.url, self.request_body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail']['last_name'][0], expected_response_detail_message)
+
