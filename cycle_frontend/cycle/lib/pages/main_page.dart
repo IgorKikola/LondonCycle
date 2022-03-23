@@ -200,6 +200,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 330,
             child: FloatingActionButton.small(
+              heroTag: 'move_to_start',
               backgroundColor: Colors.blue,
               onPressed: moveToStart,
               child: const Icon(
@@ -212,6 +213,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 380,
             child: FloatingActionButton.small(
+              heroTag: 'move_to_destination',
               backgroundColor: Colors.blue,
               onPressed: moveToDestination,
               child: const Icon(
@@ -224,6 +226,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 430,
             child: FloatingActionButton.small(
+              heroTag: 'zoom_in',
               backgroundColor: Colors.blue,
               onPressed: zoomIn,
               child: const Icon(
@@ -236,6 +239,7 @@ class _MapWidgetState extends State<MapWidget> {
             right: 10,
             bottom: 480,
             child: FloatingActionButton.small(
+              heroTag: 'zoom_out',
               backgroundColor: Colors.blue,
               onPressed: zoomOut,
               child: const Icon(
