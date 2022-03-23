@@ -1,8 +1,10 @@
 import 'package:cycle/models/stop.dart';
 import 'package:cycle/pages/journey_stop_pages/journey_stops.dart';
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cycle/services/stops_manager.dart';
+import '../../services/route.dart';
 import '../../utilities/constants.dart';
 import '../menu.dart';
 
@@ -11,6 +13,7 @@ void main() {
 }
 
 class RemoveStops extends StatelessWidget {
+  MyRoute myRoute = MyRouteProvider.myRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ class StopTiles extends StatelessWidget {
                     trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
+                          //TODO: implement myRoute.deleteWaypoint(index)
                           stopsP.deleteStop(stopsP.stops[index]);
                         }),
                     title: Text(

@@ -1,3 +1,4 @@
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cycle/pages/menu.dart';
 import 'package:cycle/models/stop.dart';
@@ -28,10 +29,9 @@ class JourneyStops extends StatelessWidget {
 }
 
 class StopTiles extends StatelessWidget {
-
   final TextEditingController textController = TextEditingController();
   StopLocation stopCoordinates = StopLocation();
-  MyRoute myRoute = MyRoute();
+  MyRoute myRoute = MyRouteProvider.myRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,6 @@ class StopTiles extends StatelessWidget {
       ),
       backgroundColor: Colors.lightBlue,
       drawer: Menu(),
-
       body: ListView.builder(
         itemCount: allStops.stops.length,
         itemBuilder: (BuildContext context, int index) {
