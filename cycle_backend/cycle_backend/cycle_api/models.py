@@ -1,6 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core.validators import RegexValidator
+from .managers import UserManager
+
 import requests
 import csv
+
 
 class Place(models.Model):
     id = models.TextField(primary_key='True')
@@ -19,9 +24,9 @@ class Place(models.Model):
         bikepoints = response.json()
         for bikepoint in bikepoints:
             place = Place.create(bikepoint['id'],
-                                bikepoint['commonName'],
-                                bikepoint['lat'],
-                                bikepoint['lon'])
+                                 bikepoint['commonName'],
+                                 bikepoint['lat'],
+                                 bikepoint['lon'])
             place.save()
 
     @classmethod
@@ -34,3 +39,41 @@ class Place(models.Model):
                                      landmark[2],
                                      landmark[3])
                 place.save()
+
+
+""" Custom User model """
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True, blank=False)
+    first_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
+            regex=r'^[A-Z][-a-zA-Z]+$',
+            message='First name must start with a capital letter and contain only letters.'
+        )]
+    )
+    last_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
+            regex=r'^[A-Z][-a-zA-Z]+$',
+            message='Last name must start with a capital letter and contain only letters.'
+        )]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    objects = UserManager()
+
+    """ Field by which to identify the user """
+    USERNAME_FIELD = 'email'
+    """ Fields that cannot be blank """
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def __str__(self):
+        return self.email
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    class Meta:
+        """Model options."""
+        ordering = ['-created_at']

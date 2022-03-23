@@ -1,5 +1,5 @@
+import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cycle/pages/menu.dart';
 import 'package:cycle/animations/animate.dart';
 
@@ -19,8 +19,7 @@ class _JourneyStopsState extends State<JourneyStops> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text('Journey Stops',
-            style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: Text('Journey Stops', style: kAppBarTextStyle),
         backgroundColor: Colors.lightBlue,
       ),
       backgroundColor: Colors.lightBlue,
@@ -50,11 +49,7 @@ class _JourneyStopsState extends State<JourneyStops> {
                 color: Colors.lightBlue[200],
                 borderRadius: BorderRadius.circular(20)),
             child: ListTile(
-              title: Text(location,
-                  style: GoogleFonts.lato(
-                      fontStyle: FontStyle.normal,
-                      color: Colors.white,
-                      fontSize: 18)),
+              title: Text(location, style: kStopsListTileTextStyle),
               onLongPress: () {
                 // setState(() {
                 // stops.removeLast();
@@ -92,16 +87,15 @@ class _JourneyStopsState extends State<JourneyStops> {
           //     context: context,
           //     builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Add a stop',
-                style: GoogleFonts.lato(color: Colors.white)),
+            title: Text('Add a stop', style: kStopsAlertDialogTitleTextStyle),
             backgroundColor: Colors.lightBlue[200],
             content: TextField(
               autofocus: true,
               controller: textController,
-              style: GoogleFonts.lato(color: Colors.white),
+              style: kStopsAlertDialogContentTextStyle,
               decoration: InputDecoration(
                   hintText: 'Enter Stop',
-                  hintStyle: GoogleFonts.lato(color: Colors.white)),
+                  hintStyle: kStopsAlertDialogInputHintTextStyle),
             ),
             actions: <Widget>[
               Row(

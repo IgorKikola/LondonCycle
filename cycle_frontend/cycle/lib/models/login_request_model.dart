@@ -13,7 +13,7 @@ class LoginRequestModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['email'] = email;
+    _data['username'] = email;
     _data['password'] = password;
     return _data;
   }

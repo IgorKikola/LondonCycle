@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:cycle/config.dart';
+import 'package:cycle/models/update_profile_request_model.dart';
+import 'package:cycle/models/update_profile_response_model.dart';
+import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/models/login_response_model.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/services/user_details_helper.dart';
@@ -24,9 +27,12 @@ class APIService {
 
     if (response.statusCode == 200) {
       // If login is successful, save user login status in the cache.
-      await UserDetailsHelper.setLoginDetails(loginResponseJson(response.body));
+      await UserDetailsHelper.saveAuthenticationToken(
+          loginResponseJson(response.body, response.statusCode));
+      await APIService.getUserProfile();
       return true;
     } else {
+      print(response.body);
       return false;
     }
   }
@@ -36,30 +42,44 @@ class APIService {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
-
     var url = Uri.http(Config.apiURL, Config.signupAPI);
+
     var response = await client.post(url,
         headers: requestHeaders, body: json.encode(model.toJson()));
 
-    return signupResponseModel(response.body);
+    return signupResponseModel(response.body, response.statusCode);
+  }
+
+  /// Update user details in the database.
+  static Future<UpdateProfileResponseModel> updateProfile(
+      UpdateProfileRequestModel model) async {
+    var token = await UserDetailsHelper.authToken();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token $token'
+    };
+    var url = Uri.http(Config.apiURL, Config.updateUserProfileAPI);
+
+    var response = await client.put(url,
+        headers: requestHeaders, body: json.encode(model.toJson()));
+
+    return updateProfileResponseModel(response.body, response.statusCode);
   }
 
   /// Get logged in user details from the database.
-  static Future<String> getUserProfile() async {
-    var loginDetails = await UserDetailsHelper.loginDetails();
-
+  static Future<void> getUserProfile() async {
+    var token = await UserDetailsHelper.authToken();
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic ${loginDetails!.data.token}'
+      'Authorization': 'Token $token'
     };
 
-    var url = Uri.http(Config.apiURL, Config.userProfileAPI);
+    var url = Uri.http(Config.apiURL, Config.getUserProfileAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return '';
+      await UserDetailsHelper.setUserDetails(
+          getUserDetailsResponseModel(response.body));
     }
   }
 }

@@ -1,54 +1,28 @@
 import 'dart:convert';
 
-LoginResponseModel loginResponseJson(String string) =>
-    LoginResponseModel.fromJson(json.decode(string));
+LoginResponseModel loginResponseJson(String string, int statusCode) =>
+    LoginResponseModel.fromJson(json.decode(string), statusCode);
 
 class LoginResponseModel {
   LoginResponseModel({
     required this.message,
-    required this.data,
-  });
-  late final String message;
-  late final Data data;
-
-  LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    data = Data.fromJson(json['data']);
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['message'] = message;
-    _data['data'] = data.toJson();
-    return _data;
-  }
-}
-
-class Data {
-  Data({
-    required this.email,
-    required this.date,
-    required this.id,
     required this.token,
   });
-  late final String email;
-  late final String date;
-  late final String id;
+  late final String message;
   late final String token;
+  late final int statusCode;
 
-  Data.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    date = json['date'];
-    id = json['id'];
-    token = json['token'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['email'] = email;
-    _data['date'] = date;
-    _data['id'] = id;
-    _data['token'] = token;
-    return _data;
+  LoginResponseModel.fromJson(Map<String, dynamic> json, this.statusCode) {
+    if (statusCode == 200) {
+      token = json['token'];
+      message = 'Token was received successfully';
+    } else {
+      if (json['non_field_errors'][0] != null) {
+        message = json['non_field_errors'][0];
+      } else {
+        message = '';
+      }
+      token = '';
+    }
   }
 }
