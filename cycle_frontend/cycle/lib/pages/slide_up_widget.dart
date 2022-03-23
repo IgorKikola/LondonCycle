@@ -169,41 +169,78 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   borderRadius: BorderRadius.circular(15.0)),
                               child: Material(
                                 color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: InkWell(
-                                  splashColor: Colors.lightBlue,
-                                  onTap: () => {
-                                    showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                        title: const Text('Add riders'),
-                                        content: new TextField(
-                                          controller: numController,
-                                          decoration: new InputDecoration(
-                                              labelText:
-                                                  "Enter the number of riders."),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.lightBlue[200],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      backgroundColor: Colors.lightBlue[200],
+                                      title: const Text(
+                                        'Add riders',
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                context, 'Cancel'),
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, 'OK');
-                                              changeText();
-                                            },
-                                            child: const Text('OK'),
-                                          ),
+                                      ),
+                                      content: new TextField(
+                                        controller: numController,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        decoration: new InputDecoration(
+                                            labelStyle:
+                                                TextStyle(color: Colors.white),
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
                                         ],
                                       ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            changeText();
+                                          },
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  changeText(),
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.person_add,
+                                        key: Key('RiderIcon'),
+                                        color: Colors.red),
+                                    Text(
+                                      'Riders:',
+                                      key: Key('RiderText'),
+                                      style: kSlideUpWidgetLabelTextStyle,
                                     ),
                                     changeText(),
                                   },

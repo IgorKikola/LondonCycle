@@ -64,6 +64,7 @@ class _MapWidgetState extends State<MapWidget> {
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
   MarkerLocation searchMarker = MarkerLocation();
+  MapController mapController = MapController();
 
   void _myMapWidgetRefresh() {
     setState(() {});
@@ -110,6 +111,7 @@ class _MapWidgetState extends State<MapWidget> {
       body: Stack(
         children: [
           FlutterMap(
+            mapController: mapController,
             options: MapOptions(
               center: LatLng(51.50, 0.12),
               zoom: 13,
@@ -165,8 +167,8 @@ class _MapWidgetState extends State<MapWidget> {
                   new Marker(
                     width: 45.0,
                     height: 45.0,
-                    point: LatLng(searchMarker.getEndingLocation().latitude,
-                        searchMarker.getEndingLocation().longitude),
+                    point: LatLng(searchMarker.getDestination().latitude,
+                        searchMarker.getDestination().longitude),
                     builder: (context) => Container(
                       child: IconButton(
                         icon: Icon(Icons.location_on),
@@ -185,10 +187,59 @@ class _MapWidgetState extends State<MapWidget> {
           Positioned(
             right: 10,
             bottom: 280,
-            child: FloatingActionButton(
+            child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
               onPressed: center,
               child: const Icon(
                 Icons.my_location,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 330,
+            child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
+              onPressed: moveToStart,
+              child: const Icon(
+                Icons.pin_drop,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 380,
+            child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
+              onPressed: moveToDestination,
+              child: const Icon(
+                Icons.sports_score,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 430,
+            child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
+              onPressed: zoomIn,
+              child: const Icon(
+                Icons.zoom_in,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 480,
+            child: FloatingActionButton.small(
+              backgroundColor: Colors.blue,
+              onPressed: zoomOut,
+              child: const Icon(
+                Icons.zoom_out,
                 color: Colors.white,
               ),
             ),
@@ -201,7 +252,37 @@ class _MapWidgetState extends State<MapWidget> {
   void adjustMarker() {
     setState(() {
       searchMarker.getStartingLocation();
-      searchMarker.getEndingLocation();
+      searchMarker.getDestination();
+    });
+  }
+
+  void moveToDestination() {
+    setState(() {
+      mapController.move(
+          LatLng(searchMarker.getDestination().latitude,
+              searchMarker.getDestination().longitude),
+          13);
+    });
+  }
+
+  void moveToStart() {
+    setState(() {
+      mapController.move(
+          LatLng(searchMarker.getStartingLocation().latitude,
+              searchMarker.getStartingLocation().longitude),
+          13);
+    });
+  }
+
+  void zoomIn() {
+    setState(() {
+      mapController.move(mapController.center, (mapController.zoom + 1));
+    });
+  }
+
+  void zoomOut() {
+    setState(() {
+      mapController.move(mapController.center, (mapController.zoom - 1));
     });
   }
 
