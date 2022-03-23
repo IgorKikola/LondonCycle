@@ -1,6 +1,5 @@
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/edit_user_profile.dart';
-import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/terms_policy_pages/privacy_policy_page.dart';
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         EditProfilePage.id: (context) => EditProfilePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
-        NavigationPage.id: (context) => NavigationPage(),
       },
     );
   }

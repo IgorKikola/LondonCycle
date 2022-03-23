@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
 import 'journey_stops.dart';
@@ -314,7 +315,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           child: InkWell(
                             splashColor: Colors.lightBlue,
                             onTap: () {
-                              findRoute();
+                              Navigation navigation = Navigation();
+                              navigation.navigate();
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
