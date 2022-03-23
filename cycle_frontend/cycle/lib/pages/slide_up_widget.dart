@@ -114,7 +114,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 padding: EdgeInsets.all(1),
                 child: Container(
                   padding: EdgeInsets.all(15.0),
-                  height: 150,
+                  height: 180,
                   width: 400,
                   decoration: BoxDecoration(
                     color: Colors.lightBlueAccent,
@@ -300,6 +300,30 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             ),
                           ),
                         ],
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 30,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Material(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: InkWell(
+                            splashColor: Colors.lightBlue,
+                            onTap: () {
+                              findRoute();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.flag_outlined, color: Colors.white),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

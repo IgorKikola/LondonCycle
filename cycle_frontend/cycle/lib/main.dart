@@ -23,7 +23,7 @@ void main() async {
   // to login every time the app is opened.
   bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
   if (_isLoggedIn) {
-    _defaultPageId = MainPage.id;
+    _defaultPageId = HomePage.id;
   }
   runApp(const MyApp());
 }
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      initialRoute: NavigationPage.id,
+      initialRoute: HomePage.id,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),
