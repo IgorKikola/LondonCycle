@@ -1,4 +1,4 @@
-from rest_framework.test import force_authenticate, APIClient
+from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 from cycle_backend.cycle_api.models import User
 from rest_framework.authtoken.models import Token

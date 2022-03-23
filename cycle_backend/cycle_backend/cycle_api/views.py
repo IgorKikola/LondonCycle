@@ -100,13 +100,20 @@ def update_profile_view(request):
     serializer = UserSerializer(data=request.data)
     user = request.user
     if serializer.is_valid():
+        # If new email does not exist in the database already and first/last names are of a valid format
         response_data = update_user(user, serializer.data)
     else:
-        if serializer.data['email'] == user.email:
+        # If it exists, check if all the necessary fields are provided
+        # and then check if the new email is users current email.
+        # Same user ---> update the rest of the details although serializer is not valid provided that it is not valid
+        # because it gave an error about already existing email.
+        error_keys = list(serializer.errors)
+        if len(error_keys) == 1 and error_keys[0] == 'email' and serializer.data['email'] == user.email:
+            print(list(serializer.errors))
             response_data = update_user(user, serializer.data)
         else:
             response_data = {
-                "detail": serializer.errors['email'][0]
+                "detail": serializer.errors
             }
             return Response(response_data, status=400, content_type="application/json")
     return Response(response_data, content_type="application/json")
