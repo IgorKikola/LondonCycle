@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/utilities/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/services.dart';
 import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
-import 'journey_stops.dart';
+import 'journey_stop_pages/journey_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -19,6 +20,7 @@ final TextEditingController finishingPointSearchboxTypeAheadController =
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
   final mapRefreshCallback;
+  final MyRoute myRoute = MyRouteProvider.myRoute;
 
   SlideUpWidget(
       {Key? key, required this.controller, required void mapRefreshCallback()})
@@ -31,7 +33,6 @@ class SlideUpWidget extends StatefulWidget {
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
   // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
-  MyRoute myRoute = MyRoute();
 
   List<List<dynamic>> data = [];
 
@@ -54,20 +55,20 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   }
 
   bool isRouteComplete() {
-    return myRoute.startingLocation != null &&
-        myRoute.finishingLocation != null;
+    return widget.myRoute.startingLocation != null &&
+        widget.myRoute.finishingLocation != null;
   }
 
   Future<void> findRoute() async {
     print('finding route for...');
-    if (myRoute.startingLocation != null) {
-      print('starting point: ${myRoute.startingLocation}');
+    if (widget.myRoute.startingLocation != null) {
+      print('starting point: ${widget.myRoute.startingLocation}');
     }
-    if (myRoute.finishingLocation != null) {
-      print('finishing point: ${myRoute.finishingLocation}');
+    if (widget.myRoute.finishingLocation != null) {
+      print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(myRoute);
+    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 
@@ -122,13 +123,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SearchBoxWidget(
-                          searchBar:
-                              StartingLocationSearchBar(myRoute: myRoute),
+                          searchBar: StartingLocationSearchBar(
+                              myRoute: widget.myRoute),
                         ),
                         SizedBox(height: 10),
                         SearchBoxWidget(
-                          searchBar:
-                              FinishingLocationSearchBar(myRoute: myRoute),
+                          searchBar: FinishingLocationSearchBar(
+                              myRoute: widget.myRoute),
                         ),
                         SizedBox(height: 10),
                         Row(
@@ -169,41 +170,78 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   borderRadius: BorderRadius.circular(15.0)),
                               child: Material(
                                 color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: InkWell(
-                                  splashColor: Colors.lightBlue,
-                                  onTap: () => {
-                                    showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                        title: const Text('Add riders'),
-                                        content: new TextField(
-                                          controller: numController,
-                                          decoration: new InputDecoration(
-                                              labelText:
-                                                  "Enter the number of riders."),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.lightBlue[200],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      backgroundColor: Colors.lightBlue[200],
+                                      title: const Text(
+                                        'Add riders',
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                context, 'Cancel'),
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, 'OK');
-                                              changeText();
-                                            },
-                                            child: const Text('OK'),
-                                          ),
+                                      ),
+                                      content: new TextField(
+                                        controller: numController,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        decoration: new InputDecoration(
+                                            labelStyle:
+                                                TextStyle(color: Colors.white),
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
                                         ],
                                       ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            changeText();
+                                          },
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  changeText(),
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.person_add,
+                                        key: Key('RiderIcon'),
+                                        color: Colors.red),
+                                    Text(
+                                      'Riders:',
+                                      key: Key('RiderText'),
+                                      style: kSlideUpWidgetLabelTextStyle,
                                     ),
                                     changeText(),
                                   },
@@ -700,7 +738,7 @@ class StopsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const JourneyStops()),
+              MaterialPageRoute(builder: (context) => JourneyStops()),
             );
           },
           child: Row(
