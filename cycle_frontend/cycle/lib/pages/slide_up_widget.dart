@@ -7,6 +7,7 @@ import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
 import 'journey_stop_pages/journey_stops.dart';
@@ -35,12 +36,16 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
 
   List<List<dynamic>> data = [];
 
-  var numController = TextEditingController();
-  var num = 0;
+  var riderNumController = TextEditingController();
+  var numOfRiders = 0;
 
-  changeText() {
+  void updateNumberOfRiders() {
     setState(() {
-      num = int.parse(numController.text);
+      if (int.parse(riderNumController.text) > 5) {
+        numOfRiders = 5;
+      } else {
+        numOfRiders = int.parse(riderNumController.text);
+      }
     });
   }
 
@@ -110,7 +115,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                 padding: EdgeInsets.all(1),
                 child: Container(
                   padding: EdgeInsets.all(15.0),
-                  height: 150,
+                  height: 180,
                   width: 400,
                   decoration: BoxDecoration(
                     color: Colors.lightBlueAccent,
@@ -167,66 +172,67 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue[200],
                                   borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.lightBlue[200],
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                onTap: () => {
-                                  showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      backgroundColor: Colors.lightBlue[200],
-                                      title: const Text(
-                                        'Add riders',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                              child: Material(
+                                color: Colors.lightBlue[200],
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: InkWell(
+                                  splashColor: Colors.lightBlue,
+                                  onTap: () => {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        backgroundColor: Colors.lightBlue[200],
+                                        title: const Text(
+                                          'Add riders (Max of 5)',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      content: new TextField(
-                                        controller: numController,
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                        content: new TextField(
+                                          controller: riderNumController,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          decoration: new InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              labelText:
+                                                  "Enter the number of riders."),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
-                                        decoration: new InputDecoration(
-                                            labelStyle:
-                                                TextStyle(color: Colors.white),
-                                            labelText:
-                                                "Enter the number of riders."),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, 'OK');
+                                              updateNumberOfRiders();
+                                            },
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text(
-                                            'Cancel',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context, 'OK');
-                                            changeText();
-                                          },
-                                          child: const Text(
-                                            'OK',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
                                     ),
-                                  ),
-                                  changeText(),
-                                },
+                                    updateNumberOfRiders(),
+                                  },
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -243,7 +249,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       Container(
                                         //padding: EdgeInsets.only(right: 70),
                                         child: Text(
-                                          num.toString(),
+                                          numOfRiders.toString(),
                                           key: Key('RiderValue'),
                                           style: kSlideUpWidgetLabelTextStyle,
                                         ),
@@ -255,6 +261,32 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 30,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(15.0)),
+                          child: Material(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: InkWell(
+                              splashColor: Colors.lightBlue,
+                              onTap: () {
+                                Navigation navigation = Navigation();
+                                navigation.navigate();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.flag_outlined,
+                                      color: Colors.white),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
