@@ -1,16 +1,19 @@
 import 'package:cycle/models/stop.dart';
 import 'package:cycle/pages/journey_stop_pages/journey_stops.dart';
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cycle/services/stops_manager.dart';
+import '../../services/route.dart';
 import '../../utilities/constants.dart';
 import '../menu.dart';
 
 void main() {
-  runApp( RemoveStops());
+  runApp(RemoveStops());
 }
 
 class RemoveStops extends StatelessWidget {
+  MyRoute myRoute = MyRouteProvider.myRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +25,14 @@ class RemoveStops extends StatelessWidget {
     );
   }
 }
+
 class StopTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stopsP = Provider.of<StopProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title:  Text('Remove Stops', style: kRemoveJourneyStopsTextStyle) ,
+        title: Text('Remove Stops', style: kRemoveJourneyStopsTextStyle),
         backgroundColor: Colors.lightBlue,
       ),
       drawer: Menu(),
@@ -48,12 +52,11 @@ class StopTiles extends StatelessWidget {
                     trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
+                          //TODO: call myRoute.removeWaypointAt(index)
                           stopsP.deleteStop(stopsP.stops[index]);
                         }),
-                    title: Text(
-                        stopsP.stops[index].name,
-                        style: kRemoveJourneyStopsTextStyle
-                    ),
+                    title: Text(stopsP.stops[index].name,
+                        style: kRemoveJourneyStopsTextStyle),
                   )),
             ),
             const SizedBox(height: 5)
@@ -62,7 +65,11 @@ class StopTiles extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => JourneyStops(),), (route) => route.isFirst);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => JourneyStops(),
+              ),
+              (route) => route.isFirst);
         },
         child: Icon(Icons.reset_tv),
         backgroundColor: Colors.green,
