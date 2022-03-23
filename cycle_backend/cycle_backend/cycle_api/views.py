@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
-from .models import Place
+from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
+from .models import Place, Stop
 
 from geopy import distance
 from queue import PriorityQueue
@@ -116,6 +116,12 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
 
+class StopViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows stops to be viewed or edited.
+    """
+    queryset = Stop.objects.all()
+    serializer_class = StopSerializer
 
 # Signup view
 @api_view(['POST'])

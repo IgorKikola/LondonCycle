@@ -42,6 +42,9 @@ class SearchBox extends StatelessWidget {
         myRoute.setFinishingLocation(selectedLocation);
         marker.setEndingLocation(selectedLocation);
         break;
+      case Waypoint.MIDPOINT:
+        myRoute.addWaypoint(selectedLocation);
+        break;
     }
 
     print('A location has been picked for the $searchboxType of the journey.');
@@ -63,6 +66,9 @@ class SearchBox extends StatelessWidget {
         break;
       case Waypoint.FINISH:
         hintText = 'Destination';
+        break;
+      case Waypoint.MIDPOINT:
+        hintText = 'Enter Stop';
         break;
     }
   }

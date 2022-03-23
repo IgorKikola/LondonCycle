@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/utilities/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/services.dart';
 
 import '../services/route.dart';
 import '../animations/animate.dart';
-import 'journey_stops.dart';
+import 'journey_stop_pages/journey_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -18,6 +19,7 @@ final TextEditingController finishingPointSearchboxTypeAheadController =
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
   final mapRefreshCallback;
+  final MyRoute myRoute = MyRouteProvider.myRoute;
 
   SlideUpWidget(
       {Key? key, required this.controller, required void mapRefreshCallback()})
@@ -30,7 +32,6 @@ class SlideUpWidget extends StatefulWidget {
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
   // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
-  MyRoute myRoute = MyRoute();
 
   List<List<dynamic>> data = [];
 
@@ -53,20 +54,20 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   }
 
   bool isRouteComplete() {
-    return myRoute.startingLocation != null &&
-        myRoute.finishingLocation != null;
+    return widget.myRoute.startingLocation != null &&
+        widget.myRoute.finishingLocation != null;
   }
 
   Future<void> findRoute() async {
     print('finding route for...');
-    if (myRoute.startingLocation != null) {
-      print('starting point: ${myRoute.startingLocation}');
+    if (widget.myRoute.startingLocation != null) {
+      print('starting point: ${widget.myRoute.startingLocation}');
     }
-    if (myRoute.finishingLocation != null) {
-      print('finishing point: ${myRoute.finishingLocation}');
+    if (widget.myRoute.finishingLocation != null) {
+      print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(myRoute);
+    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 
@@ -121,13 +122,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SearchBoxWidget(
-                          searchBar:
-                              StartingLocationSearchBar(myRoute: myRoute),
+                          searchBar: StartingLocationSearchBar(
+                              myRoute: widget.myRoute),
                         ),
                         SizedBox(height: 10),
                         SearchBoxWidget(
-                          searchBar:
-                              FinishingLocationSearchBar(myRoute: myRoute),
+                          searchBar: FinishingLocationSearchBar(
+                              myRoute: widget.myRoute),
                         ),
                         SizedBox(height: 10),
                         Row(
@@ -673,7 +674,7 @@ class StopsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const JourneyStops()),
+              MaterialPageRoute(builder: (context) => JourneyStops()),
             );
           },
           child: Row(
