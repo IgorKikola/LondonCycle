@@ -4,15 +4,19 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
-from .models import Place
+from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
+from .models import Place, Stop
+
+from geopy import distance
+from queue import PriorityQueue
 
 from rest_framework import permissions
-from .helpers import get_n_closest_places, bikepoint_get_property
+from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
 import requests
 
 
 @api_view()
+@permission_classes([])
 def get_n_closest_bikepoints(request, n, lat, lon):
     """
     Retrieve the n closest bikepoints from the given location.
@@ -23,6 +27,7 @@ def get_n_closest_bikepoints(request, n, lat, lon):
     return Response(serializer.data)
 
 @api_view()
+@permission_classes([])
 def get_n_closest_landmarks(request, n, lat, lon):
     """
     Retrieve the n closest bikepoints from the given location.
@@ -33,6 +38,7 @@ def get_n_closest_landmarks(request, n, lat, lon):
     return Response(serializer.data)
 
 @api_view()
+@permission_classes([])
 def bikepoint_number_of_bikes(request, bikepoint_id):
     """
     Retrieve the number of available bikes a certain bikepoint has
@@ -40,13 +46,53 @@ def bikepoint_number_of_bikes(request, bikepoint_id):
     return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
 
 @api_view()
+@permission_classes([])
 def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     Retrieve the number of empty docks a certain bikepoint has
     """
     return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
 
-  
+@api_view()
+@permission_classes([])
+def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+    """
+    Retrieve the closest bikepoint with at least min_bikes available bikes
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+
+    coordinates = (lat, lon)
+    queue = get_places_by_distance(bikepoints, lat, lon)
+    closest_bikepoint = None
+    while (not queue.empty()) and closest_bikepoint is None:
+        bikepoint = queue.get()[1]
+        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
+        if NbBikes is not None and int(NbBikes) >= min_bikes:
+            closest_bikepoint = bikepoint
+
+    serializer = PlaceSerializer(closest_bikepoint)
+    return Response(serializer.data)
+
+@api_view()
+@permission_classes([])
+def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+    """
+    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+
+    coordinates = (lat, lon)
+    queue = get_places_by_distance(bikepoints, lat, lon)
+    closest_bikepoint = None
+    while (not queue.empty()) and closest_bikepoint is None:
+        bikepoint = queue.get()[1]
+        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
+        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
+            closest_bikepoint = bikepoint
+
+    serializer = PlaceSerializer(closest_bikepoint)
+    return Response(serializer.data)
+
 class PlaceViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows places to be viewed or edited.
@@ -70,6 +116,12 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
 
+class StopViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows stops to be viewed or edited.
+    """
+    queryset = Stop.objects.all()
+    serializer_class = StopSerializer
 
 # Signup view
 @api_view(['POST'])
