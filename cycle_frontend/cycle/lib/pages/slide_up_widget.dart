@@ -168,9 +168,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue[200],
                                   borderRadius: BorderRadius.circular(15.0)),
-                              child: Material(
-                                color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0)),
                             child: Material(
                               color: Colors.lightBlue[200],
                               borderRadius: BorderRadius.circular(15.0),
@@ -231,20 +228,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   ),
                                   changeText(),
                                 },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(Icons.person_add,
-                                        key: Key('RiderIcon'),
-                                        color: Colors.red),
-                                    Text(
-                                      'Riders:',
-                                      key: Key('RiderText'),
-                                      style: kSlideUpWidgetLabelTextStyle,
-                                    ),
-                                    changeText(),
-                                  },
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
