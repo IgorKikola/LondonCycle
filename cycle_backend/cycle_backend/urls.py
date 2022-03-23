@@ -15,4 +15,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('get_route_multiple_stop/', views.get_route_multiple_stop , namespace='get_route_multiple_stop')),
+    path('get_route_single_stop/', views.get_route_single_stop , namespace='get_route_single_stop')),      
 ]
