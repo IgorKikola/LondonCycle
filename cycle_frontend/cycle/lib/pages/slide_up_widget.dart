@@ -3,13 +3,12 @@ import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/utilities/constants.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../animations/animate.dart';
 import '../services/navigation.dart';
 import '../services/route.dart';
-import '../animations/animate.dart';
 import 'journey_stop_pages/journey_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
@@ -158,7 +157,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.search, color: Colors.white),
+                                      Icon(Icons.search,
+                                          key: Key("navigateIcon"),
+                                          color: Colors.white),
                                     ],
                                   ),
                                 ),
@@ -346,13 +347,21 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               children: [
                                 BottomSectionLabel(labelText: 'Landm:'),
                                 SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Lon.'),
+                                LandmarkItemWidget(
+                                    key: Key('londonEye'),
+                                    landmarkName: 'Lon.'),
                                 SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Big Ben'),
+                                LandmarkItemWidget(
+                                    key: Key('bigBen'),
+                                    landmarkName: 'Big Ben'),
                                 SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'The Shard'),
+                                LandmarkItemWidget(
+                                    key: Key('theShard'),
+                                    landmarkName: 'The Shard'),
                                 SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Tower...'),
+                                LandmarkItemWidget(
+                                    key: Key('towerBridge'),
+                                    landmarkName: 'Tower...'),
                               ],
                             ),
                           ),
@@ -389,15 +398,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               BottomSectionLabel(labelText: 'Bikepoints:'),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
+                                  key: Key('horseferryName'),
                                   bikeStationName: 'Horseferry Road'),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
+                                  key: Key('westministerName'),
                                   bikeStationName: 'Westminister Pier'),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
+                                  key: Key('vauxhallName'),
                                   bikeStationName: 'Vauxhall Bridge'),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
+                                  key: Key('milbankName'),
                                   bikeStationName: 'Milbank Tower'),
                             ],
                           ),
@@ -738,6 +751,7 @@ class StopsWidget extends StatelessWidget {
               Icon(Icons.add_location_alt, color: Colors.red),
               Text(
                 'Stops',
+                key: Key('stoptext'),
                 style: kSlideUpWidgetLabelTextStyle,
               ),
               SizedBox(width: 10.0)
