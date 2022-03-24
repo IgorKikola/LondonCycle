@@ -1,10 +1,8 @@
-class Landmark {
-  String id;
-  String name;
-  double lat;
-  double lon;
+import 'package:cycle/models/place.dart';
 
-  Landmark(this.id, this.name, this.lat, this.lon);
+class Landmark extends Place {
+  Landmark(String id, String name, double lat, double lon)
+      : super(id, name, lat, lon);
 
   factory Landmark.fromJson(dynamic json) {
     return Landmark(

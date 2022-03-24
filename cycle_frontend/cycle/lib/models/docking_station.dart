@@ -1,10 +1,8 @@
-class DockingStation {
-  String id;
-  String name;
-  double lat;
-  double lon;
+import 'package:cycle/models/place.dart';
 
-  DockingStation(this.id, this.name, this.lat, this.lon);
+class DockingStation extends Place {
+  DockingStation(String id, String name, double lat, double lon)
+      : super(id, name, lat, lon);
 
   factory DockingStation.fromJson(dynamic json) {
     return DockingStation(
