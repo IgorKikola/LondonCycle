@@ -4,8 +4,8 @@ enum MarkerType { START, FINISH }
 
 class MarkerLocation {
   static Coordinate startingLocation =
-      Coordinate(latitude: 0.0, longitude: 0.0);
-  static Coordinate endingLocation = Coordinate(latitude: 0.0, longitude: 0.0);
+      Coordinate(latitude: 51.50, longitude: 0.12);
+  static Coordinate destination = Coordinate(latitude: 51.50, longitude: -0.11);
 
   MarkerLocation();
 
@@ -13,15 +13,15 @@ class MarkerLocation {
     startingLocation = start;
   }
 
-  void setEndingLocation(Coordinate end) {
-    endingLocation = end;
+  void setDestination(Coordinate end) {
+    destination = end;
   }
 
   Coordinate getStartingLocation() {
     return startingLocation;
   }
 
-  Coordinate getEndingLocation() {
-    return endingLocation;
+  Coordinate getDestination() {
+    return destination;
   }
 }

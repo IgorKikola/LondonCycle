@@ -10,7 +10,7 @@ class BikepointLandmarkTestCase(TestCase):
         self.LandmarkUrl = reverse('landmarks-list')
         self.place = Place.objects.all()
 
-    """Tests of the bikepoint view."""
+    """Tests of the bikepoint model."""
 
     def test_get_bikepoint_url(self):
         self.assertEqual(self.BikeUrl, '/bikepoints/')
