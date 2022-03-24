@@ -3,6 +3,20 @@ from queue import PriorityQueue
 from cycle_backend.cycle_api.models import Place
 from cycle_backend.cycle_api.serializers import PlaceSerializer
 import requests
+from typing import NamedTuple
+
+def string_to_list_of_coordinates(string_of_coordinates):
+    class Coordinates(NamedTuple):
+        lat: float
+        lon: float
+    list_of_coordinates = []
+    for coordinate_string in string_of_coordinates.split(";"):
+        coordinates = coordinate_string.split(",")
+        list_of_coordinates.append(
+            Coordinates(float(coordinates[0]), float(coordinates[1]))
+        )
+    return list_of_coordinates
+
 
 def get_places_by_distance(queryset, lat, lon):
     """
