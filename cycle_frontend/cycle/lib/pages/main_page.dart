@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:cycle/models/landmark.dart';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
+import 'package:cycle/services/marker_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -52,7 +52,7 @@ class MainPageState extends State<MainPage> {
 }
 
 class MapWidget extends StatefulWidget {
-  MapWidget({
+  const MapWidget({
     Key? key,
   }) : super(key: key);
 
@@ -89,23 +89,13 @@ class _MapWidgetState extends State<MapWidget> {
 
   Future<List<Marker>> loadDockingStationMarkers() async {
     return (await getDockingStations())
-        .map((dockingStation) => Marker(
-            point: LatLng(dockingStation.lat, dockingStation.lon),
-            builder: (ctx) => const Icon(
-                  Icons.pedal_bike,
-                  color: Colors.blue,
-                )))
+        .map((dockingStation) => getDockingStationMarker(dockingStation))
         .toList();
   }
 
   Future<List<Marker>> loadLandmarkMarkers() async {
     return (await getLandmarks())
-        .map((landmark) => Marker(
-            point: LatLng(landmark.lat, landmark.lon),
-            builder: (ctx) => const Icon(
-                  Icons.museum,
-                  color: Colors.amber,
-                )))
+        .map((landmark) => getLandmarkMarker(landmark))
         .toList();
   }
 
@@ -162,7 +152,7 @@ class _MapWidgetState extends State<MapWidget> {
             layers: [
               MarkerLayerOptions(
                 markers: [
-                  new Marker(
+                  Marker(
                     width: 45.0,
                     height: 45.0,
                     point: LatLng(searchMarker.getStartingLocation().latitude,
@@ -178,7 +168,7 @@ class _MapWidgetState extends State<MapWidget> {
                       ),
                     ),
                   ),
-                  new Marker(
+                  Marker(
                     width: 45.0,
                     height: 45.0,
                     point: LatLng(searchMarker.getEndingLocation().latitude,
