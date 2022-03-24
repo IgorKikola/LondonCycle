@@ -6,9 +6,12 @@ import 'validator_messages.dart';
 final RegExp passwordRegex =
     RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$");
 
+/// An object of this class is responsible for checking whether strings are of a valid format.
 class StringValidator {
-  StringValidator();
-
+  /// Checks if the provided string is of a valid name format.
+  /// - If it consists of letter only.
+  /// - If the first letter is capital.
+  /// - If all the other letters are lowercase.
   ValidatorMessage isFirstName(String toCheck) {
     if (!isAlpha(toCheck)) {
       return ValidatorMessage.nameIsNotOnlyLetters;
@@ -21,6 +24,10 @@ class StringValidator {
     }
   }
 
+  /// Checks if the provided string is of a valid name format.
+  /// - If it consists of letter only.
+  /// - If the first letter is capital.
+  /// - If all the other letters are lowercase.
   ValidatorMessage isLastName(String toCheck) {
     if (!isAlpha(toCheck)) {
       return ValidatorMessage.surnameIsNotOnlyLetters;
@@ -33,12 +40,18 @@ class StringValidator {
     }
   }
 
+  /// Checks if the provided string is of a valid password format according to the specified regex.
+  /// - Minimum 8 characters &&
+  /// - At least 1 of them is a letter &&
+  /// - At least 1 of them is a number &&
+  /// - At least 1 of them is a special character from @$!%*#?&
   ValidatorMessage isValidPassword(String toCheck) {
     return !passwordRegex.hasMatch(toCheck)
         ? ValidatorMessage.passwordIsOfWrongFormat
         : ValidatorMessage.defaultMessage;
   }
 
+  /// Get message to display to the user according to the validator message type.
   String getText(ValidatorMessage string) {
     switch (string) {
       case ValidatorMessage.firstLetterOfNameMustBeCapital:

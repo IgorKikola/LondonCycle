@@ -1,0 +1,22 @@
+[
+  {
+    "model": "cycle_api.user",
+    "fields": {
+      "email": "jimmorrison@gmail.com",
+      "first_name": "Jim",
+      "last_name": "Morrison",
+      "password": "pbkdf2_sha256$320000$rnHz4hHxBhWydKxiOxDg6w$730M15A71b8FDCx7C5NbHpC6gr02QFa6hib53FihwPA=",
+      "created_at": "2022-03-20T11:02:35+00:00"
+    }
+  },
+  {
+    "model": "cycle_api.user",
+    "fields": {
+      "email": "bobmarley@gmail.com",
+      "first_name": "Bob",
+      "last_name": "Marley",
+      "password": "pbkdf2_sha256$320000$bzAGOm3hD9dEwq1cEZO9A0$lRcgRvPx33+xuuy0RzXSV21tC+XmhISZnrPu2vd99dI=",
+      "created_at": "2022-03-20T11:04:57+00:00"
+    }
+  }
+]
