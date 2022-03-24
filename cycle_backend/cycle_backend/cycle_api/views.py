@@ -116,12 +116,14 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
 
+
 class StopViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows stops to be viewed or edited.
     """
     queryset = Stop.objects.all()
     serializer_class = StopSerializer
+
 
 # Signup view
 @api_view(['POST'])
