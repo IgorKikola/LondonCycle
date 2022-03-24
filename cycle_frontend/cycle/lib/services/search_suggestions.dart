@@ -24,7 +24,7 @@ class BackendService {
       String pattern) async {
     Position currentPosition = await getPosition();
 
-    List<String> resultsList = await _getClosestLandmarksForLocation(
+    List<String> resultsList = await _getClosestLandmarksForCurrentLocation(
         currentPosition.latitude.toString(),
         currentPosition.longitude.toString());
 
@@ -116,7 +116,7 @@ class BackendService {
         objectLatitude;
   }
 
-  static Future<List<String>> _getClosestLandmarksForLocation(
+  static Future<List<String>> _getClosestLandmarksForCurrentLocation(
       String latitude, String longitude) async {
     List<String> landmarksList = List.empty(growable: true);
 
