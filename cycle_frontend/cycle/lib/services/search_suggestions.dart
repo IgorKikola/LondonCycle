@@ -1,6 +1,7 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
+import 'package:cycle/services/location_manager.dart';
 import '../utilities/api_constants.dart';
 
 const String kApiKey =
@@ -21,9 +22,11 @@ const String kProximityCenterLatitude = '51.50072917963769';
 class BackendService {
   static Future<List<String>> getSuggestionsFromGeocoding(
       String pattern) async {
+    Position currentPosition = await getPosition();
+
     List<String> resultsList = await _getClosestLandmarksForLocation(
-        kProximityCenterLatitude,
-        kProximityCenterLongitude); //TODO: change that to the current location
+        currentPosition.latitude.toString(),
+        currentPosition.longitude.toString());
 
     var url = Uri.https(kMapBoxForwardGeocodingURL,
         '/geocoding/v5/mapbox.places/$pattern.json', {
