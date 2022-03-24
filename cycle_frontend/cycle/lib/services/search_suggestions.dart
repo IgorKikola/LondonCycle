@@ -22,11 +22,7 @@ const String kProximityCenterLatitude = '51.50072917963769';
 class BackendService {
   static Future<List<String>> getSuggestionsFromGeocoding(
       String pattern) async {
-    Position currentPosition = await getPosition();
-
-    List<String> resultsList = await _getClosestLandmarksForCurrentLocation(
-        currentPosition.latitude.toString(),
-        currentPosition.longitude.toString());
+    List<String> resultsList = await _getClosestLandmarksForCurrentLocation();
 
     var url = Uri.https(kMapBoxForwardGeocodingURL,
         '/geocoding/v5/mapbox.places/$pattern.json', {
@@ -116,9 +112,12 @@ class BackendService {
         objectLatitude;
   }
 
-  static Future<List<String>> _getClosestLandmarksForCurrentLocation(
-      String latitude, String longitude) async {
+  static Future<List<String>> _getClosestLandmarksForCurrentLocation() async {
     List<String> landmarksList = List.empty(growable: true);
+
+    Position currentPosition = await getPosition();
+    String latitude = currentPosition.latitude.toString();
+    String longitude = currentPosition.longitude.toString();
 
     var url = Uri.https(
         kBackendApiURL, '/closest/5/landmarks/from/$latitude/$longitude/', {
