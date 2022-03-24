@@ -8,9 +8,41 @@ from .models import Place, Stop
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
+from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
+from cycle_backend.cycle_api.models import Place
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from jsonmerge import Merger
 from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
 import requests
 
+@api_view()
+def get_route(request, fromPlace, toPlace):
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
+
+@api_view()
+def get_route_single_stop(request, fromPlace, firstStop, toPlace):
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
+
+@api_view()
+def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
+    schema = {
+                "properties": {
+                        "mergeStrategy": "append"     
+                 }
+             }
+    merger=Merger(schema)
+    listStops = stringOfStops.split(";")
+    i = 0
+    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
+    while i+1 <= len(listStops):
+        currentStop= listStops[i]
+        nextStop= listStops[i+i]
+        result= merger.merge(base,Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle')))
+        i+=1
+    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
+    result=merger.merge(result,end)
+    return result
 
 @api_view()
 @permission_classes([])
