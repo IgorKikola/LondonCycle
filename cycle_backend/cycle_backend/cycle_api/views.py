@@ -3,13 +3,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
-
 from geopy import distance
 from queue import PriorityQueue
-
 from rest_framework import permissions
 from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
 import requests
@@ -26,6 +23,7 @@ def get_n_closest_bikepoints(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 @permission_classes([])
 def get_n_closest_landmarks(request, n, lat, lon):
@@ -37,13 +35,15 @@ def get_n_closest_landmarks(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 @permission_classes([])
 def bikepoint_number_of_bikes(request, bikepoint_id):
     """
     Retrieve the number of available bikes a certain bikepoint has
     """
-    return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
+    return Response({'Number of bikes': bikepoint_get_property(bikepoint_id, 'NbBikes')})
+
 
 @api_view()
 @permission_classes([])
@@ -51,7 +51,8 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     Retrieve the number of empty docks a certain bikepoint has
     """
-    return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+    return Response({'Number of empty docks': bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+
 
 @api_view()
 @permission_classes([])
@@ -92,6 +93,7 @@ def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
 
     serializer = PlaceSerializer(closest_bikepoint)
     return Response(serializer.data)
+
 
 class PlaceViewSet(viewsets.ModelViewSet):
     """
@@ -144,7 +146,7 @@ def signup_view(request):
         response_data = {
             "detail": serializer.errors['email'][0]
         }
-        return Response(response_data, 400)
+        return Response(response_data, status=400)
     return Response(response_data)
 
 
@@ -155,16 +157,25 @@ def update_profile_view(request):
     serializer = UserSerializer(data=request.data)
     user = request.user
     if serializer.is_valid():
+        # If new email does not exist in the database already and first/last names are of a valid format
+        print("aaa")
         response_data = update_user(user, serializer.data)
     else:
-        if serializer.data['email'] == user.email:
+        # If it exists, check if all the necessary fields are provided
+        # and then check if the new email is users current email.
+        # Same user ---> update the rest of the details although serializer is not valid provided that it is not valid
+        # because it gave an error about already existing email.
+        error_keys = list(serializer.errors)
+        print(len(error_keys) == 1)
+        if len(error_keys) == 1 and 'email' in serializer.errors and\
+                serializer.errors['email'][0] != "This field is required." and serializer.data['email'] == user.email:
             response_data = update_user(user, serializer.data)
         else:
             response_data = {
-                "detail": serializer.errors['email'][0]
+                "detail": serializer.errors
             }
-            return Response(response_data, 400)
-    return Response(response_data)
+            return Response(response_data, status=400, content_type="application/json")
+    return Response(response_data, content_type="application/json")
 
 
 # Get user details
@@ -179,7 +190,7 @@ def get_user_details_view(request):
         'email': user.email
     }
 
-    return Response(response_data)
+    return Response(response_data, content_type="application/json")
 
 
 """ Used to update user and return a response containing his updated information """

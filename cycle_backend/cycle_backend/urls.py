@@ -4,7 +4,7 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from cycle_backend.cycle_api import views
 
-appname='cycleapi'
+appname = 'cycleapi'
 
 router = routers.DefaultRouter()
 router.register(r'places', views.PlaceViewSet, basename='places')
