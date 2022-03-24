@@ -40,19 +40,26 @@ class Place(models.Model):
                                      landmark[3])
                 place.save()
 
+class Stop(models.Model):
+    name = models.TextField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created']
 
 """ Custom User model """
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, blank=False)
     first_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
-            regex=r'^[A-Z][-a-zA-Z]+$',
+            regex=r'^[A-Z][-a-z]+$',
             message='First name must start with a capital letter and contain only letters.'
         )]
     )
     last_name = models.CharField(max_length=50, blank=False, validators=[RegexValidator(
-            regex=r'^[A-Z][-a-zA-Z]+$',
+            regex=r'^[A-Z][-a-z]+$',
             message='Last name must start with a capital letter and contain only letters.'
         )]
     )

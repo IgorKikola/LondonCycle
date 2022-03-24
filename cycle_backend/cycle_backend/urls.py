@@ -4,12 +4,13 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from cycle_backend.cycle_api import views
 
-appname='cycleapi'
+appname = 'cycleapi'
 
 router = routers.DefaultRouter()
 router.register(r'places', views.PlaceViewSet, basename='places')
 router.register(r'bikepoints', views.BikePointViewSet, basename='bikepoints')
 router.register(r'landmarks', views.LandmarkViewSet, basename='landmarks')
+router.register(r'stops', views.StopViewSet, basename='stops')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -17,6 +18,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('get_route_multiple_stop/', views.get_route_multiple_stop , name = 'get_route_multiple_stop'),
+    path('get_route_single_stop/', views.get_route_single_stop , name = 'get_route_single_stop'),      
     path('closest/bikepoint/with/<int:min_empty_docks>/empty_docks/from/<str:lat>/<str:lon>/', views.get_closest_bikepoint_with_empty_docks, name = "closest_bikepoint_with_empty_docks"),
     path('closest/bikepoint/with/<int:min_bikes>/bikes/from/<str:lat>/<str:lon>/', views.get_closest_available_bikepoint, name = "closest_available_bikepoint"),
     path('closest/<int:n>/bikepoints/from/<str:lat>/<str:lon>/', views.get_n_closest_bikepoints, name = "closest_bikepoints"),

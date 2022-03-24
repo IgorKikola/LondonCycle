@@ -95,3 +95,20 @@ const kSlideUpWidgetLandmarksAlertDialogListTileTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   color: Colors.white,
 );
+
+const kJourneyStopsTileTextStyle = TextStyle(
+  fontSize: 18,
+  fontStyle: FontStyle.normal,
+  fontFamily: 'Lato',
+  color: Colors.white,
+);
+
+const kJourneyStopsTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  color: Colors.white,
+);
+
+const kRemoveJourneyStopsTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  color: Colors.white,
+);
