@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from django.utils.decorators import method_decorator
 
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
 from .models import Place
@@ -99,6 +100,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class BikePointViewSet(viewsets.ModelViewSet):
@@ -107,6 +109,7 @@ class BikePointViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='BikePoints')
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class LandmarkViewSet(viewsets.ModelViewSet):
@@ -115,6 +118,7 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 # Signup view
