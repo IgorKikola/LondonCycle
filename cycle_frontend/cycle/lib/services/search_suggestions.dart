@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../utilities/api_constants.dart';
+
 const String kApiKey =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
 const String kMapBoxForwardGeocodingURL = 'api.mapbox.com';
@@ -19,10 +21,9 @@ const String kProximityCenterLatitude = '51.50072917963769';
 class BackendService {
   static Future<List<String>> getSuggestionsFromGeocoding(
       String pattern) async {
-    List<String> resultsList = [
-      'my_history_result1|Some location details|0.1|51.0',
-      'my_history_result2|Some location details|0.1|51.0'
-    ];
+    List<String> resultsList = await _getClosestLandmarksForLocation(
+        kProximityCenterLatitude,
+        kProximityCenterLongitude); //TODO: change that to the current location
 
     var url = Uri.https(kMapBoxForwardGeocodingURL,
         '/geocoding/v5/mapbox.places/$pattern.json', {
@@ -46,48 +47,16 @@ class BackendService {
         String locationTitle = jsonResponse['features'][i]['text'];
         int contextLength = jsonResponse['features'][i]['context'].length;
 
-        String locationDetails = '';
+        String locationDetails =
+            _getLocationDetails(jsonResponse, i, contextLength);
 
-        if (jsonResponse['features'][i]['properties']['address'] != null) {
-          locationDetails = locationDetails +
-              jsonResponse['features'][i]['properties']['address'] +
-              ', ';
-        }
-
-        for (int j = 0; j < contextLength; j++) {
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('neighborhood')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'] +
-                ', ';
-          }
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('postcode')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'] +
-                ', ';
-          }
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('locality')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'];
-          }
-        }
         String objectLongitude =
             jsonResponse['features'][i]['center'][0].toString();
         String objectLatitude =
             jsonResponse['features'][i]['center'][1].toString();
 
-        String merged = locationTitle +
-            '|' +
-            locationDetails +
-            '|' +
-            objectLongitude +
-            '|' +
-            objectLatitude;
+        String merged = _encodeSuggestionParameters(
+            locationTitle, locationDetails, objectLongitude, objectLatitude);
 
         resultsList.add(merged);
       }
@@ -96,5 +65,85 @@ class BackendService {
     }
 
     return resultsList;
+  }
+
+  static String _getLocationDetails(
+      Map<String, dynamic> jsonResponse, int i, int contextLength) {
+    String locationDetails = '';
+
+    if (jsonResponse['features'][i]['properties']['address'] != null) {
+      locationDetails = locationDetails +
+          jsonResponse['features'][i]['properties']['address'] +
+          ', ';
+    }
+
+    for (int j = 0; j < contextLength; j++) {
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('neighborhood')) {
+        locationDetails = locationDetails +
+            jsonResponse['features'][i]['context'][j]['text'] +
+            ', ';
+      }
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('postcode')) {
+        locationDetails = locationDetails +
+            jsonResponse['features'][i]['context'][j]['text'] +
+            ', ';
+      }
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('locality')) {
+        locationDetails =
+            locationDetails + jsonResponse['features'][i]['context'][j]['text'];
+      }
+    }
+    return locationDetails;
+  }
+
+  static String _encodeSuggestionParameters(String locationTitle,
+      String locationDetails, String objectLongitude, String objectLatitude) {
+    return locationTitle +
+        '|' +
+        locationDetails +
+        '|' +
+        objectLongitude +
+        '|' +
+        objectLatitude;
+  }
+
+  static Future<List<String>> _getClosestLandmarksForLocation(
+      String latitude, String longitude) async {
+    List<String> landmarksList = List.empty(growable: true);
+
+    var url = Uri.https(
+        kBackendApiURL, '/closest/5/landmarks/from/$latitude/$longitude/', {
+      'format': 'json',
+    });
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+      int responseLength = jsonResponse.length;
+
+      for (int i = 0; i < responseLength; i++) {
+        String locationTitle = jsonResponse[i]['name'];
+
+        String locationDetails = '';
+
+        String objectLongitude = jsonResponse[i]['lon'].toString();
+        String objectLatitude = jsonResponse[i]['lat'].toString();
+
+        String merged = _encodeSuggestionParameters(
+            locationTitle, locationDetails, objectLongitude, objectLatitude);
+
+        landmarksList.add(merged);
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return landmarksList;
   }
 }
