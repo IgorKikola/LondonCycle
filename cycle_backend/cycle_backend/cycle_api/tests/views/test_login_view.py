@@ -16,7 +16,7 @@ class LoginViewTestCase(APITestCase):
         self.url = reverse('login')
 
     def test_login_url(self):
-        self.assertEqual(self.url, '/login')
+        self.assertEqual(self.url, '/login/')
 
     """ Test that only POST method is valid """
 
