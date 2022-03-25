@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:cycle/services/location_manager.dart';
 import '../utilities/api_constants.dart';
+import 'package:latlong2/latlong.dart';
 
 const String kApiKey =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
@@ -64,6 +65,14 @@ class BackendService {
     }
 
     return resultsList;
+  }
+
+  static Future<Map<String, String>> getNBikeStationForCurrentLocation(
+      int n) async {
+    List<Map<String, String>> bikeStationsList =
+        await _getClosestBikeStationsForCurrentLocation();
+
+    return bikeStationsList.elementAt(n);
   }
 
   static String _getLocationDetails(
@@ -147,5 +156,55 @@ class BackendService {
     }
 
     return landmarksList;
+  }
+
+  static Future<List<Map<String, String>>>
+      _getClosestBikeStationsForCurrentLocation() async {
+    List<Map<String, String>> bikeStationsList = List.empty(growable: true);
+
+    Position currentPosition = await getPosition();
+    String latitude = currentPosition.latitude.toString();
+    String longitude = currentPosition.longitude.toString();
+
+    var url = Uri.https(
+        kBackendApiURL, '/closest/5/bikepoints/from/$latitude/$longitude/', {
+      'format': 'json',
+    });
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+      int responseLength = jsonResponse.length;
+
+      for (int i = 0; i < responseLength; i++) {
+        String locationTitle = jsonResponse[i]['name'];
+        double locationLatitude = jsonResponse[i]['lat'];
+        double locationLongitude = jsonResponse[i]['lon'];
+        locationTitle = locationTitle.substring(0, locationTitle.indexOf(','));
+
+        Map<String, String> bikeStationPair = {
+          locationTitle: _getDistanceBetween(currentPosition.latitude,
+              currentPosition.longitude, locationLatitude, locationLongitude)
+        };
+
+        bikeStationsList.add(bikeStationPair);
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return bikeStationsList;
+  }
+
+  static String _getDistanceBetween(double latitude1, double longitude1,
+      double latitude2, double longitude2) {
+    const Distance distance = Distance();
+    String distanceInMeters =
+        distance(LatLng(latitude1, longitude1), LatLng(latitude2, longitude2))
+            .toInt()
+            .toString();
+
+    String suffix = 'm';
+    return distanceInMeters + suffix;
   }
 }

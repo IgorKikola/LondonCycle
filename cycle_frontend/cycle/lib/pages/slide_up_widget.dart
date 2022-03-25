@@ -2,6 +2,7 @@ import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/my_route_provider.dart';
+import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -35,6 +36,17 @@ class SlideUpWidget extends StatefulWidget {
 class _SlideUpWidgetState extends State<SlideUpWidget> {
   // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
 
+  late List<GlobalKey<_BikeStationItemWidgetState>>
+      globalBikeStationWidgetItemsKeys =
+      _createGlobalBikeStationWidgetItemsKeys(4);
+
+  void myBikeStationItemWidgetStateRefresh() {
+    for (GlobalKey<_BikeStationItemWidgetState> item
+        in globalBikeStationWidgetItemsKeys) {
+      item.currentState?.myBikeStationItemWidgetRefresh();
+    }
+  }
+
   List<List<dynamic>> data = [];
 
   var riderNumController = TextEditingController();
@@ -48,6 +60,21 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         numOfRiders = int.parse(riderNumController.text);
       }
     });
+  }
+
+  List<GlobalKey<_BikeStationItemWidgetState>>
+      _createGlobalBikeStationWidgetItemsKeys(int numberOfKeys) {
+    List<GlobalKey<_BikeStationItemWidgetState>> returnKeys =
+        List.empty(growable: true);
+    for (int i = 0; i < numberOfKeys; i++) {
+      returnKeys.add(_createGlobalKeyForBikeStationWidgetItem());
+    }
+    return returnKeys;
+  }
+
+  GlobalKey<_BikeStationItemWidgetState>
+      _createGlobalKeyForBikeStationWidgetItem() {
+    return GlobalKey<_BikeStationItemWidgetState>();
   }
 
   void _loadCSV() async {
@@ -342,7 +369,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                BottomSectionLabel(labelText: 'Landm:'),
+                                // BottomSectionLabel(labelText: 'Landm:',),
                                 SizedBox(height: 10),
                                 LandmarkItemWidget(landmarkName: 'Lon.'),
                                 SizedBox(height: 10),
@@ -384,19 +411,30 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BottomSectionLabel(labelText: 'Bikepoints:'),
+                              BottomSectionLabel(
+                                  labelText: 'Bikepoints:',
+                                  myBikeStationItemWidgetStateRefreshCallback:
+                                      myBikeStationItemWidgetStateRefresh),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
-                                  bikeStationName: 'Horseferry Road'),
+                                  bikeStationId: 0,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(0)),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
-                                  bikeStationName: 'Westminister Pier'),
+                                  bikeStationId: 1,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(1)),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
-                                  bikeStationName: 'Vauxhall Bridge'),
+                                  bikeStationId: 2,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(2)),
                               SizedBox(height: 10),
                               BikeStationItemWidget(
-                                  bikeStationName: 'Milbank Tower'),
+                                  bikeStationId: 3,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(3)),
                             ],
                           ),
                         ),
@@ -553,16 +591,23 @@ class _LandmarkItemWidgetState extends State<LandmarkItemWidget> {
 class BikeStationItemWidget extends StatefulWidget {
   BikeStationItemWidget({
     Key? key,
-    required this.bikeStationName,
+    required this.bikeStationId,
   }) : super(key: key);
 
-  final String bikeStationName;
+  final int bikeStationId;
 
   @override
   State<BikeStationItemWidget> createState() => _BikeStationItemWidgetState();
 }
 
 class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
+  final GlobalKey<_BikeStationDataRowState> _myBikeStationDataRowState =
+      GlobalKey<_BikeStationDataRowState>();
+
+  void myBikeStationItemWidgetRefresh() {
+    _myBikeStationDataRowState.currentState?._bikeStationDataRowStateRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -578,34 +623,83 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
         child: InkWell(
           splashColor: Colors.lightBlue,
           onTap: () {
-            print(widget.bikeStationName);
+            print(widget.bikeStationId);
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                sanitiseString(widget.bikeStationName, 5),
-                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
-              ),
-              Text(
-                '0.5 m.', //TODO: implement nearest bikepoints distances
-                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
-              ),
-            ],
-          ),
+          child: BikeStationDataRow(
+              key: _myBikeStationDataRowState,
+              bikeStationId: widget.bikeStationId),
         ),
       ),
     );
   }
 }
 
-class BottomSectionLabel extends StatelessWidget {
-  const BottomSectionLabel({
+class BikeStationDataRow extends StatefulWidget {
+  const BikeStationDataRow({
     Key? key,
-    required this.labelText,
+    required this.bikeStationId,
   }) : super(key: key);
 
+  final int bikeStationId;
+
+  @override
+  State<BikeStationDataRow> createState() =>
+      _BikeStationDataRowState(bikeStationId);
+}
+
+class _BikeStationDataRowState extends State<BikeStationDataRow> {
+  void _bikeStationDataRowStateRefresh() {
+    setState(() {
+      updateBikeStationPair(this.bikeStationId);
+    });
+  }
+
+  Map<String, String> _bikeStationPair = {'loading': '0km'};
+  late final int bikeStationId;
+
+  _BikeStationDataRowState(int bikeStationId) {
+    this.bikeStationId = bikeStationId;
+    updateBikeStationPair(bikeStationId);
+  }
+
+  void updateBikeStationPair(int bikeStationId) {
+    BackendService.getNBikeStationForCurrentLocation(bikeStationId).then(
+      (incomingBikeStationPair) => setState(() {
+        _bikeStationPair = incomingBikeStationPair;
+      }),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          sanitiseString(_bikeStationPair.keys.first, 5),
+          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+        ),
+        Text(
+          _bikeStationPair
+              .values.first, //TODO: implement nearest bikepoints distances
+          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+        ),
+      ],
+    );
+  }
+}
+
+class BottomSectionLabel extends StatelessWidget {
+  const BottomSectionLabel(
+      {Key? key,
+      required this.labelText,
+      required void myBikeStationItemWidgetStateRefreshCallback()})
+      : myBikeStationItemWidgetStateRefreshCallback =
+            myBikeStationItemWidgetStateRefreshCallback,
+        super(key: key);
+
   final String labelText;
+  final myBikeStationItemWidgetStateRefreshCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -619,9 +713,16 @@ class BottomSectionLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            sanitiseString(labelText, 5),
+            sanitiseString(labelText, 3),
             style: kSlideUpWidgetBottomSectionLabelTextStyle,
           ),
+          const SizedBox(width: 1),
+          GestureDetector(
+            onTap: () {
+              myBikeStationItemWidgetStateRefreshCallback();
+            },
+            child: Icon(Icons.refresh),
+          )
         ],
       ),
     );

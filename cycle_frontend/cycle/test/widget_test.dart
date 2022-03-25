@@ -27,8 +27,8 @@ void main() {
     expect(find.text('Destination'), findsOneWidget);
     expect(find.text('Stops'), findsOneWidget);
     expect(find.text('0'), findsOneWidget); //TODO: should really start with one
-    expect(find.text('Land...'), findsOneWidget);
-    expect(find.text('Bike...'), findsOneWidget);
+    // expect(find.text('Land...'), findsOneWidget);
+    expect(find.text('Bi...'), findsOneWidget);
     expect(find.text('abcd'), findsNothing);
     expect(find.text('1'), findsNothing); //TODO: as above
   });
