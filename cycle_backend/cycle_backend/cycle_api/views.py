@@ -127,13 +127,15 @@ def get_closest_available_bikepoint(request, min_bikes, lat, lon):
     queue = get_places_by_distance(bikepoints, lat, lon)
     closest_bikepoint = None
     while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
+        bikepoint = queue.get()
+        NbBikes = bikepoint_get_property(bikepoint[1].id, 'NbBikes')
         if NbBikes is not None and int(NbBikes) >= min_bikes:
             closest_bikepoint = bikepoint
 
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 @api_view()
 @permission_classes([])
@@ -147,13 +149,15 @@ def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
     queue = get_places_by_distance(bikepoints, lat, lon)
     closest_bikepoint = None
     while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
+        bikepoint = queue.get()
+        NbEmptyDocks = bikepoint_get_property(bikepoint[1].id, 'NbEmptyDocks')
         if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
             closest_bikepoint = bikepoint
 
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
