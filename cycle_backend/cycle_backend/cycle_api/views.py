@@ -15,7 +15,7 @@ from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from jsonmerge import Merger
-from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance, string_to_list_of_coordinates
+from .helpers import *
 import requests
 
 @api_view()
@@ -117,20 +117,11 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
 
 @api_view()
 @permission_classes([])
-def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+def get_closest_bikepoint_with_at_least_n_bikes(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_bikes available bikes
+    Retrieve the closest bikepoint with at least n available bikes
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
-
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()
-        NbBikes = bikepoint_get_property(bikepoint[1].id, 'NbBikes')
-        if NbBikes is not None and int(NbBikes) >= min_bikes:
-            closest_bikepoint = bikepoint
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbBikes', n)
 
     serializer = PlaceSerializer(closest_bikepoint[1])
     return_data = serializer.data
@@ -139,20 +130,11 @@ def get_closest_available_bikepoint(request, min_bikes, lat, lon):
 
 @api_view()
 @permission_classes([])
-def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+def get_closest_bikepoint_with_at_least_n_empty_docks(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    Retrieve the closest bikepoint with at least n empty docks
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
-
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()
-        NbEmptyDocks = bikepoint_get_property(bikepoint[1].id, 'NbEmptyDocks')
-        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
-            closest_bikepoint = bikepoint
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbEmptyDocks', n)
 
     serializer = PlaceSerializer(closest_bikepoint[1])
     return_data = serializer.data
