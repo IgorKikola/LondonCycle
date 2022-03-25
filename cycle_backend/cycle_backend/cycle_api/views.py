@@ -46,14 +46,17 @@ def get_list_of_stops(request, string_of_stops):
 
 
 @api_view()
+@permission_classes([])
 def get_route(request, fromPlace, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_single_stop(request, fromPlace, firstStop, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     schema = {
                 "properties": {
