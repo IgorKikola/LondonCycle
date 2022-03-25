@@ -24,7 +24,7 @@ class SignupViewTestCase(APITestCase):
         self.url = reverse('signup')
 
     def test_sign_up_url(self):
-        self.assertEqual(self.url, '/signup')
+        self.assertEqual(self.url, '/signup/')
 
     """ Test that only POST method is valid """
 
