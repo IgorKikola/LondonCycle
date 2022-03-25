@@ -7,6 +7,7 @@ import 'package:cycle/services/stop_location.dart';
 import 'package:provider/provider.dart';
 import 'package:cycle/services/stops_manager.dart';
 import 'package:cycle/components/searchbox.dart';
+import '../../models/journey_stop.dart';
 import '../../services/route.dart';
 import '../../utilities/constants.dart';
 import '../home_page.dart';

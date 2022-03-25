@@ -11,6 +11,7 @@ import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
 import 'journey_stop_pages/journey_stops.dart';
+import 'journey_stop_pages/stored_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -726,7 +727,7 @@ class StopsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => JourneyStops()),
+              MaterialPageRoute(builder: (context) => Stops()),
             );
           },
           child: Row(
