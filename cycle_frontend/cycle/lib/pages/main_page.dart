@@ -268,19 +268,23 @@ class _MapWidgetState extends State<MapWidget> {
 
   void moveToDestination() {
     setState(() {
-      mapController.move(
-          LatLng(searchMarker.getDestination().latitude,
-              searchMarker.getDestination().longitude),
-          13);
+      if (searchMarker.getDestination().latitude != 0.0) {
+        mapController.move(
+            LatLng(searchMarker.getDestination().latitude,
+                searchMarker.getDestination().longitude),
+            13);
+      }
     });
   }
 
   void moveToStart() {
     setState(() {
-      mapController.move(
-          LatLng(searchMarker.getStartingLocation().latitude,
-              searchMarker.getStartingLocation().longitude),
-          13);
+      if (searchMarker.getStartingLocation().latitude != 0.0) {
+        mapController.move(
+            LatLng(searchMarker.getStartingLocation().latitude,
+                searchMarker.getStartingLocation().longitude),
+            13);
+      }
     });
   }
 
