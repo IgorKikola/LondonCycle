@@ -66,6 +66,14 @@ class BackendService {
     return resultsList;
   }
 
+  static Future<Map<String, String>> getNBikeStationForCurrentLocation(
+      int n) async {
+    List<Map<String, String>> bikeStationsList =
+        await _getClosestBikeStationsForCurrentLocation();
+
+    return bikeStationsList.elementAt(n);
+  }
+
   static String _getLocationDetails(
       Map<String, dynamic> jsonResponse, int i, int contextLength) {
     String locationDetails = '';
@@ -147,5 +155,40 @@ class BackendService {
     }
 
     return landmarksList;
+  }
+
+  static Future<List<Map<String, String>>>
+      _getClosestBikeStationsForCurrentLocation() async {
+    List<Map<String, String>> bikeStationsList = List.empty(growable: true);
+
+    Position currentPosition = await getPosition();
+    String latitude = currentPosition.latitude.toString();
+    String longitude = currentPosition.longitude.toString();
+
+    var url = Uri.https(
+        kBackendApiURL, '/closest/5/bikepoints/from/$latitude/$longitude/', {
+      'format': 'json',
+    });
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+      int responseLength = jsonResponse.length;
+
+      for (int i = 0; i < responseLength; i++) {
+        String locationTitle = jsonResponse[i]['name'];
+        locationTitle = locationTitle.substring(0, locationTitle.indexOf(','));
+
+        Map<String, String> bikeStationPair = {
+          locationTitle: '1km'
+        }; //TODO: add distance when available
+
+        bikeStationsList.add(bikeStationPair);
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return bikeStationsList;
   }
 }

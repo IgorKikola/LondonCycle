@@ -2,6 +2,7 @@ import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/my_route_provider.dart';
+import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
 
 import 'package:flutter/material.dart';
@@ -385,17 +386,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             children: [
                               BottomSectionLabel(labelText: 'Bikepoints:'),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationName: 'Horseferry Road'),
+                              BikeStationItemWidget(bikeStationId: 0),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationName: 'Westminister Pier'),
+                              BikeStationItemWidget(bikeStationId: 1),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationName: 'Vauxhall Bridge'),
+                              BikeStationItemWidget(bikeStationId: 2),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationName: 'Milbank Tower'),
+                              BikeStationItemWidget(bikeStationId: 3),
                             ],
                           ),
                         ),
@@ -552,10 +549,10 @@ class _LandmarkItemWidgetState extends State<LandmarkItemWidget> {
 class BikeStationItemWidget extends StatefulWidget {
   BikeStationItemWidget({
     Key? key,
-    required this.bikeStationName,
+    required this.bikeStationId,
   }) : super(key: key);
 
-  final String bikeStationName;
+  final int bikeStationId;
 
   @override
   State<BikeStationItemWidget> createState() => _BikeStationItemWidgetState();
@@ -577,23 +574,53 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
         child: InkWell(
           splashColor: Colors.lightBlue,
           onTap: () {
-            print(widget.bikeStationName);
+            print(widget.bikeStationId);
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                sanitiseString(widget.bikeStationName, 5),
-                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
-              ),
-              Text(
-                '0.5 m.', //TODO: implement nearest bikepoints distances
-                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
-              ),
-            ],
-          ),
+          child: BikeStationDataRow(bikeStationId: widget.bikeStationId),
         ),
       ),
+    );
+  }
+}
+
+class BikeStationDataRow extends StatefulWidget {
+  const BikeStationDataRow({
+    Key? key,
+    required this.bikeStationId,
+  }) : super(key: key);
+
+  final int bikeStationId;
+
+  @override
+  State<BikeStationDataRow> createState() =>
+      _BikeStationDataRowState(bikeStationId);
+}
+
+class _BikeStationDataRowState extends State<BikeStationDataRow> {
+  Map<String, String> _bikeStationPair = {'loading': '0km'};
+
+  _BikeStationDataRowState(int bikeStationId) {
+    BackendService.getNBikeStationForCurrentLocation(bikeStationId)
+        .then((incomingBikeStationPair) => setState(() {
+              _bikeStationPair = incomingBikeStationPair;
+            }));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          sanitiseString(_bikeStationPair.keys.first, 5),
+          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+        ),
+        Text(
+          _bikeStationPair
+              .values.first, //TODO: implement nearest bikepoints distances
+          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+        ),
+      ],
     );
   }
 }
