@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:cycle/services/location_manager.dart';
 import '../utilities/api_constants.dart';
+import 'package:latlong2/latlong.dart';
 
 const String kApiKey =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
@@ -177,11 +178,14 @@ class BackendService {
 
       for (int i = 0; i < responseLength; i++) {
         String locationTitle = jsonResponse[i]['name'];
+        double locationLatitude = jsonResponse[i]['lat'];
+        double locationLongitude = jsonResponse[i]['lon'];
         locationTitle = locationTitle.substring(0, locationTitle.indexOf(','));
 
         Map<String, String> bikeStationPair = {
-          locationTitle: '1km'
-        }; //TODO: add distance when available
+          locationTitle: _getDistanceBetween(currentPosition.latitude,
+              currentPosition.longitude, locationLatitude, locationLongitude)
+        };
 
         bikeStationsList.add(bikeStationPair);
       }
@@ -190,5 +194,17 @@ class BackendService {
     }
 
     return bikeStationsList;
+  }
+
+  static String _getDistanceBetween(double latitude1, double longitude1,
+      double latitude2, double longitude2) {
+    const Distance distance = Distance();
+    String distanceInMeters =
+        distance(LatLng(latitude1, longitude1), LatLng(latitude2, longitude2))
+            .toInt()
+            .toString();
+
+    String suffix = 'm';
+    return distanceInMeters + suffix;
   }
 }
