@@ -62,9 +62,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   }
 
   List<GlobalKey<_BikeStationItemWidgetState>>
-  _createGlobalBikeStationWidgetItemsKeys(int numberOfKeys) {
+      _createGlobalBikeStationWidgetItemsKeys(int numberOfKeys) {
     List<GlobalKey<_BikeStationItemWidgetState>> returnKeys =
-    List.empty(growable: true);
+        List.empty(growable: true);
     for (int i = 0; i < numberOfKeys; i++) {
       returnKeys.add(_createGlobalKeyForBikeStationWidgetItem());
     }
@@ -72,7 +72,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   }
 
   GlobalKey<_BikeStationItemWidgetState>
-  _createGlobalKeyForBikeStationWidgetItem() {
+      _createGlobalKeyForBikeStationWidgetItem() {
     return GlobalKey<_BikeStationItemWidgetState>();
   }
 
@@ -712,16 +712,16 @@ class BottomSectionLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            sanitiseString(labelText, 5),
+            sanitiseString(labelText, 3),
             style: kSlideUpWidgetBottomSectionLabelTextStyle,
           ),
-          const SizedBox(width: 20),
-          IconButton(
-            onPressed: () => {
-              myBikeStationItemWidgetStateRefreshCallback(),
+          const SizedBox(width: 1),
+          GestureDetector(
+            onTap: () {
+              myBikeStationItemWidgetStateRefreshCallback();
             },
-            icon: Icon(Icons.refresh),
-          ),
+            child: Icon(Icons.refresh),
+          )
         ],
       ),
     );
