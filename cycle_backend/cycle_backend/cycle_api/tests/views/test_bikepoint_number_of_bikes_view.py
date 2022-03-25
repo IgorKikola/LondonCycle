@@ -14,7 +14,7 @@ class GetBikePointNumberOfBikesViewTestCase(TestCase):
     """ Tests of the bikepoint_number_of_bikes view """
 
     def test_get_url(self):
-        self.assertEqual(self.url, f'/bikepoints/{self.bikepoint_id}/number_of_bikes')
+        self.assertEqual(self.url, f'/bikepoints/{self.bikepoint_id}/number_of_bikes/')
 
     def test_response_length_is_one(self):
         self.assertTrue(len(self.response.data) == 1)
