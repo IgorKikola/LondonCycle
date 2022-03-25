@@ -3,6 +3,44 @@ from queue import PriorityQueue
 from cycle_backend.cycle_api.models import Place
 from cycle_backend.cycle_api.serializers import PlaceSerializer
 import requests
+from typing import NamedTuple
+
+def get_closest_available_bikepoint(lat, lon, property, n):
+    """
+    Returns a pair of (distance, bikepoint), representing the closest
+    bikepoint (and distance) from a given location, with a value for a given
+    (numerical) property greater or equal to n.
+    """
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+
+    coordinates = (lat, lon)
+    queue = get_places_by_distance(bikepoints, lat, lon)
+    closest_bikepoint = None
+    while (not queue.empty()) and closest_bikepoint is None:
+        bikepoint = queue.get() # contains a pair of (distance, bikepoint)
+        property_value = bikepoint_get_property(bikepoint[1].id, property)
+        if property_value is not None and int(property_value) >= n:
+            closest_bikepoint = bikepoint
+
+    return closest_bikepoint
+
+def string_to_list_of_coordinates(string_of_coordinates):
+    """
+    Turn a string containing a list of coordinates separated by ";", with
+    latitude and longitude separated by "," into a list of named tuples
+    containing pairs of latitude and longitude.
+    """
+    class Coordinates(NamedTuple):
+        lat: float
+        lon: float
+    list_of_coordinates = []
+    for coordinate_string in string_of_coordinates.split(";"):
+        coordinates = coordinate_string.split(",")
+        list_of_coordinates.append(
+            Coordinates(float(coordinates[0]), float(coordinates[1]))
+        )
+    return list_of_coordinates
+
 
 def get_places_by_distance(queryset, lat, lon):
     """

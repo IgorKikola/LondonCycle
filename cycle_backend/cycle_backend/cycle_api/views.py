@@ -2,9 +2,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django.utils.decorators import method_decorator
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
+
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
@@ -13,22 +15,52 @@ from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from jsonmerge import Merger
-from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
+from .helpers import *
 import requests
 
 @api_view()
+@permission_classes([])
+def get_list_of_stops(request, string_of_stops):
+    stops = string_to_list_of_coordinates(string_of_stops)
+    start = stops.pop(0)
+    end = stops.pop()
+    stopsQueue = get_places_by_distance(stops, start.lat, start.lon)
+    sortedStops = []
+    for i in range(len(stops)):
+        sortedStops.append(stopsQueue.get()[1])
+
+    sortedStops = [start] + sortedStops + [end]
+
+    finalList = []
+    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    for i in range(len(sortedStops)):
+        stop = sortedStops[i]
+        finalList.append(stop)
+        closest_bikepoint = get_n_closest_places(1, bikepoints, stop.lat, stop.lon)[0]
+        finalList.append((closest_bikepoint.lat, closest_bikepoint.lon))
+
+    json = {}
+    for i in range(len(finalList)):
+        json[i] = finalList[i]
+    return Response(finalList)
+
+
+@api_view()
+@permission_classes([])
 def get_route(request, fromPlace, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_single_stop(request, fromPlace, firstStop, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     schema = {
                 "properties": {
-                        "mergeStrategy": "append"     
+                        "mergeStrategy": "append"
                  }
              }
     merger=Merger(schema)
@@ -88,43 +120,29 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
 
 @api_view()
 @permission_classes([])
-def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+def get_closest_bikepoint_with_at_least_n_bikes(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_bikes available bikes
+    Retrieve the closest bikepoint with at least n available bikes
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbBikes', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
-        if NbBikes is not None and int(NbBikes) >= min_bikes:
-            closest_bikepoint = bikepoint
-
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 @api_view()
 @permission_classes([])
-def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+def get_closest_bikepoint_with_at_least_n_empty_docks(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    Retrieve the closest bikepoint with at least n empty docks
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbEmptyDocks', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
-        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
-            closest_bikepoint = bikepoint
-
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
@@ -133,6 +151,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class BikePointViewSet(viewsets.ModelViewSet):
@@ -141,6 +160,7 @@ class BikePointViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='BikePoints')
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class LandmarkViewSet(viewsets.ModelViewSet):
@@ -149,6 +169,7 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class StopViewSet(viewsets.ModelViewSet):
