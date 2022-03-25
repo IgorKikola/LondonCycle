@@ -1,5 +1,6 @@
 import 'package:cycle/models/docking_station.dart';
 import 'package:cycle/models/landmark.dart';
+import 'package:cycle/models/stop.dart';
 import 'package:cycle/services/network_helper.dart';
 
 const String kBackEndUrl = 'https://agile-citadel-13372.herokuapp.com/';
@@ -26,4 +27,14 @@ Future<List<Landmark>> getLandmarks() async {
       .toList();
 
   return landmarks;
+}
+
+Future<List<JourneyStop>> getStops() async {
+  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl + kLandmarksPath);
+
+  List<JourneyStop> journeyStops = (await networkHelper.getDataAsJsonList())
+      .map((journeyStop) => JourneyStop.fromJson(journeyStop))
+      .toList();
+
+  return journeyStops;
 }

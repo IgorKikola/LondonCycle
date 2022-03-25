@@ -1,7 +1,13 @@
 import 'dart:async';
 import 'package:flutter_mapbox_navigation/library.dart';
+import 'package:latlong2/latlong.dart';
 
 class Navigation {
+  final List<LatLng> _stops = [
+    LatLng(51.510357, -0.116773),
+    LatLng(51.504501, -0.086500)
+  ];
+
   final _home =
       WayPoint(name: "Home", latitude: 51.458060, longitude: -0.371500);
 
