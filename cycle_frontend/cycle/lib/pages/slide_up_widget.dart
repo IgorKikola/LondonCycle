@@ -35,6 +35,17 @@ class SlideUpWidget extends StatefulWidget {
 class _SlideUpWidgetState extends State<SlideUpWidget> {
   // Coordinate myDefaultStartingPoint = Coordinate(latitude: 51.0, longitude: 0.1);
 
+  late List<GlobalKey<_BikeStationItemWidgetState>>
+      globalBikeStationWidgetItemsKeys =
+      _createGlobalBikeStationWidgetItemsKeys(4);
+
+  void myBikeStationItemWidgetStateRefresh() {
+    for (GlobalKey<_BikeStationItemWidgetState> item
+        in globalBikeStationWidgetItemsKeys) {
+      item.currentState?.myBikeStationItemWidgetRefresh();
+    }
+  }
+
   List<List<dynamic>> data = [];
 
   var riderNumController = TextEditingController();
@@ -48,6 +59,21 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         numOfRiders = int.parse(riderNumController.text);
       }
     });
+  }
+
+  List<GlobalKey<_BikeStationItemWidgetState>>
+  _createGlobalBikeStationWidgetItemsKeys(int numberOfKeys) {
+    List<GlobalKey<_BikeStationItemWidgetState>> returnKeys =
+    List.empty(growable: true);
+    for (int i = 0; i < numberOfKeys; i++) {
+      returnKeys.add(_createGlobalKeyForBikeStationWidgetItem());
+    }
+    return returnKeys;
+  }
+
+  GlobalKey<_BikeStationItemWidgetState>
+  _createGlobalKeyForBikeStationWidgetItem() {
+    return GlobalKey<_BikeStationItemWidgetState>();
   }
 
   void _loadCSV() async {
@@ -342,7 +368,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                BottomSectionLabel(labelText: 'Landm:'),
+                                // BottomSectionLabel(labelText: 'Landm:',),
                                 SizedBox(height: 10),
                                 LandmarkItemWidget(landmarkName: 'Lon.'),
                                 SizedBox(height: 10),
@@ -384,15 +410,30 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BottomSectionLabel(labelText: 'Bikepoints:'),
+                              BottomSectionLabel(
+                                  labelText: 'Bikepoints:',
+                                  myBikeStationItemWidgetStateRefreshCallback:
+                                      myBikeStationItemWidgetStateRefresh),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(bikeStationId: 0),
+                              BikeStationItemWidget(
+                                  bikeStationId: 0,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(0)),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(bikeStationId: 1),
+                              BikeStationItemWidget(
+                                  bikeStationId: 1,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(1)),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(bikeStationId: 2),
+                              BikeStationItemWidget(
+                                  bikeStationId: 2,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(2)),
                               SizedBox(height: 10),
-                              BikeStationItemWidget(bikeStationId: 3),
+                              BikeStationItemWidget(
+                                  bikeStationId: 3,
+                                  key: globalBikeStationWidgetItemsKeys
+                                      .elementAt(3)),
                             ],
                           ),
                         ),
@@ -559,6 +600,13 @@ class BikeStationItemWidget extends StatefulWidget {
 }
 
 class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
+  final GlobalKey<_BikeStationDataRowState> _myBikeStationDataRowState =
+      GlobalKey<_BikeStationDataRowState>();
+
+  void myBikeStationItemWidgetRefresh() {
+    _myBikeStationDataRowState.currentState?._bikeStationDataRowStateRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -576,7 +624,9 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
           onTap: () {
             print(widget.bikeStationId);
           },
-          child: BikeStationDataRow(bikeStationId: widget.bikeStationId),
+          child: BikeStationDataRow(
+              key: _myBikeStationDataRowState,
+              bikeStationId: widget.bikeStationId),
         ),
       ),
     );
@@ -597,13 +647,26 @@ class BikeStationDataRow extends StatefulWidget {
 }
 
 class _BikeStationDataRowState extends State<BikeStationDataRow> {
+  void _bikeStationDataRowStateRefresh() {
+    setState(() {
+      updateBikeStationPair(this.bikeStationId);
+    });
+  }
+
   Map<String, String> _bikeStationPair = {'loading': '0km'};
+  late final int bikeStationId;
 
   _BikeStationDataRowState(int bikeStationId) {
-    BackendService.getNBikeStationForCurrentLocation(bikeStationId)
-        .then((incomingBikeStationPair) => setState(() {
-              _bikeStationPair = incomingBikeStationPair;
-            }));
+    this.bikeStationId = bikeStationId;
+    updateBikeStationPair(bikeStationId);
+  }
+
+  void updateBikeStationPair(int bikeStationId) {
+    BackendService.getNBikeStationForCurrentLocation(bikeStationId).then(
+      (incomingBikeStationPair) => setState(() {
+        _bikeStationPair = incomingBikeStationPair;
+      }),
+    );
   }
 
   @override
@@ -626,12 +689,16 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
 }
 
 class BottomSectionLabel extends StatelessWidget {
-  const BottomSectionLabel({
-    Key? key,
-    required this.labelText,
-  }) : super(key: key);
+  const BottomSectionLabel(
+      {Key? key,
+      required this.labelText,
+      required void myBikeStationItemWidgetStateRefreshCallback()})
+      : myBikeStationItemWidgetStateRefreshCallback =
+            myBikeStationItemWidgetStateRefreshCallback,
+        super(key: key);
 
   final String labelText;
+  final myBikeStationItemWidgetStateRefreshCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -647,6 +714,13 @@ class BottomSectionLabel extends StatelessWidget {
           Text(
             sanitiseString(labelText, 5),
             style: kSlideUpWidgetBottomSectionLabelTextStyle,
+          ),
+          const SizedBox(width: 20),
+          IconButton(
+            onPressed: () => {
+              myBikeStationItemWidgetStateRefreshCallback(),
+            },
+            icon: Icon(Icons.refresh),
           ),
         ],
       ),
