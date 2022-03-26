@@ -45,7 +45,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
     base["toLocationDisambiguation"].extend(end["toLocationDisambiguation"])
-    base["fromLocationDisambiguation"].extend(result["fromLocationDisambiguation"])
+    base["fromLocationDisambiguation"].extend(end["fromLocationDisambiguation"])
     return base
 
 @api_view()
