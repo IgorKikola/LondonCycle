@@ -19,7 +19,38 @@ from .helpers import *
 import requests
 import json
 
+@api_view()
+@permission_classes([])
+def deep_merge_lists(original, incoming):
+    common_length = min(len(original), len(incoming))
+    for idx in range(common_length):
+        if isinstance(original[idx], dict) and isinstance(incoming[idx], dict):
+            deep_merge_dicts(original[idx], incoming[idx])
 
+        elif isinstance(original[idx], list) and isinstance(incoming[idx], list):
+            deep_merge_lists(original[idx], incoming[idx])
+
+        else:
+            original[idx] = incoming[idx]
+
+    for idx in range(common_length, len(incoming)):
+        original.append(incoming[idx])
+
+@api_view()
+@permission_classes([])
+def deep_merge_dicts(original, incoming):
+    for key in incoming:
+        if key in original:
+            if isinstance(original[key], dict) and isinstance(incoming[key], dict):
+                deep_merge_dicts(original[key], incoming[key])
+
+            elif isinstance(original[key], list) and isinstance(incoming[key], list):
+                deep_merge_lists(original[key], incoming[key])
+
+            else:
+                original[key] = incoming[key]
+        else:
+            original[key] = incoming[key]
 @api_view()
 @permission_classes([])
 def get_route(request, fromPlace, toPlace):
@@ -41,10 +72,10 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
         result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        merge(base, result)
+        deep_merge_dicts(base, result)
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    merge(base, end)
+    deep_merge_dicts(base, end)
     base = json.dumps(base)
     loaded_base = json.loads(base)
     return loaded_base
