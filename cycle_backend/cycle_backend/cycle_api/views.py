@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from django.utils.decorators import method_decorator
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
-
+from mergedeep import merge
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
@@ -40,12 +40,10 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
         result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        base["toLocationDisambiguation"].extend(result["toLocationDisambiguation"])
-        base["fromLocationDisambiguation"].extend(result["fromLocationDisambiguation"])
+        merge(base, result)
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    base["toLocationDisambiguation"].extend(end["toLocationDisambiguation"])
-    base["fromLocationDisambiguation"].extend(end["fromLocationDisambiguation"])
+    merge(base, end)
     return base
 
 @api_view()
