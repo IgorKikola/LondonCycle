@@ -32,23 +32,21 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @api_view()
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    schema = {
-                "properties": {
-                        "mergeStrategy": "append"
-                 }
-             }
-    merger=Merger(schema)
+
     listStops = stringOfStops.split(";")
     i = 0
     base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
     while i+1 <= len(listStops):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
-        result= merger.merge(base,Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle')))
+        result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
+        base["toLocationDisambiguation"].extend(result["toLocationDisambiguation"])
+        base["fromLocationDisambiguation"].extend(result["fromLocationDisambiguation"])
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    result=merger.merge(result,end)
-    return result
+    base["toLocationDisambiguation"].extend(end["toLocationDisambiguation"])
+    base["fromLocationDisambiguation"].extend(result["fromLocationDisambiguation"])
+    return base
 
 @api_view()
 @permission_classes([])
