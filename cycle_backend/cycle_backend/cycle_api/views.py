@@ -18,32 +18,6 @@ from jsonmerge import Merger
 from .helpers import *
 import requests
 
-@api_view()
-@permission_classes([])
-def get_list_of_stops(request, string_of_stops):
-    stops = string_to_list_of_coordinates(string_of_stops)
-    start = stops.pop(0)
-    end = stops.pop()
-    stopsQueue = get_places_by_distance(stops, start.lat, start.lon)
-    sortedStops = []
-    for i in range(len(stops)):
-        sortedStops.append(stopsQueue.get()[1])
-
-    sortedStops = [start] + sortedStops + [end]
-
-    finalList = []
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
-    for i in range(len(sortedStops)):
-        stop = sortedStops[i]
-        finalList.append(stop)
-        closest_bikepoint = get_n_closest_places(1, bikepoints, stop.lat, stop.lon)[0]
-        finalList.append((closest_bikepoint.lat, closest_bikepoint.lon))
-
-    json = {}
-    for i in range(len(finalList)):
-        json[i] = finalList[i]
-    return Response(finalList)
-
 
 @api_view()
 @permission_classes([])
