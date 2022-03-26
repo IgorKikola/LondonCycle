@@ -45,7 +45,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
         for index in result['fromLocationDisambiguation']:
             coordinatesList.append(result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-         for index in result['toLocationDisambiguation']:
+        for index in result['toLocationDisambiguation']:
             coordinatesList.append(result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon']) 
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
