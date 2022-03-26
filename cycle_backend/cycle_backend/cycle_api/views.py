@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from jsonmerge import Merger
 from .helpers import *
 import requests
+import json
 
 
 @api_view()
@@ -44,7 +45,9 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
     merge(base, end)
-    return base
+    base = json.dumps(base)
+    loaded_base = json.loads(base)
+    return loaded_base
 
 @api_view()
 @permission_classes([])
