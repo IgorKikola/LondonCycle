@@ -1,10 +1,10 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.urls import include, path, reverse
 from cycle_backend.cycle_api.models import Place
 
 
 
-class GetNClosestBikepointsViewTestCase(TestCase):
+class GetNClosestBikepointsViewTestCase(APITestCase):
 
     def setUp(self):
         self.lat = 51.5972
