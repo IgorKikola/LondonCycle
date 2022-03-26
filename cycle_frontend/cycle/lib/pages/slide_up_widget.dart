@@ -37,14 +37,16 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   List<List<dynamic>> data = [];
 
   var riderNumController = TextEditingController();
-  var numOfRiders = 0;
+  var numOfRiders = 1;
 
   void updateNumberOfRiders() {
     setState(() {
       if (int.parse(riderNumController.text) > 5) {
         numOfRiders = 5;
-      } else {
+      } else if (int.parse(riderNumController.text) > 0) {
         numOfRiders = int.parse(riderNumController.text);
+      } else {
+        numOfRiders = 1;
       }
     });
   }
@@ -184,7 +186,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           AlertDialog(
                                         backgroundColor: Colors.lightBlue[200],
                                         title: const Text(
-                                          'Add riders (Max of 5)',
+                                          'Add riders (Min: 1 | Max: 5)',
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
