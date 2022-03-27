@@ -50,14 +50,16 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   List<List<dynamic>> data = [];
 
   var riderNumController = TextEditingController();
-  var numOfRiders = 0;
+  var numOfRiders = 1;
 
   void updateNumberOfRiders() {
     setState(() {
       if (int.parse(riderNumController.text) > 5) {
         numOfRiders = 5;
-      } else {
+      } else if (int.parse(riderNumController.text) > 0) {
         numOfRiders = int.parse(riderNumController.text);
+      } else {
+        numOfRiders = 1;
       }
     });
   }
@@ -195,7 +197,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             SizedBox(width: 10),
                             Container(
                               height: 30,
-                              width: 60,
+                              width: 130,
                               key: Key('RiderContainer'),
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue[200],
@@ -212,7 +214,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           AlertDialog(
                                         backgroundColor: Colors.lightBlue[200],
                                         title: const Text(
-                                          'Add riders (Max of 5)',
+                                          'Add riders (Min: 1 | Max: 5)',
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
@@ -265,15 +267,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.person_add,
-                                          key: Key('RiderIcon'),
-                                          color: Colors.red),
-                                      // Text(
-                                      //   'Riders:',
-                                      //   key: Key('RiderText'),
-                                      //   style: kSlideUpWidgetLabelTextStyle,
-                                      // ),
-                                      // SizedBox(width: 5),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Icon(Icons.person_add,
+                                            key: Key('RiderIcon'),
+                                            color: Colors.red),
+                                      ),
+                                      Text(
+                                        'Riders:',
+                                        key: Key('RiderText'),
+                                        style: kSlideUpWidgetLabelTextStyle,
+                                      ),
+                                      SizedBox(width: 5),
                                       Container(
                                         //padding: EdgeInsets.only(right: 70),
                                         child: Text(
