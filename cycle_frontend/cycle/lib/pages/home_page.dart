@@ -26,16 +26,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text(
-          'Map',
-          style: kAppBarTextStyle,
+          title: Text(
+            'Map',
+            style: kAppBarTextStyle,
+          ),
+          backgroundColor: Colors.lightBlue,
         ),
-        backgroundColor: Colors.lightBlue,
-      ),
+
       body: SlidingUpPanel(
         color: Colors.lightBlue,
         minHeight: 185,
-        maxHeight: 450,
+        maxHeight: 430,
         parallaxEnabled: true,
         parallaxOffset: 1.0,
         isDraggable: true,
