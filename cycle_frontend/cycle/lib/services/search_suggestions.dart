@@ -1,5 +1,9 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:cycle/services/location_manager.dart';
+import '../utilities/api_constants.dart';
+import 'package:latlong2/latlong.dart';
 
 const String kApiKey =
     'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
@@ -19,10 +23,7 @@ const String kProximityCenterLatitude = '51.50072917963769';
 class BackendService {
   static Future<List<String>> getSuggestionsFromGeocoding(
       String pattern) async {
-    List<String> resultsList = [
-      'my_history_result1|Some location details|0.1|51.0',
-      'my_history_result2|Some location details|0.1|51.0'
-    ];
+    List<String> resultsList = await _getClosestLandmarksForCurrentLocation();
 
     var url = Uri.https(kMapBoxForwardGeocodingURL,
         '/geocoding/v5/mapbox.places/$pattern.json', {
@@ -46,48 +47,16 @@ class BackendService {
         String locationTitle = jsonResponse['features'][i]['text'];
         int contextLength = jsonResponse['features'][i]['context'].length;
 
-        String locationDetails = '';
+        String locationDetails =
+            _getLocationDetails(jsonResponse, i, contextLength);
 
-        if (jsonResponse['features'][i]['properties']['address'] != null) {
-          locationDetails = locationDetails +
-              jsonResponse['features'][i]['properties']['address'] +
-              ', ';
-        }
-
-        for (int j = 0; j < contextLength; j++) {
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('neighborhood')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'] +
-                ', ';
-          }
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('postcode')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'] +
-                ', ';
-          }
-          if (jsonResponse['features'][i]['context'][j]['id']
-              .toString()
-              .contains('locality')) {
-            locationDetails = locationDetails +
-                jsonResponse['features'][i]['context'][j]['text'];
-          }
-        }
         String objectLongitude =
             jsonResponse['features'][i]['center'][0].toString();
         String objectLatitude =
             jsonResponse['features'][i]['center'][1].toString();
 
-        String merged = locationTitle +
-            '|' +
-            locationDetails +
-            '|' +
-            objectLongitude +
-            '|' +
-            objectLatitude;
+        String merged = _encodeSuggestionParameters(
+            locationTitle, locationDetails, objectLongitude, objectLatitude);
 
         resultsList.add(merged);
       }
@@ -96,5 +65,146 @@ class BackendService {
     }
 
     return resultsList;
+  }
+
+  static Future<Map<String, String>> getNBikeStationForCurrentLocation(
+      int n) async {
+    List<Map<String, String>> bikeStationsList =
+        await _getClosestBikeStationsForCurrentLocation();
+
+    return bikeStationsList.elementAt(n);
+  }
+
+  static String _getLocationDetails(
+      Map<String, dynamic> jsonResponse, int i, int contextLength) {
+    String locationDetails = '';
+
+    if (jsonResponse['features'][i]['properties']['address'] != null) {
+      locationDetails = locationDetails +
+          jsonResponse['features'][i]['properties']['address'] +
+          ', ';
+    }
+
+    for (int j = 0; j < contextLength; j++) {
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('neighborhood')) {
+        locationDetails = locationDetails +
+            jsonResponse['features'][i]['context'][j]['text'] +
+            ', ';
+      }
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('postcode')) {
+        locationDetails = locationDetails +
+            jsonResponse['features'][i]['context'][j]['text'] +
+            ', ';
+      }
+      if (jsonResponse['features'][i]['context'][j]['id']
+          .toString()
+          .contains('locality')) {
+        locationDetails =
+            locationDetails + jsonResponse['features'][i]['context'][j]['text'];
+      }
+    }
+    return locationDetails;
+  }
+
+  static String _encodeSuggestionParameters(String locationTitle,
+      String locationDetails, String objectLongitude, String objectLatitude) {
+    return locationTitle +
+        '|' +
+        locationDetails +
+        '|' +
+        objectLongitude +
+        '|' +
+        objectLatitude;
+  }
+
+  static Future<List<String>> _getClosestLandmarksForCurrentLocation() async {
+    List<String> landmarksList = List.empty(growable: true);
+
+    Position currentPosition = await getPosition();
+    String latitude = currentPosition.latitude.toString();
+    String longitude = currentPosition.longitude.toString();
+
+    var url = Uri.https(
+        kBackendApiURL, '/closest/5/landmarks/from/$latitude/$longitude/', {
+      'format': 'json',
+    });
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+      int responseLength = jsonResponse.length;
+
+      for (int i = 0; i < responseLength; i++) {
+        String locationTitle = jsonResponse[i]['name'];
+
+        String locationDetails = '';
+
+        String objectLongitude = jsonResponse[i]['lon'].toString();
+        String objectLatitude = jsonResponse[i]['lat'].toString();
+
+        String merged = _encodeSuggestionParameters(
+            locationTitle, locationDetails, objectLongitude, objectLatitude);
+
+        landmarksList.add(merged);
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return landmarksList;
+  }
+
+  static Future<List<Map<String, String>>>
+      _getClosestBikeStationsForCurrentLocation() async {
+    List<Map<String, String>> bikeStationsList = List.empty(growable: true);
+
+    Position currentPosition = await getPosition();
+    String latitude = currentPosition.latitude.toString();
+    String longitude = currentPosition.longitude.toString();
+
+    var url = Uri.https(
+        kBackendApiURL, '/closest/5/bikepoints/from/$latitude/$longitude/', {
+      'format': 'json',
+    });
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+      int responseLength = jsonResponse.length;
+
+      for (int i = 0; i < responseLength; i++) {
+        String locationTitle = jsonResponse[i]['name'];
+        double locationLatitude = jsonResponse[i]['lat'];
+        double locationLongitude = jsonResponse[i]['lon'];
+        locationTitle = locationTitle.substring(0, locationTitle.indexOf(','));
+
+        Map<String, String> bikeStationPair = {
+          locationTitle: _getDistanceBetween(currentPosition.latitude,
+              currentPosition.longitude, locationLatitude, locationLongitude)
+        };
+
+        bikeStationsList.add(bikeStationPair);
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return bikeStationsList;
+  }
+
+  static String _getDistanceBetween(double latitude1, double longitude1,
+      double latitude2, double longitude2) {
+    const Distance distance = Distance();
+    String distanceInMeters =
+        distance(LatLng(latitude1, longitude1), LatLng(latitude2, longitude2))
+            .toInt()
+            .toString();
+
+    String suffix = 'm';
+    return distanceInMeters + suffix;
   }
 }

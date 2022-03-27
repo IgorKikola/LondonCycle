@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
+import 'package:cycle/services/marker_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -51,7 +52,7 @@ class MainPageState extends State<MainPage> {
 }
 
 class MapWidget extends StatefulWidget {
-  MapWidget({
+  const MapWidget({
     Key? key,
   }) : super(key: key);
 
@@ -84,13 +85,18 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> loadMarkers() async {
-    markers = (await getDockingStations())
-        .map((dockingStation) => Marker(
-            point: LatLng(dockingStation.lat, dockingStation.lon),
-            builder: (ctx) => const Icon(
-                  Icons.pedal_bike,
-                  color: Colors.blue,
-                )))
+    markers = await loadLandmarkMarkers() + await loadDockingStationMarkers();
+  }
+
+  Future<List<Marker>> loadDockingStationMarkers() async {
+    return (await getDockingStations())
+        .map((dockingStation) => getDockingStationMarker(dockingStation))
+        .toList();
+  }
+
+  Future<List<Marker>> loadLandmarkMarkers() async {
+    return (await getLandmarks())
+        .map((landmark) => getLandmarkMarker(landmark))
         .toList();
   }
 
@@ -148,7 +154,7 @@ class _MapWidgetState extends State<MapWidget> {
             layers: [
               MarkerLayerOptions(
                 markers: [
-                  new Marker(
+                  Marker(
                     width: 45.0,
                     height: 45.0,
                     point: LatLng(searchMarker.getStartingLocation().latitude,
@@ -164,7 +170,7 @@ class _MapWidgetState extends State<MapWidget> {
                       ),
                     ),
                   ),
-                  new Marker(
+                  Marker(
                     width: 45.0,
                     height: 45.0,
                     point: LatLng(searchMarker.getDestination().latitude,
@@ -262,19 +268,23 @@ class _MapWidgetState extends State<MapWidget> {
 
   void moveToDestination() {
     setState(() {
-      mapController.move(
-          LatLng(searchMarker.getDestination().latitude,
-              searchMarker.getDestination().longitude),
-          13);
+      if (searchMarker.getDestination().latitude != 0.0) {
+        mapController.move(
+            LatLng(searchMarker.getDestination().latitude,
+                searchMarker.getDestination().longitude),
+            13);
+      }
     });
   }
 
   void moveToStart() {
     setState(() {
-      mapController.move(
-          LatLng(searchMarker.getStartingLocation().latitude,
-              searchMarker.getStartingLocation().longitude),
-          13);
+      if (searchMarker.getStartingLocation().latitude != 0.0) {
+        mapController.move(
+            LatLng(searchMarker.getStartingLocation().latitude,
+                searchMarker.getStartingLocation().longitude),
+            13);
+      }
     });
   }
 

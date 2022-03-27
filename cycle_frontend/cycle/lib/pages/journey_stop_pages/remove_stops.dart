@@ -1,4 +1,4 @@
-import 'package:cycle/models/stop.dart';
+import 'package:cycle/models/journey_stop.dart';
 import 'package:cycle/pages/journey_stop_pages/journey_stops.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +53,7 @@ class StopTiles extends StatelessWidget {
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           //TODO: call myRoute.removeWaypointAt(index)
+                          MyRouteProvider.myRoute.removeWaypointAt(index);
                           stopsP.deleteStop(stopsP.stops[index]);
                         }),
                     title: Text(stopsP.stops[index].name,

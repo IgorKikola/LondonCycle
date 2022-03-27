@@ -1,0 +1,47 @@
+[
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "Landmark_1",
+      "name": "Science Museum",
+      "lat": 51.4972,
+      "lon": -0.1767
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "Landmark_2",
+      "name": "The British Library",
+      "lat": 51.53,
+      "lon": -0.1277
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "Landmark_3",
+      "name": "Victoria and Albert Museum",
+      "lat": 51.4966,
+      "lon": -0.1722
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "Landmark_4",
+      "name": "Tate Modern",
+      "lat": 51.5072,
+      "lon": -0.0994
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "Landmark_13",
+      "name": "National Portrait Gallery",
+      "lat": 51.5094,
+      "lon": -0.1281
+    }
+  }
+]

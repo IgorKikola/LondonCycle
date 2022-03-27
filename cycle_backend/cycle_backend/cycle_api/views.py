@@ -2,18 +2,59 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django.utils.decorators import method_decorator
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
-
 from geopy import distance
 from queue import PriorityQueue
-
 from rest_framework import permissions
-from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance
+from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
+from cycle_backend.cycle_api.models import Place
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .helpers import *
 import requests
+import json
 
+
+@api_view()
+@permission_classes([])
+def get_route(request, fromPlace, toPlace):
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
+
+@api_view()
+@permission_classes([])
+def get_route_single_stop(request, fromPlace, firstStop, toPlace):
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
+
+@api_view()
+@permission_classes([])
+def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
+    coordinatesList=[] 
+    listStops = stringOfStops.split(";")
+    i = 0
+    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
+    for index in base['fromLocationDisambiguation']['disambiguationOptions']:
+        coordinatesList.append(base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
+    for index in base['toLocationDisambiguation']['disambiguationOptions']:
+        coordinatesList.append(base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
+    while i+1 <= len(listStops):
+        currentStop= listStops[i]
+        nextStop= listStops[i+i]
+        result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
+        for index in result['fromLocationDisambiguation']['disambiguationOptions']:
+            coordinatesList.append(result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
+        for index in result['toLocationDisambiguation']['disambiguationOptions']:
+            coordinatesList.append(result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon']) 
+        i+=1
+    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
+    for index in end['fromLocationDisambiguation']['disambiguationOptions']:
+        coordinatesList.append(end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
+    for index in end['toLocationDisambiguation']['disambiguationOptions']:
+        coordinatesList.append(end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
+    coordinatesJSON = json.dumps(coordinatesList)
+    return coordinatesJSON
 
 @api_view()
 @permission_classes([])
@@ -26,6 +67,7 @@ def get_n_closest_bikepoints(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 @permission_classes([])
 def get_n_closest_landmarks(request, n, lat, lon):
@@ -37,13 +79,15 @@ def get_n_closest_landmarks(request, n, lat, lon):
     serializer = PlaceSerializer(closest_places, many=True)
     return Response(serializer.data)
 
+
 @api_view()
 @permission_classes([])
 def bikepoint_number_of_bikes(request, bikepoint_id):
     """
     Retrieve the number of available bikes a certain bikepoint has
     """
-    return Response({'Number of bikes' : bikepoint_get_property(bikepoint_id, 'NbBikes')})
+    return Response({'Number of bikes': bikepoint_get_property(bikepoint_id, 'NbBikes')})
+
 
 @api_view()
 @permission_classes([])
@@ -51,47 +95,35 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
     """
     Retrieve the number of empty docks a certain bikepoint has
     """
-    return Response({'Number of empty docks' : bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+    return Response({'Number of empty docks': bikepoint_get_property(bikepoint_id, 'NbEmptyDocks')})
+
 
 @api_view()
 @permission_classes([])
-def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+def get_closest_bikepoint_with_at_least_n_bikes(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_bikes available bikes
+    Retrieve the closest bikepoint with at least n available bikes
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbBikes', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
-        if NbBikes is not None and int(NbBikes) >= min_bikes:
-            closest_bikepoint = bikepoint
-
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 @api_view()
 @permission_classes([])
-def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+def get_closest_bikepoint_with_at_least_n_empty_docks(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    Retrieve the closest bikepoint with at least n empty docks
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbEmptyDocks', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
-        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
-            closest_bikepoint = bikepoint
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
 
 class PlaceViewSet(viewsets.ModelViewSet):
     """
@@ -99,6 +131,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class BikePointViewSet(viewsets.ModelViewSet):
@@ -107,6 +140,7 @@ class BikePointViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='BikePoints')
     serializer_class = PlaceSerializer
+    permission_classes = []
 
 
 class LandmarkViewSet(viewsets.ModelViewSet):
@@ -115,6 +149,8 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     """
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
+    permission_classes = []
+
 
 class StopViewSet(viewsets.ModelViewSet):
     """
@@ -122,6 +158,7 @@ class StopViewSet(viewsets.ModelViewSet):
     """
     queryset = Stop.objects.all()
     serializer_class = StopSerializer
+
 
 # Signup view
 @api_view(['POST'])
@@ -142,7 +179,7 @@ def signup_view(request):
         response_data = {
             "detail": serializer.errors['email'][0]
         }
-        return Response(response_data, 400)
+        return Response(response_data, status=400)
     return Response(response_data)
 
 
@@ -153,16 +190,23 @@ def update_profile_view(request):
     serializer = UserSerializer(data=request.data)
     user = request.user
     if serializer.is_valid():
+        # If new email does not exist in the database already and first/last names are of a valid format
         response_data = update_user(user, serializer.data)
     else:
-        if serializer.data['email'] == user.email:
+        # If it exists, check if all the necessary fields are provided
+        # and then check if the new email is users current email.
+        # Same user ---> update the rest of the details although serializer is not valid provided that it is not valid
+        # because it gave an error about already existing email.
+        error_keys = list(serializer.errors)
+        if len(error_keys) == 1 and 'email' in serializer.errors and\
+                serializer.errors['email'][0] != "This field is required." and serializer.data['email'] == user.email:
             response_data = update_user(user, serializer.data)
         else:
             response_data = {
-                "detail": serializer.errors['email'][0]
+                "detail": serializer.errors
             }
-            return Response(response_data, 400)
-    return Response(response_data)
+            return Response(response_data, status=400, content_type="application/json")
+    return Response(response_data, content_type="application/json")
 
 
 # Get user details
@@ -177,7 +221,7 @@ def get_user_details_view(request):
         'email': user.email
     }
 
-    return Response(response_data)
+    return Response(response_data, content_type="application/json")
 
 
 """ Used to update user and return a response containing his updated information """

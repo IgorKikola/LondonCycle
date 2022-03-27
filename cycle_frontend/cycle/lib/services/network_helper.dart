@@ -20,4 +20,13 @@ class NetworkHelper {
       return null;
     }
   }
+
+  Future<List<dynamic>> getDataAsJsonList() async {
+    var data = (await getData());
+
+    if (data == null) {
+      return List.empty();
+    }
+    return data['results'] as List;
+  }
 }
