@@ -47,8 +47,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
     }
   }
 
-  List<List<dynamic>> data = [];
-
   var riderNumController = TextEditingController();
   var numOfRiders = 1;
 
@@ -77,15 +75,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   GlobalKey<_BikeStationItemWidgetState>
       _createGlobalKeyForBikeStationWidgetItem() {
     return GlobalKey<_BikeStationItemWidgetState>();
-  }
-
-  void _loadCSV() async {
-    final _rawData = await rootBundle.loadString("assets/landmarks.csv");
-    List<List<dynamic>> _listData =
-        const CsvToListConverter().convert(_rawData);
-    setState(() {
-      data = _listData;
-    });
   }
 
   bool isRouteComplete() {
@@ -136,461 +125,222 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         ),
       );
 
-  Widget buildSearchBar(BuildContext context) => Container(
-        child: Padding(
-          padding: EdgeInsets.zero,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(1),
-                child: Container(
-                  padding: EdgeInsets.all(15.0),
-                  height: 180,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Material(
-                    color: Colors.lightBlueAccent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SearchBoxWidget(
-                          searchBar: StartingLocationSearchBar(
-                              myRoute: widget.myRoute),
-                        ),
-                        SizedBox(height: 10),
-                        SearchBoxWidget(
-                          searchBar: FinishingLocationSearchBar(
-                              myRoute: widget.myRoute),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            StopsWidget(),
-                            SizedBox(width: 10),
-                            Container(
-                              height: 30,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Material(
+  Widget buildSearchBar(BuildContext context) => Padding(
+        padding: EdgeInsets.zero,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(1),
+              child: Container(
+                padding: EdgeInsets.all(15.0),
+                height: 150,
+                width: 400,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Material(
+                  color: Colors.lightBlueAccent,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SearchBoxWidget(
+                        searchBar:
+                            StartingLocationSearchBar(myRoute: widget.myRoute),
+                      ),
+                      SizedBox(height: 10),
+                      SearchBoxWidget(
+                        searchBar:
+                            FinishingLocationSearchBar(myRoute: widget.myRoute),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          StopsWidget(),
+                          SizedBox(width: 10),
+                          Container(
+                            height: 30,
+                            width: 80,
+                            decoration: BoxDecoration(
                                 color: Colors.red,
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: InkWell(
-                                  splashColor: Colors.lightBlue,
-                                  onTap: () {
-                                    findRoute();
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.search, color: Colors.white),
-                                    ],
-                                  ),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () {
+                                  findRoute();
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.search, color: Colors.white),
+                                  ],
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
-                            Container(
-                              height: 30,
-                              width: 130,
-                              key: Key('RiderContainer'),
-                              decoration: BoxDecoration(
-                                  color: Colors.lightBlue[200],
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Material(
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            height: 30,
+                            width: 130,
+                            key: Key('RiderContainer'),
+                            decoration: BoxDecoration(
                                 color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: InkWell(
-                                  splashColor: Colors.lightBlue,
-                                  onTap: () => {
-                                    showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                        backgroundColor: Colors.lightBlue[200],
-                                        title: const Text(
-                                          'Add riders (Min: 1 | Max: 5)',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.lightBlue[200],
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      backgroundColor: Colors.lightBlue[200],
+                                      title: const Text(
+                                        'Add riders (Min: 1 | Max: 5)',
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
-                                        content: new TextField(
-                                          controller: riderNumController,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                          decoration: new InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white),
-                                              labelText:
-                                                  "Enter the number of riders."),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                      ),
+                                      content: new TextField(
+                                        controller: riderNumController,
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                context, 'Cancel'),
-                                            child: const Text(
-                                              'Cancel',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, 'OK');
-                                              updateNumberOfRiders();
-                                            },
-                                            child: const Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
+                                        decoration: new InputDecoration(
+                                            labelStyle:
+                                                TextStyle(color: Colors.white),
+                                            labelText:
+                                                "Enter the number of riders."),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
                                         ],
                                       ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'OK');
+                                            updateNumberOfRiders();
+                                          },
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    updateNumberOfRiders(),
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Icon(Icons.person_add,
-                                            key: Key('RiderIcon'),
-                                            color: Colors.red),
-                                      ),
-                                      Text(
-                                        'Riders:',
-                                        key: Key('RiderText'),
+                                  ),
+                                  updateNumberOfRiders(),
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Icon(Icons.person_add,
+                                          key: Key('RiderIcon'),
+                                          color: Colors.red),
+                                    ),
+                                    Text(
+                                      'Riders:',
+                                      key: Key('RiderText'),
+                                      style: kSlideUpWidgetLabelTextStyle,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Container(
+                                      //padding: EdgeInsets.only(right: 70),
+                                      child: Text(
+                                        numOfRiders.toString(),
+                                        key: Key('RiderValue'),
                                         style: kSlideUpWidgetLabelTextStyle,
                                       ),
-                                      SizedBox(width: 5),
-                                      Container(
-                                        //padding: EdgeInsets.only(right: 70),
-                                        child: Text(
-                                          numOfRiders.toString(),
-                                          key: Key('RiderValue'),
-                                          style: kSlideUpWidgetLabelTextStyle,
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 30,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15.0)),
-                          child: Material(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: InkWell(
-                              splashColor: Colors.lightBlue,
-                              onTap: () {
-                                Navigation navigation = Navigation();
-                                navigation.navigate();
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.flag_outlined,
-                                      color: Colors.white),
-                                ],
-                              ),
-                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget buildWidgetGrid() => Container(
-        padding: EdgeInsets.all(1.0),
-        alignment: Alignment(-1.0, 0.0),
-        constraints: BoxConstraints.tightForFinite(height: 400, width: 200),
-        height: 400,
-        width: 200,
-        child: GridView.count(
-          padding: EdgeInsets.all(1.0),
-          crossAxisCount: 2,
-          childAspectRatio: 0.5,
-          children: [
-            Center(
-              widthFactor: 300,
-              heightFactor: 400,
-              child: Container(
-                padding: EdgeInsets.all(6.0),
-                alignment: Alignment(1.0, 0.0),
-                child: Material(
-                  color: Colors.lightBlue,
-                  child: InkWell(
-                    splashColor: Colors.lightBlue,
-                    onTap: () {
-                      showLandmarks(context);
-                      setState(() {
-                        _loadCSV();
-                      });
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(1),
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            height: 250,
-                            width: 190,
-                            decoration: BoxDecoration(
-                              color: Colors.lightBlueAccent,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // BottomSectionLabel(labelText: 'Landm:',),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Lon.'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Big Ben'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'The Shard'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Tower...'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              widthFactor: 300,
-              heightFactor: 400,
-              child: Container(
-                  padding: EdgeInsets.all(1.0),
-                  alignment: Alignment(-1.0, 0.0),
-                  child: Container(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Container(
-                          padding: EdgeInsets.all(20.0),
-                          height: 250,
-                          width: 190,
-                          decoration: BoxDecoration(
-                            color: Colors.lightBlueAccent,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BottomSectionLabel(
-                                  labelText: 'Bikepoints:',
-                                  myBikeStationItemWidgetStateRefreshCallback:
-                                      myBikeStationItemWidgetStateRefresh),
-                              SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationId: 0,
-                                  key: globalBikeStationWidgetItemsKeys
-                                      .elementAt(0)),
-                              SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationId: 1,
-                                  key: globalBikeStationWidgetItemsKeys
-                                      .elementAt(1)),
-                              SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationId: 2,
-                                  key: globalBikeStationWidgetItemsKeys
-                                      .elementAt(2)),
-                              SizedBox(height: 10),
-                              BikeStationItemWidget(
-                                  bikeStationId: 3,
-                                  key: globalBikeStationWidgetItemsKeys
-                                      .elementAt(3)),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     ],
-                  ))),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       );
 
-  Future<dynamic> showLandmarks(BuildContext context) async {
-    return showGeneralDialog(
-        context: context,
-        barrierLabel: '',
-        barrierDismissible: true,
-        transitionDuration: Duration(milliseconds: 300),
-        transitionBuilder: (context, _animation, _secondaryAnimation, _child) {
-          return Animations.grow(_animation, _secondaryAnimation, _child);
-        },
-        pageBuilder: (_animation, _secondaryAnimation, _child) {
-          // return showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                title: Text(
-                  "Landmarks",
-                  style: kSlideUpWidgetLandmarksAlertDialogTitleTextStyle,
-                ),
-                backgroundColor: Colors.lightBlueAccent,
-                content: SingleChildScrollView(
+  Widget buildWidgetGrid() => Center(
+        child: Container(
+            padding: EdgeInsets.all(1.0),
+            alignment: Alignment(-1.0, 0.0),
+            child: Container(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(6),
                   child: Container(
-                    width: double.maxFinite,
+                    padding: EdgeInsets.all(20.0),
+                    height: 230,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlueAccent,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Divider(),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height * 0.4,
-                          ),
-                          child: ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (_, index) {
-                              return Card(
-                                margin: const EdgeInsets.all(3),
-                                color: Colors.lightBlue[200],
-                                child: ListTile(
-                                  title: Text(
-                                    data[index][1],
-                                    style:
-                                        kSlideUpWidgetLandmarksAlertDialogListTileTextStyle,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BottomSectionLabel(
+                            labelText: 'Bikepoints:',
+                            myBikeStationItemWidgetStateRefreshCallback:
+                                myBikeStationItemWidgetStateRefresh),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 0,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 1,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 2,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 3,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
                       ],
                     ),
                   ),
                 ),
-                actions: <Widget>[
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //   children: [
-                  //     ElevatedButton(
-                  //         style: ButtonStyle(
-                  //           backgroundColor:
-                  //           MaterialStateProperty.all<Color>(Colors.red),
-                  //         ),
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             _loadCSV();
-                  //           });
-                  //         },
-                  //         child: Icon(Icons.add_circle)),
-                  //
-                  //   ],
-                  // )
-                ],
-              );
-            },
-          );
-        });
-  }
-}
-
-class LandmarkItemWidget extends StatefulWidget {
-  LandmarkItemWidget({
-    Key? key,
-    required this.landmarkName,
-  }) : super(key: key);
-
-  Color starColor = Colors.grey;
-  final String landmarkName;
-
-  @override
-  State<LandmarkItemWidget> createState() => _LandmarkItemWidgetState();
-}
-
-class _LandmarkItemWidgetState extends State<LandmarkItemWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 2),
-      height: 35,
-      width: 150,
-      decoration: BoxDecoration(
-          color: Colors.lightBlue[200],
-          borderRadius: BorderRadius.circular(20.0)),
-
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      // children: [
-
-      child: Material(
-        color: Colors.lightBlue[200],
-        borderRadius: BorderRadius.circular(25.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          onTap: () {
-            print(widget.landmarkName);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                sanitiseString(widget.landmarkName, 5),
-                style: kSlideUpWidgetLeftBottomSectionItemTextStyle,
-              ),
-              IconButton(
-                alignment: Alignment(1.0, 0),
-                icon: Icon(Icons.star, color: widget.starColor),
-                onPressed: () {
-                  setState(() {
-                    widget.starColor = widget.starColor == Colors.grey
-                        ? Colors.yellow
-                        : Colors.grey;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+              ],
+            ))),
+      );
 }
 
 class BikeStationItemWidget extends StatefulWidget {
@@ -616,9 +366,8 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(2.0),
-      height: 35,
-      width: 150,
+      height: 30,
+      width: 400,
       decoration: BoxDecoration(
           color: Colors.lightBlue[200],
           borderRadius: BorderRadius.circular(20.0)),
@@ -627,12 +376,16 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
           onTap: () {
             print(widget.bikeStationId);
           },
-          child: BikeStationDataRow(
-              key: _myBikeStationDataRowState,
-              bikeStationId: widget.bikeStationId),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: BikeStationDataRow(
+                key: _myBikeStationDataRowState,
+                bikeStationId: widget.bikeStationId),
+          ),
         ),
       ),
     );
@@ -681,7 +434,7 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          sanitiseString(_bikeStationPair.keys.first, 5),
+          sanitiseString(_bikeStationPair.keys.first, 30),
           style: kSlideUpWidgetRightBottomSectionItemTextStyle,
         ),
         Text(
@@ -710,7 +463,7 @@ class BottomSectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      width: 150,
+      width: 400,
       decoration: BoxDecoration(
           color: Colors.lightBlueAccent,
           borderRadius: BorderRadius.circular(10.0)),
@@ -718,16 +471,21 @@ class BottomSectionLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            sanitiseString(labelText, 3),
+            sanitiseString(labelText, 20),
             style: kSlideUpWidgetBottomSectionLabelTextStyle,
           ),
-          const SizedBox(width: 1),
-          GestureDetector(
-            onTap: () {
-              myBikeStationItemWidgetStateRefreshCallback();
-            },
-            child: Icon(Icons.refresh),
-          )
+          Material(
+            color: Colors.lightBlue[200],
+            borderRadius: BorderRadius.circular(15.0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              splashColor: Colors.lightBlue,
+              onTap: () {
+                myBikeStationItemWidgetStateRefreshCallback();
+              },
+              child: Icon(Icons.refresh),
+            ),
+          ),
         ],
       ),
     );
@@ -778,7 +536,7 @@ class StartingLocationSearchBar extends StatelessWidget {
           myRoute: myRoute,
           typeAheadController: startingPointSearchboxTypeAheadController,
         ),
-        // SizedBox(width: 32.0)
+        const SizedBox(width: 20),
       ],
     );
   }
@@ -806,7 +564,7 @@ class FinishingLocationSearchBar extends StatelessWidget {
           myRoute: myRoute,
           typeAheadController: finishingPointSearchboxTypeAheadController,
         ),
-        // SizedBox(width: 32.0)
+        const SizedBox(width: 20),
       ],
     );
   }
@@ -830,6 +588,7 @@ class StopsWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
           onTap: () {
             Navigator.push(
               context,
