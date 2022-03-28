@@ -1,34 +1,3 @@
-/*
-
-class Direction {
-  late int id;
-  // String studentName;
-  // int studentScores;
-
-  Direction({
-    required this.id,
-    // required this.studentName,
-    // required this.studentScores
-  });
-
-  // Student.fromJson(Map<String, dynamic> parsedJson) {
-  //   _id = parsedJson['id'];
-  //   // _id = parsedJson['id'];
-  //   // _title = parsedJson['title'];
-  //   // _body = parsedJson['body'];
-  // }
-
-  // int get id => id1;
-
-  factory Direction.fromJson(Map<String, dynamic> parsedJson) {
-    return Direction(
-      id: parsedJson['id'],
-      // studentName: parsedJson['name'],
-      // studentScores: parsedJson['score']
-    );
-  }
-}
-*/
 
 class MapBoxRoute {
   late Geometry geometry;
