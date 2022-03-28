@@ -6,6 +6,7 @@ import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../custom_blue_button.dart';
@@ -113,6 +114,7 @@ class EditProfileFormState extends State<EditProfileForm> {
                     APIService.updateProfile(model).then((response) {
                       if (response.statusCode == 200) {
                         // Update was successful.
+                        UserDetailsHelper.setUserDetails(response);
                         Navigator.pop(context);
                       } else {
                         Flushbar(

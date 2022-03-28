@@ -2,6 +2,7 @@ import 'package:cycle/main.dart';
 import 'package:cycle/pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
+import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:cycle/pages/settings.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
@@ -59,7 +60,8 @@ Widget buildProfileColumn(BuildContext context) => Container(
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Profile()),
+              MaterialPageRoute(
+                  builder: (context) => const ViewProfileLoadingScreen()),
             );
           },
           child: Column(
