@@ -35,24 +35,15 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     listStops = stringOfStops.split(";")
     i = 0
     base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
-    for index in base['fromLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-    for index in base['toLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
+    coordinatesList.append(base['journeys'][0]['legs'][0]['path']['lineString'])
     while i+1 <= len(listStops):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
         result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        for index in result['fromLocationDisambiguation']['disambiguationOptions']:
-            coordinatesList.append(result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-        for index in result['toLocationDisambiguation']['disambiguationOptions']:
-            coordinatesList.append(result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon']) 
+        coordinatesList.append(result['journeys'][0]['legs'][0]['path']['lineString'])
         i+=1
     end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    for index in end['fromLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-    for index in end['toLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
+    coordinatesList.append(end['journeys'][0]['legs'][0]['path']['lineString'])   
     coordinatesJSON = json.dumps(coordinatesList)
     return coordinatesJSON
 
