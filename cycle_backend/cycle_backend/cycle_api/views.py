@@ -13,6 +13,7 @@ from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from urllib.request import urlopen
 from .helpers import *
 import requests
 import json
@@ -34,18 +35,39 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     coordinatesList=[] 
     listStops = stringOfStops.split(";")
     i = 0
-    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
-    coordinatesList.append(base['journeys'][0]['legs'][0]['path']['lineString'])
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
     while i+1 <= len(listStops):
         currentStop= listStops[i]
         nextStop= listStops[i+i]
-        result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        coordinatesList.append(result['journeys'][0]['legs'][0]['path']['lineString'])
+        result= f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'
+        result_response = urlopen(result)
+        result_json = json.loads(result_response.read())        
+        coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
         i+=1
-    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    coordinatesList.append(end['journeys'][0]['legs'][0]['path']['lineString'])   
+    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'
+    end_response = urlopen(end)
+    end_json = json.loads(end_response.read())    
+    coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])   
     coordinatesJSON = json.dumps(coordinatesList)
     return coordinatesJSON
+
+
+
+url = "https://api.tfl.gov.uk/Journey/JourneyResults/51.501476,0.140634/to/51.511028,-0.117194?mode=cycle"
+  
+# store the response of URL
+response = urlopen(url)
+  
+# storing the JSON response 
+# from url in data
+data_json = json.loads(response.read())
+  
+# print the json response
+print(data_json.keys())
+print(data_json['journeys'][0]['legs'][0]['path']['lineString'])
 
 @api_view()
 @permission_classes([])
