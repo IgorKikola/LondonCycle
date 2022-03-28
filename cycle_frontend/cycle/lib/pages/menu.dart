@@ -32,10 +32,9 @@ class Menu extends StatelessWidget {
           buildHistory(context),
           SizedBox(height: 10),
           buildSettings(context),
-          SizedBox(height: 50),
-          // EDIT THIS PART ACCORDING TO YOUR DESIGN
+          SizedBox(height: 10),
           buildEditProfile(context),
-
+          SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               UserDetailsHelper.logout(context);
@@ -201,7 +200,7 @@ Widget buildEditProfile(BuildContext context) => Container(
         child: InkWell(
           splashColor: Colors.lightBlue,
           child: ListTile(
-            leading: Icon(Icons.settings),
+            leading: Icon(Icons.person),
             title: Text(
               'Edit Profile',
               style: kMenuItemTextStyle,

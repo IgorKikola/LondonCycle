@@ -31,47 +31,62 @@ class _ProfilePageState extends State<ProfilePage> {
           'Profile',
         ),
       ),
-      body: Column(
-        children: [
-          Row(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 60.0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
             children: [
-              Text(
-                "First name:",
-              ),
-              Text(
-                widget.userData.firstName,
+              Column(
+                children: [
+                  UserProfileRow(
+                    title: "First name:",
+                    value: widget.userData.firstName,
+                  ),
+                  UserProfileRow(
+                    title: "Last name:",
+                    value: widget.userData.lastName,
+                  ),
+                  UserProfileRow(
+                    title: "Email:",
+                    value: widget.userData.email,
+                  ),
+                ],
               ),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                "Last name:",
-              ),
-              Text(
-                widget.userData.lastName,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                "First name:",
-              ),
-              Text(
-                widget.userData.email,
-              ),
-            ],
-          ),
-          CustomBlueButton(
-              text: "Edit profile details",
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const EditProfileLoadingScreen();
-                }));
-              })
-        ],
+        ),
       ),
+    );
+  }
+}
+
+class UserProfileRow extends StatelessWidget {
+  const UserProfileRow({required this.title, required this.value});
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+        const SizedBox(
+          width: 30,
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -114,7 +114,7 @@ class EditProfileFormState extends State<EditProfileForm> {
                     APIService.updateProfile(model).then((response) {
                       if (response.statusCode == 200) {
                         // Update was successful.
-                        UserDetailsHelper.setUserDetails(response);
+                        UserDetailsHelper.updateUserDetails(response);
                         Navigator.pop(context);
                       } else {
                         Flushbar(
