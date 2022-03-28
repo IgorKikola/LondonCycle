@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/location_manager.dart';
+import 'package:cycle/services/mapcontroller_provider.dart';
 import 'package:cycle/services/marker_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -66,7 +67,7 @@ class _MapWidgetState extends State<MapWidget> {
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
   MarkerLocation searchMarker = MarkerLocation();
-  MapController mapController = MapController();
+  MapController mapController = MapControllerProvider.mapController;
 
   void _myMapWidgetRefresh() {
     setState(() {});
