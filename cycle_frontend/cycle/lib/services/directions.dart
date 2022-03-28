@@ -1,3 +1,4 @@
+import 'package:cycle/models/map_box_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cycle/services/route.dart';
@@ -71,8 +72,9 @@ class DirectionsService {
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
+      MapBoxRoute mapBoxRoute = MapBoxRoute.fromJson(jsonResponse);
       int responseLength =
-          jsonResponse['routes'][0]['geometry']['coordinates'].length;
+          mapBoxRoute.geometry.coordinates.coordinatesList.length;
 
       if (responseLength > 0) {
         resultsList.clear();
@@ -80,8 +82,7 @@ class DirectionsService {
       }
 
       for (int i = 0; i < responseLength; i++) {
-        var coordinate =
-            jsonResponse['routes'][0]['geometry']['coordinates'][i];
+        var coordinate = mapBoxRoute.geometry.coordinates.coordinatesList[i];
         double lat = coordinate[1];
         double long = coordinate[0];
         String latInfo = lat.toString();
