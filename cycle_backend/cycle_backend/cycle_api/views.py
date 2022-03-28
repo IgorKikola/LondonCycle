@@ -43,7 +43,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
     while i+1 < len(listStops):
         currentStop = listStops[i]
-        nextStop = listStops[i+i]
+        nextStop = listStops[i+1]
         result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?mode=cycle,walking&journeyPreference=LeastTime'
         result_response = urlopen(result)
         result_json = json.loads(result_response.read())        
