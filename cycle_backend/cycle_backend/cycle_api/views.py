@@ -39,10 +39,10 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     base_response = urlopen(base)
     base_json = json.loads(base_response.read())
     coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
-    while i+1 <= len(listStops):
-        currentStop= listStops[i]
-        nextStop= listStops[i+i]
-        result= f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'
+    while i+1 < len(listStops):
+        currentStop = listStops[i]
+        nextStop = listStops[i+i]
+        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'
         result_response = urlopen(result)
         result_json = json.loads(result_response.read())        
         coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
@@ -54,20 +54,6 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     coordinatesJSON = json.dumps(coordinatesList)
     return coordinatesJSON
 
-
-
-url = "https://api.tfl.gov.uk/Journey/JourneyResults/51.501476,0.140634/to/51.511028,-0.117194?mode=cycle"
-  
-# store the response of URL
-response = urlopen(url)
-  
-# storing the JSON response 
-# from url in data
-data_json = json.loads(response.read())
-  
-# print the json response
-print(data_json.keys())
-print(data_json['journeys'][0]['legs'][0]['path']['lineString'])
 
 @api_view()
 @permission_classes([])
