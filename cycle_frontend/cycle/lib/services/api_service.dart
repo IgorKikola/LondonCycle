@@ -32,7 +32,6 @@ class APIService {
       await APIService.getUserProfile();
       return true;
     } else {
-      print(response.body);
       return false;
     }
   }
@@ -43,10 +42,8 @@ class APIService {
       'Content-Type': 'application/json',
     };
     var url = Uri.http(Config.apiURL, Config.signupAPI);
-
     var response = await client.post(url,
         headers: requestHeaders, body: json.encode(model.toJson()));
-
     return signupResponseModel(response.body, response.statusCode);
   }
 
@@ -62,7 +59,6 @@ class APIService {
 
     var response = await client.put(url,
         headers: requestHeaders, body: json.encode(model.toJson()));
-
     return updateProfileResponseModel(response.body, response.statusCode);
   }
 

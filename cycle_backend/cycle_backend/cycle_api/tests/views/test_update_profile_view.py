@@ -29,7 +29,7 @@ class UpdateProfileViewTestCase(APITestCase):
         self.url = reverse('update_user')
 
     def test_login_url(self):
-        self.assertEqual(self.url, '/users/update')
+        self.assertEqual(self.url, '/users/update/')
 
     """ Test that all methods without authorization token are not allowed """
 

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:cycle/services/stops_manager.dart';
 import '../../services/route.dart';
 import '../../utilities/constants.dart';
-import '../menu.dart';
+import '../../components/menu.dart';
 
 void main() {
   runApp(RemoveStops());

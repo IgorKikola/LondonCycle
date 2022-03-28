@@ -26,7 +26,7 @@ class UpdateProfileResponseModel {
       lastName = json['last_name'];
       email = json['email'];
     } else {
-      response = json['detail'];
+      response = json['detail']['email'][0];
       firstName = '';
       lastName = '';
       email = '';
