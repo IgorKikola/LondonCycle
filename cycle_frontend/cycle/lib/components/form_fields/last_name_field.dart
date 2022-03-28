@@ -20,8 +20,6 @@ class LastNameField extends StatefulWidget {
 }
 
 class LastNameFieldState extends State<LastNameField> {
-  final _validator = StringValidator();
-
   @override
   void dispose() {
     super.dispose();
@@ -34,9 +32,9 @@ class LastNameFieldState extends State<LastNameField> {
         if (value == null || value.isEmpty) {
           return 'Please enter your surname';
         }
-        ValidatorMessage message = _validator.isLastName(value);
+        ValidatorMessage message = StringValidator.isLastName(value);
         if (message != ValidatorMessage.defaultMessage) {
-          return _validator.getText(message);
+          return StringValidator.getText(message);
         } else {
           return null;
         }

@@ -1,6 +1,6 @@
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/menu.dart';
 import 'package:cycle/models/stop.dart';
 import 'package:cycle/pages/journey_stop_pages/remove_stops.dart';
 import 'package:cycle/services/stop_location.dart';
@@ -11,13 +11,13 @@ import '../../models/journey_stop.dart';
 import '../../services/route.dart';
 import '../../utilities/constants.dart';
 import '../home_page.dart';
-import '../menu.dart';
+import '../../components/menu.dart';
 
 void main() {
-  runApp( JourneyStops());
+  runApp(JourneyStops());
 }
-class JourneyStops extends StatelessWidget {
 
+class JourneyStops extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -39,7 +39,7 @@ class StopTiles extends StatelessWidget {
     final allStops = Provider.of<StopProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title:  const Text('Journey Stops', style: kJourneyStopsTextStyle) ,
+        title: const Text('Journey Stops', style: kJourneyStopsTextStyle),
         backgroundColor: Colors.lightBlue,
       ),
       backgroundColor: Colors.lightBlue,
@@ -57,8 +57,8 @@ class StopTiles extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: ListTile(
                     title: Text(
-                        allStops.stops[index].name,
-                        style: kJourneyStopsTileTextStyle,
+                      allStops.stops[index].name,
+                      style: kJourneyStopsTileTextStyle,
                     ),
                   )),
             ),
@@ -78,9 +78,7 @@ class StopTiles extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          RemoveStops()),
+                  MaterialPageRoute(builder: (context) => RemoveStops()),
                 );
               },
               child: Icon(Icons.delete),
@@ -97,15 +95,17 @@ class StopTiles extends StatelessWidget {
                 child: InkWell(
                   splashColor: Colors.lightBlue,
                   onTap: () {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage(),), (route) => route.isFirst);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                        (route) => route.isFirst);
                   },
                   child: Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       SizedBox(width: 10.0),
-                      Text('Return to Map',
-                          style: kJourneyStopsTextStyle),
+                      Text('Return to Map', style: kJourneyStopsTextStyle),
                       SizedBox(width: 10.0)
                     ],
                   ),
@@ -115,44 +115,53 @@ class StopTiles extends StatelessWidget {
             FloatingActionButton(
               heroTag: "Create",
               backgroundColor: Colors.lightBlue[200],
-              onPressed: () {showDialog(
-                  context: context,
-                  builder: (BuildContext dialogContext) {
-                    return AlertDialog(
-                      title: Text('Add a stop',
-                          style: kJourneyStopsTextStyle),
-                      backgroundColor: Colors.lightBlue[200],
-                      content: SearchBox(
-                          searchboxType: Waypoint.MIDPOINT,
-                          myRoute: myRoute,
-                          typeAheadController:
-                          textController),
-                      actions: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.red),
-                                ),
-                                onPressed: () {
-                                  if (textController.text.isEmpty == false) {
-                                    int index = 0;
-                                    double stopLat = stopCoordinates.getStopLocation().latitude;
-                                    double stopLon = stopCoordinates.getStopLocation().longitude;
-                                    final JourneyStop newStop = JourneyStop(name: textController.text, lat: stopLat, lon: stopLon, id: index + 1);
-                                    textController.clear();
-                                    allStops.addStop(newStop);
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                                child: const Icon(Icons.add_circle))
-                          ],
-                        )
-                      ],
-                    );
-                  });
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        title:
+                            Text('Add a stop', style: kJourneyStopsTextStyle),
+                        backgroundColor: Colors.lightBlue[200],
+                        content: SearchBox(
+                            searchboxType: Waypoint.MIDPOINT,
+                            myRoute: myRoute,
+                            typeAheadController: textController),
+                        actions: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.red),
+                                  ),
+                                  onPressed: () {
+                                    if (textController.text.isEmpty == false) {
+                                      int index = 0;
+                                      double stopLat = stopCoordinates
+                                          .getStopLocation()
+                                          .latitude;
+                                      double stopLon = stopCoordinates
+                                          .getStopLocation()
+                                          .longitude;
+                                      final JourneyStop newStop = JourneyStop(
+                                          name: textController.text,
+                                          lat: stopLat,
+                                          lon: stopLon,
+                                          id: index + 1);
+                                      textController.clear();
+                                      allStops.addStop(newStop);
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: const Icon(Icons.add_circle))
+                            ],
+                          )
+                        ],
+                      );
+                    });
               },
               child: Icon(Icons.add),
             )

@@ -3,7 +3,7 @@ import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../profile.dart';
+import '../../components/menu_components/profile.dart';
 
 class ViewProfileLoadingScreen extends StatefulWidget {
   const ViewProfileLoadingScreen({Key? key}) : super(key: key);

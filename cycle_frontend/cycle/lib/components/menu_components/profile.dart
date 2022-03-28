@@ -2,10 +2,10 @@ import 'package:cycle/components/custom_blue_button.dart';
 import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/menu.dart';
 
-import '../services/user_details_helper.dart';
-import 'loading_screens/edit_profile_loading_screen.dart';
+import '../../services/user_details_helper.dart';
+import '../../pages/loading_screens/edit_profile_loading_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   final UserDetailsResponseModel userData;

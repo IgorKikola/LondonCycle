@@ -10,8 +10,8 @@ import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'pages/main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:cycle/pages/slide_up_widget.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/slide_up_widget.dart';
+import 'package:cycle/components/menu.dart';
 
 // Default page for users that are not logged in.
 String _defaultPageId = StartingPage.id;

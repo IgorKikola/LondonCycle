@@ -11,8 +11,8 @@ import 'package:flutter/services.dart';
 import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
-import 'journey_stop_pages/journey_stops.dart';
-import 'journey_stop_pages/stored_stops.dart';
+import '../pages/journey_stop_pages/journey_stops.dart';
+import '../pages/journey_stop_pages/stored_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
