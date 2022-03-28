@@ -32,7 +32,9 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @api_view()
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    coordinatesList=[] 
+    coordinatesList=[]
+    currentStop=[]
+    nextStop=[]
     listStops = stringOfStops.split(";")
     i = 0
     base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'
