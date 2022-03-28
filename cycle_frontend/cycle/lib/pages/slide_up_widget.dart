@@ -100,7 +100,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
+    await DirectionsService.updateCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 

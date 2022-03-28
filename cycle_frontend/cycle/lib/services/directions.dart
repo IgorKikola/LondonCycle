@@ -45,9 +45,7 @@ class DirectionsService {
   //   return resultsList;
   // }
 
-  static Future<List<String>> getCoordinatesForRoute(MyRoute route) async {
-    List<String> resultsList = List.empty(growable: true);
-
+  static updateCoordinatesForRoute(MyRoute route) async {
     String locationsToVisit =
         route.getRouteAsSemicolonSeparatedListWithLongLatOrder();
 
@@ -57,7 +55,6 @@ class DirectionsService {
     int numberOfCoordinates = mapBoxApiProvider.getNumberOfCoordinates();
 
     if (numberOfCoordinates > 0) {
-      resultsList.clear();
       coordinates.clear();
     }
 
@@ -73,10 +70,7 @@ class DirectionsService {
       coordinates.add(latLng);
 
       print(coordinateInfo);
-      resultsList.add(coordinateInfo);
     }
-
-    return resultsList;
   }
 
   static List<Polyline> getPolylines() {
