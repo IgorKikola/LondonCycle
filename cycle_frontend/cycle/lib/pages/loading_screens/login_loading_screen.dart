@@ -40,10 +40,16 @@ class _LoginLoadingScreenState extends State<LoginLoadingScreen> {
               Icons.clear,
               color: Colors.red,
             ),
-            title: 'Credentials are invalid.',
+            flushbarStyle: FlushbarStyle.GROUNDED,
+            titleText: const Text(
+              "Credentials are invalid!",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
             message: 'Check if your email and password are correct.',
             duration: const Duration(seconds: 5),
-            flushbarStyle: FlushbarStyle.GROUNDED,
           ).show(context);
         }
       },

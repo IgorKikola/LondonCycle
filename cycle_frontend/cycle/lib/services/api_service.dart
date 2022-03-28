@@ -32,7 +32,6 @@ class APIService {
       await APIService.getUserProfile();
       return true;
     } else {
-      print(response.body);
       return false;
     }
   }
