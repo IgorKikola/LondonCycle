@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Cycle',
       theme: ThemeData.dark(),
-      initialRoute: HomePage.id,
+      initialRoute: _defaultPageId,
       routes: {
         SignupPage.id: (context) => SignupPage(),
         TermsOfUsePage.id: (context) => TermsOfUsePage(),
