@@ -8,11 +8,14 @@ import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/mapcontroller_provider.dart';
 import '../services/navigation.dart';
 import '../services/route.dart';
 import '../animations/animate.dart';
 import 'journey_stop_pages/journey_stops.dart';
 import 'journey_stop_pages/stored_stops.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -267,7 +270,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       key: Key('RiderText'),
                                       style: kSlideUpWidgetLabelTextStyle,
                                     ),
-                                    SizedBox(width: 5),
+                                    SizedBox(width: 10),
                                     Container(
                                       //padding: EdgeInsets.only(right: 70),
                                       child: Text(
@@ -276,7 +279,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         style: kSlideUpWidgetLabelTextStyle,
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 15),
                                   ],
                                 ),
                               ),
@@ -371,23 +374,8 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
       decoration: BoxDecoration(
           color: Colors.lightBlue[200],
           borderRadius: BorderRadius.circular(20.0)),
-      child: Material(
-        color: Colors.lightBlue[200],
-        borderRadius: BorderRadius.circular(15.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          borderRadius: BorderRadius.circular(20),
-          onTap: () {
-            print(widget.bikeStationId);
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: BikeStationDataRow(
-                key: _myBikeStationDataRowState,
-                bikeStationId: widget.bikeStationId),
-          ),
-        ),
-      ),
+      child: BikeStationDataRow(
+          key: _myBikeStationDataRowState, bikeStationId: widget.bikeStationId),
     );
   }
 }
@@ -412,8 +400,10 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
     });
   }
 
-  Map<String, String> _bikeStationPair = {'loading': '0km'};
   late final int bikeStationId;
+  MapController mapController = MapControllerProvider.mapController;
+  Map<String, String> _bikeStationPair = {'loading': '0km'};
+  Map<double, double> bikestationCoordinates = {0: 0};
 
   _BikeStationDataRowState(int bikeStationId) {
     this.bikeStationId = bikeStationId;
@@ -426,23 +416,47 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
         _bikeStationPair = incomingBikeStationPair;
       }),
     );
+    BackendService.getNBikeStationForCurrentLocationCoordinates(bikeStationId)
+        .then(
+      (BikeStationCoordinates) => setState(() {
+        bikestationCoordinates = BikeStationCoordinates;
+      }),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          sanitiseString(_bikeStationPair.keys.first, 30),
-          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+    return Material(
+      color: Colors.lightBlue[200],
+      borderRadius: BorderRadius.circular(15.0),
+      child: InkWell(
+        splashColor: Colors.lightBlue,
+        borderRadius: BorderRadius.circular(20),
+        onTap: () {
+          double? lat = bikestationCoordinates.keys.first;
+          double? lon = bikestationCoordinates.values.first;
+          setState(() {
+            mapController.move(LatLng(lat, lon), 18);
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                sanitiseString(_bikeStationPair.keys.first, 30),
+                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+              ),
+              Text(
+                _bikeStationPair.values
+                    .first, //TODO: implement nearest bikepoints distances
+                style: kSlideUpWidgetRightBottomSectionItemTextStyle,
+              ),
+            ],
+          ),
         ),
-        Text(
-          _bikeStationPair
-              .values.first, //TODO: implement nearest bikepoints distances
-          style: kSlideUpWidgetRightBottomSectionItemTextStyle,
-        ),
-      ],
+      ),
     );
   }
 }
