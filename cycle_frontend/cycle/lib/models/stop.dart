@@ -1,19 +1,38 @@
-class JourneyStop {
+class Stop {
   int id;
   String name;
   double lat;
   double lon;
 
-  JourneyStop({
-    required this.id,
-    required this.name,
-    required this.lat,
-    required this.lon,
-  });
-
-  factory JourneyStop.fromJson(Map<String, dynamic> json) {
-    return JourneyStop(
-        id: json['id'], name: json['name'], lat: json['lat'], lon: json['lon']);
+  Stop(this.id, this.name, this.lat, this.lon) {
+    id = this.id;
+    name = this.name;
+    lat = this.lat;
+    lon = this.lon;
   }
-  dynamic toJson() => {'id': id, 'name': name, 'lat': lat, 'lon': lon};
+
+  toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "lat": lat,
+      "lon": lon
+    };
+  }
+
+  fromJson(jsonData) {
+    return Stop(
+        jsonData['id'],
+        jsonData['name'],
+        jsonData['lat'],
+        jsonData['lon']);
+  }
+  factory Stop.fromJson(dynamic json) {
+    return Stop(
+      json['id'] as int,
+      json['name'] as String,
+      json['lat'] as double,
+      json['lon'] as double,
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/menu.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);

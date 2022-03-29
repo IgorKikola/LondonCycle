@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from django.utils.decorators import method_decorator
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
-
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
@@ -14,64 +13,49 @@ from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from jsonmerge import Merger
-from .helpers import get_n_closest_places, bikepoint_get_property, get_places_by_distance, string_to_list_of_coordinates
+from urllib.request import urlopen
+from .helpers import *
 import requests
+import json
+
 
 @api_view()
 @permission_classes([])
-def get_list_of_stops(request, string_of_stops):
-    stops = string_to_list_of_coordinates(string_of_stops)
-    start = stops.pop(0)
-    end = stops.pop()
-    stopsQueue = get_places_by_distance(stops, start.lat, start.lon)
-    sortedStops = []
-    for i in range(len(stops)):
-        sortedStops.append(stopsQueue.get()[1])
-
-    sortedStops = [start] + sortedStops + [end]
-
-    finalList = []
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
-    for i in range(len(sortedStops)):
-        stop = sortedStops[i]
-        finalList.append(stop)
-        closest_bikepoint = get_n_closest_places(1, bikepoints, stop.lat, stop.lon)[0]
-        finalList.append((closest_bikepoint.lat, closest_bikepoint.lon))
-
-    json = {}
-    for i in range(len(finalList)):
-        json[i] = finalList[i]
-    return Response(finalList)
-
-
-@api_view()
 def get_route(request, fromPlace, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_single_stop(request, fromPlace, firstStop, toPlace):
     return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
 
 @api_view()
+@permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    schema = {
-                "properties": {
-                        "mergeStrategy": "append"
-                 }
-             }
-    merger=Merger(schema)
+    coordinatesList=[]
+    currentStop=[]
+    nextStop=[]
     listStops = stringOfStops.split(";")
     i = 0
-    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
-    while i+1 <= len(listStops):
-        currentStop= listStops[i]
-        nextStop= listStops[i+i]
-        result= merger.merge(base,Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle')))
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle,walking&journeyPreference=LeastTime'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
+    while i+1 < len(listStops):
+        currentStop = listStops[i]
+        nextStop = listStops[i+1]
+        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle,walking&journeyPreference=LeastTime'
+        result_response = urlopen(result)
+        result_json = json.loads(result_response.read())
+        coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
         i+=1
-    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    result=merger.merge(result,end)
-    return result
+    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle,walking&journeyPreference=LeastTime'
+    end_response = urlopen(end)
+    end_json = json.loads(end_response.read())
+    coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])
+    coordinatesJSON = json.dumps(coordinatesList)
+    return Response(coordinatesJSON)
+
 
 @api_view()
 @permission_classes([])
@@ -117,43 +101,29 @@ def bikepoint_number_of_empty_docks(request, bikepoint_id):
 
 @api_view()
 @permission_classes([])
-def get_closest_available_bikepoint(request, min_bikes, lat, lon):
+def get_closest_bikepoint_with_at_least_n_bikes(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_bikes available bikes
+    Retrieve the closest bikepoint with at least n available bikes
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbBikes', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbBikes = bikepoint_get_property(bikepoint.id, 'NbBikes')
-        if NbBikes is not None and int(NbBikes) >= min_bikes:
-            closest_bikepoint = bikepoint
-
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 @api_view()
 @permission_classes([])
-def get_closest_bikepoint_with_empty_docks(request, min_empty_docks, lat, lon):
+def get_closest_bikepoint_with_at_least_n_empty_docks(request, n, lat, lon):
     """
-    Retrieve the closest bikepoint with at least min_empty_docks empty docks
+    Retrieve the closest bikepoint with at least n empty docks
     """
-    bikepoints = Place.objects.filter(id__startswith='BikePoints')
+    closest_bikepoint = get_closest_available_bikepoint(lat, lon, 'NbEmptyDocks', n)
 
-    coordinates = (lat, lon)
-    queue = get_places_by_distance(bikepoints, lat, lon)
-    closest_bikepoint = None
-    while (not queue.empty()) and closest_bikepoint is None:
-        bikepoint = queue.get()[1]
-        NbEmptyDocks = bikepoint_get_property(bikepoint.id, 'NbEmptyDocks')
-        if NbEmptyDocks is not None and int(NbEmptyDocks) >= min_empty_docks:
-            closest_bikepoint = bikepoint
-
-    serializer = PlaceSerializer(closest_bikepoint)
-    return Response(serializer.data)
+    serializer = PlaceSerializer(closest_bikepoint[1])
+    return_data = serializer.data
+    return_data['distance'] = str(closest_bikepoint[0])
+    return Response(return_data)
 
 
 class PlaceViewSet(viewsets.ModelViewSet):

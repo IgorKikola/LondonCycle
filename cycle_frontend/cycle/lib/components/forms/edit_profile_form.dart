@@ -6,6 +6,8 @@ import 'package:cycle/components/form_fields/password_field.dart';
 import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
+import 'package:cycle/pages/loading_screens/update_details_loading_screen.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../custom_blue_button.dart';
@@ -110,23 +112,10 @@ class EditProfileFormState extends State<EditProfileForm> {
                       lastName: lastNameController.text,
                     );
                     // Try to update user profile details.
-                    APIService.updateProfile(model).then((response) {
-                      if (response.statusCode == 200) {
-                        // Update was successful.
-                        Navigator.pop(context);
-                      } else {
-                        Flushbar(
-                          // Otherwise display a message at the bottom of the screen with the message
-                          // received from the API about what went wrong.
-                          icon: const Icon(Icons.warning_rounded),
-                          title: 'Oops... Something went wrong.',
-                          message:
-                              "${response.response[0].toUpperCase()}${response.response.substring(1).toLowerCase()}",
-                          duration: const Duration(seconds: 5),
-                          flushbarStyle: FlushbarStyle.GROUNDED,
-                        ).show(context);
-                      }
-                    });
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return UpdateUserDetailsLoadingScreen(model: model);
+                    }));
                   }
                 },
               ),

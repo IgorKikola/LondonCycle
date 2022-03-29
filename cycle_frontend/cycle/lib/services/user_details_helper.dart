@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
+import 'package:cycle/models/update_profile_response_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/models/login_response_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,6 +41,22 @@ class UserDetailsHelper {
   static Future<void> setUserDetails(UserDetailsResponseModel model) async {
     APICacheDBModel cacheDBModel =
         APICacheDBModel(key: 'user_details', syncData: jsonEncode(model));
+    await APICacheManager().addCacheData(cacheDBModel);
+  }
+
+  /// Used to update user details in the cache.
+  static Future<void> updateUserDetails(
+      UpdateProfileResponseModel model) async {
+    // Delete old details
+    await APICacheManager().deleteCache('user_details');
+    // Put new details
+    Map<String, dynamic> data = {
+      "first_name": model.firstName,
+      "last_name": model.lastName,
+      "email": model.email,
+    };
+    APICacheDBModel cacheDBModel =
+        APICacheDBModel(key: 'user_details', syncData: jsonEncode(data));
     await APICacheManager().addCacheData(cacheDBModel);
   }
 

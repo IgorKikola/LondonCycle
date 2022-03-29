@@ -12,7 +12,7 @@ class StringValidator {
   /// - If it consists of letter only.
   /// - If the first letter is capital.
   /// - If all the other letters are lowercase.
-  ValidatorMessage isFirstName(String toCheck) {
+  static ValidatorMessage isFirstName(String toCheck) {
     if (!isAlpha(toCheck)) {
       return ValidatorMessage.nameIsNotOnlyLetters;
     } else if (!isUppercase(toCheck[0])) {
@@ -28,7 +28,7 @@ class StringValidator {
   /// - If it consists of letter only.
   /// - If the first letter is capital.
   /// - If all the other letters are lowercase.
-  ValidatorMessage isLastName(String toCheck) {
+  static ValidatorMessage isLastName(String toCheck) {
     if (!isAlpha(toCheck)) {
       return ValidatorMessage.surnameIsNotOnlyLetters;
     } else if (!isUppercase(toCheck[0])) {
@@ -45,14 +45,14 @@ class StringValidator {
   /// - At least 1 of them is a letter &&
   /// - At least 1 of them is a number &&
   /// - At least 1 of them is a special character from @$!%*#?&
-  ValidatorMessage isValidPassword(String toCheck) {
+  static ValidatorMessage isValidPassword(String toCheck) {
     return !passwordRegex.hasMatch(toCheck)
         ? ValidatorMessage.passwordIsOfWrongFormat
         : ValidatorMessage.defaultMessage;
   }
 
   /// Get message to display to the user according to the validator message type.
-  String getText(ValidatorMessage string) {
+  static String getText(ValidatorMessage string) {
     switch (string) {
       case ValidatorMessage.firstLetterOfNameMustBeCapital:
         return 'First letter of the name must be capital';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/menu.dart';
 
-import '../utilities/constants.dart';
+import '../../utilities/constants.dart';
 
 class TripHistory extends StatefulWidget {
   const TripHistory({Key? key}) : super(key: key);
