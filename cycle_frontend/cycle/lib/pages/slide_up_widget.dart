@@ -266,11 +266,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           color: Colors.red),
                                     ),
                                     Text(
-                                      'Riders:',
+                                      ':',
                                       key: Key('RiderText'),
                                       style: kSlideUpWidgetLabelTextStyle,
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 30),
                                     Container(
                                       //padding: EdgeInsets.only(right: 70),
                                       child: Text(
@@ -279,7 +279,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         style: kSlideUpWidgetLabelTextStyle,
                                       ),
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(width: 50),
                                   ],
                                 ),
                               ),
