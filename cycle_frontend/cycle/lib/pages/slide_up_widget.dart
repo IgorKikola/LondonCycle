@@ -1,21 +1,16 @@
-import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/services/directions.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../services/mapcontroller_provider.dart';
-import '../services/navigation.dart';
-import '../services/route.dart';
-import '../animations/animate.dart';
-import 'journey_stop_pages/journey_stops.dart';
-import 'journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../services/mapcontroller_provider.dart';
+import '../services/route.dart';
+import 'journey_stop_pages/stored_stops.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -615,6 +610,7 @@ class StopsWidget extends StatelessWidget {
               Icon(Icons.add_location_alt, color: Colors.red),
               Text(
                 'Stops',
+                key: Key('stoptext'),
                 style: kSlideUpWidgetLabelTextStyle,
               ),
               SizedBox(width: 10.0)
