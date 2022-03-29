@@ -8,12 +8,10 @@ import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
-import '../services/navigation.dart';
 import '../services/route.dart';
-import '../animations/animate.dart';
-import 'journey_stop_pages/journey_stops.dart';
-import 'journey_stop_pages/stored_stops.dart';
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -283,34 +281,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ),),
                           ],
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 30,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15.0)),
-                          child: Material(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: InkWell(
-                              splashColor: Colors.lightBlue,
-                              onTap: () {
-                                //Navigation navigation = Navigation();
-                                //navigation.navigate();
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.flag_outlined,
-                                      color: Colors.white),
-                                ],
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -319,74 +291,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
               ),
             ],
           ),
-        ),
       );
 
-  Widget buildWidgetGrid() => Container(
-        padding: EdgeInsets.all(1.0),
-        alignment: Alignment(-1.0, 0.0),
-        constraints: BoxConstraints.tightForFinite(height: 400, width: 200),
-        height: 400,
-        width: 200,
-        child: GridView.count(
-          padding: EdgeInsets.all(1.0),
-          crossAxisCount: 2,
-          childAspectRatio: 0.5,
-          children: [
-            Center(
-              widthFactor: 300,
-              heightFactor: 400,
-              child: Container(
-                padding: EdgeInsets.all(6.0),
-                alignment: Alignment(1.0, 0.0),
-                child: Material(
-                  color: Colors.lightBlue,
-                  child: InkWell(
-                    splashColor: Colors.lightBlue,
-                    onTap: () {
-                      showLandmarks(context);
-                      setState(() {
-                        _loadCSV();
-                      });
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(1),
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            height: 250,
-                            width: 190,
-                            decoration: BoxDecoration(
-                              color: Colors.lightBlueAccent,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // BottomSectionLabel(labelText: 'Landm:',),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Lon.'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Big Ben'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'The Shard'),
-                                SizedBox(height: 10),
-                                LandmarkItemWidget(landmarkName: 'Tower...'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
 
   Widget buildWidgetGrid() => Center(
         child: Container(
