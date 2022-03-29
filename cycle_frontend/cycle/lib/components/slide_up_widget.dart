@@ -1,6 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
-import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
@@ -102,7 +102,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
+    await RoutingService.updateCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 
