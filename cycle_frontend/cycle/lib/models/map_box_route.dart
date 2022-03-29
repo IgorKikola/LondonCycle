@@ -1,4 +1,3 @@
-
 class MapBoxRoute {
   late Geometry geometry;
 
