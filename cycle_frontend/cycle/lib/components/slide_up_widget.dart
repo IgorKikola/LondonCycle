@@ -1,5 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/main_page.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
@@ -399,7 +400,7 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
   }
 
   late final int bikeStationId;
-  MapController mapController = MapControllerProvider.mapController;
+  MapController mapController = MapController();
   Map<String, String> _bikeStationPair = {'loading': '0km'};
   Map<double, double> bikestationCoordinates = {0: 0};
 

@@ -68,7 +68,7 @@ class _MapWidgetState extends State<MapWidget> {
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
   MarkerLocation searchMarker = MarkerLocation();
-  MapController mapController = MapControllerProvider.mapController;
+  MapController mapController = MapController();
 
   void _myMapWidgetRefresh() {
     setState(() {});
