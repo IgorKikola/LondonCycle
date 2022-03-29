@@ -285,7 +285,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           .map((coordinate) => LatLng(
                                               coordinate.latitude,
                                               coordinate.longitude))
-                                          .toList());
+                                          .toList(),
+                                      numOfRiders);
                                   navigation.navigate();
                                 }
                               },

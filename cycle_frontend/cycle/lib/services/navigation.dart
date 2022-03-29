@@ -8,14 +8,14 @@ import 'package:map_launcher/map_launcher.dart';
 class Navigation {
   List<LatLng> _stops = [];
   final _context;
-  final int numberOfRiders = 3;
+  int _numberOfRiders;
 
-  Navigation(this._context, this._stops);
+  Navigation(this._context, this._stops, this._numberOfRiders);
 
   void navigate() async {
     for (int i = 0; i < _stops.length - 1; i++) {
       await buildRouteBetweenTwoPoints(
-          _stops[i], _stops[i + 1], numberOfRiders);
+          _stops[i], _stops[i + 1], _numberOfRiders);
     }
   }
 
