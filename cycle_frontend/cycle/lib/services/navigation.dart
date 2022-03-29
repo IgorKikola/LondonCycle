@@ -84,9 +84,9 @@ class Navigation {
       LatLng start, LatLng stop) async {
     var wayPoints = <WayPoint>[];
     wayPoints.add(WayPoint(
-        name: "Start", latitude: start.latitude, longitude: start.latitude));
+        name: "Start", latitude: start.latitude, longitude: start.longitude));
     wayPoints.add(WayPoint(
-        name: "Stop", latitude: stop.latitude, longitude: stop.latitude));
+        name: "Stop", latitude: stop.latitude, longitude: stop.longitude));
 
     await _directions.startNavigation(
         wayPoints: wayPoints, options: _walkingOptions);
@@ -96,9 +96,9 @@ class Navigation {
       LatLng start, LatLng stop) async {
     var wayPoints = <WayPoint>[];
     wayPoints.add(WayPoint(
-        name: "Start", latitude: start.latitude, longitude: start.latitude));
+        name: "Start", latitude: start.latitude, longitude: start.longitude));
     wayPoints.add(WayPoint(
-        name: "Stop", latitude: stop.latitude, longitude: stop.latitude));
+        name: "Stop", latitude: stop.latitude, longitude: stop.longitude));
 
     await _directions.startNavigation(
         wayPoints: wayPoints, options: _cyclingOptions);
