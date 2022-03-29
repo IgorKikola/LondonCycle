@@ -6,14 +6,11 @@ import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 class Navigation {
-  final List<LatLng> _stops = [
-    LatLng(51.510357, -0.116773),
-    LatLng(51.504501, -0.086500)
-  ];
+  List<LatLng> _stops = [];
   final _context;
   final int numberOfRiders = 3;
 
-  Navigation(this._context);
+  Navigation(this._context, this._stops);
 
   void navigate() async {
     for (int i = 0; i < _stops.length - 1; i++) {
