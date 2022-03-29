@@ -10,7 +10,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import '../services/navigation.dart';
-
+import '../services/mapcontroller_provider.dart';
 import '../services/marker_location.dart';
 
 const String kMapUrl =
@@ -262,7 +262,7 @@ class _MapWidgetState extends State<MapWidget> {
             child: FloatingActionButton.small(
               heroTag: 'navigation',
               backgroundColor: Colors.red,
-              onPressed: (){
+              onPressed: () {
                 Navigation navigation = Navigation();
                 navigation.navigate();
               },
