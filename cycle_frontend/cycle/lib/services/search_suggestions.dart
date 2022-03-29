@@ -204,7 +204,6 @@ class BackendService {
       }
       bikeStations.add(bikeStationsList);
       bikeStations.add(bikeStationsCoordinates);
-      print(bikeStations);
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

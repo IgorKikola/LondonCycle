@@ -3,6 +3,8 @@ import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
+import 'home_page.dart';
+
 class StartingPage extends StatefulWidget {
   static const String id = 'starting_page';
 
@@ -82,6 +84,19 @@ class _StartingPageState extends State<StartingPage>
                       text: "Login",
                       onPressed: () =>
                           Navigator.pushNamed(context, LoginPage.id),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 40.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomBlueButton(
+                      text: "Continue as Guest",
+                      onPressed: () =>
+                          Navigator.pushNamed(context, HomePage.id),
                     ),
                   ],
                 ),
