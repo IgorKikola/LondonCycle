@@ -19,7 +19,7 @@ class GetUserDetailsViewTestCase(APITestCase):
         self.url = reverse('get_user_details')
 
     def test_login_url(self):
-        self.assertEqual(self.url, '/users/get')
+        self.assertEqual(self.url, '/users/get/')
 
     """ Test that all methods without authorization token are not allowed """
 

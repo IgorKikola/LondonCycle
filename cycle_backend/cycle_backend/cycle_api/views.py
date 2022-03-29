@@ -13,6 +13,7 @@ from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from urllib.request import urlopen
 from .helpers import *
 import requests
 import json
@@ -31,30 +32,30 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @api_view()
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    coordinatesList=[] 
+    coordinatesList=[]
+    currentStop=[]
+    nextStop=[]
     listStops = stringOfStops.split(";")
     i = 0
-    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
-    for index in base['fromLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-    for index in base['toLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],base['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
-    while i+1 <= len(listStops):
-        currentStop= listStops[i]
-        nextStop= listStops[i+i]
-        result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        for index in result['fromLocationDisambiguation']['disambiguationOptions']:
-            coordinatesList.append(result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-        for index in result['toLocationDisambiguation']['disambiguationOptions']:
-            coordinatesList.append(result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],result['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon']) 
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle,walking&journeyPreference=LeastTime'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
+    while i+1 < len(listStops):
+        currentStop = listStops[i]
+        nextStop = listStops[i+1]
+        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle,walking&journeyPreference=LeastTime'
+        result_response = urlopen(result)
+        result_json = json.loads(result_response.read())
+        coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
         i+=1
-    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    for index in end['fromLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['fromLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])
-    for index in end['toLocationDisambiguation']['disambiguationOptions']:
-        coordinatesList.append(end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lat'],end['toLocationDisambiguation']['disambiguationOptions'][index]['place']['lon'])     
+    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle,walking&journeyPreference=LeastTime'
+    end_response = urlopen(end)
+    end_json = json.loads(end_response.read())
+    coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])
     coordinatesJSON = json.dumps(coordinatesList)
-    return coordinatesJSON
+    return Response(coordinatesJSON)
+
 
 @api_view()
 @permission_classes([])

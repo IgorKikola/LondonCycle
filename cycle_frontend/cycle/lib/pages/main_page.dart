@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cycle/services/data_manager.dart';
-import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
 import 'package:cycle/services/marker_manager.dart';
@@ -150,7 +150,7 @@ class _MapWidgetState extends State<MapWidget> {
               ),
               PolylineLayerWidget(
                 options: PolylineLayerOptions(
-                    polylines: DirectionsService.getPolylines()),
+                    polylines: RoutingService.getPolylines()),
               ),
             ],
             layers: [

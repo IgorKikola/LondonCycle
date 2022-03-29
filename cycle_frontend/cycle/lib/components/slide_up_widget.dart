@@ -1,6 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
-import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
@@ -94,7 +94,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
+    await RoutingService.updateCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 
@@ -283,6 +283,98 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   ],
                                 ),
                               ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 30,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(15.0)),
+                          child: Material(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: InkWell(
+                              splashColor: Colors.lightBlue,
+                              onTap: () {
+                                //Navigation navigation = Navigation();
+                                //navigation.navigate();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.flag_outlined,
+                                      color: Colors.white),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget buildWidgetGrid() => Container(
+        padding: EdgeInsets.all(1.0),
+        alignment: Alignment(-1.0, 0.0),
+        constraints: BoxConstraints.tightForFinite(height: 400, width: 200),
+        height: 400,
+        width: 200,
+        child: GridView.count(
+          padding: EdgeInsets.all(1.0),
+          crossAxisCount: 2,
+          childAspectRatio: 0.5,
+          children: [
+            Center(
+              widthFactor: 300,
+              heightFactor: 400,
+              child: Container(
+                padding: EdgeInsets.all(6.0),
+                alignment: Alignment(1.0, 0.0),
+                child: Material(
+                  color: Colors.lightBlue,
+                  child: InkWell(
+                    splashColor: Colors.lightBlue,
+                    onTap: () {
+                      showLandmarks(context);
+                      setState(() {
+                        _loadCSV();
+                      });
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(1),
+                          child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            height: 250,
+                            width: 190,
+                            decoration: BoxDecoration(
+                              color: Colors.lightBlueAccent,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // BottomSectionLabel(labelText: 'Landm:',),
+                                SizedBox(height: 10),
+                                LandmarkItemWidget(landmarkName: 'Lon.'),
+                                SizedBox(height: 10),
+                                LandmarkItemWidget(landmarkName: 'Big Ben'),
+                                SizedBox(height: 10),
+                                LandmarkItemWidget(landmarkName: 'The Shard'),
+                                SizedBox(height: 10),
+                                LandmarkItemWidget(landmarkName: 'Tower...'),
+                              ],
                             ),
                           ),
                         ],
