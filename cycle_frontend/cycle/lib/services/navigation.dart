@@ -1,59 +1,19 @@
 import 'dart:async';
 import 'package:cycle/models/docking_station.dart';
-import 'package:cycle/models/stop.dart';
 import 'package:cycle/services/data_manager.dart';
-import 'package:flutter_mapbox_navigation/library.dart';
+import 'package:cycle/services/map_manager.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class Navigation {
   final List<LatLng> _stops = [
     LatLng(51.510357, -0.116773),
     LatLng(51.504501, -0.086500)
   ];
-
+  final _context;
   final int numberOfRiders = 3;
 
-  late MapBoxNavigation _directions;
-  late MapBoxOptions _walkingOptions;
-  late MapBoxOptions _cyclingOptions;
-
-  Navigation() {
-    _directions = MapBoxNavigation(onRouteEvent: _onEmbeddedRouteEvent);
-
-    _walkingOptions = MapBoxOptions(
-        //initialLatitude: 36.1175275,
-        //initialLongitude: -115.1839524,
-        zoom: 19.0,
-        tilt: 0.0,
-        bearing: 0.0,
-        enableRefresh: true,
-        alternatives: true,
-        voiceInstructionsEnabled: true,
-        bannerInstructionsEnabled: true,
-        allowsUTurnAtWayPoints: true,
-        mode: MapBoxNavigationMode.walking,
-        units: VoiceUnits.imperial,
-        simulateRoute: true, //uncomment for debugging
-        animateBuildRoute: true,
-        language: "en");
-
-    _cyclingOptions = MapBoxOptions(
-        //initialLatitude: 36.1175275,
-        //initialLongitude: -115.1839524,
-        zoom: 19.0,
-        tilt: 0.0,
-        bearing: 0.0,
-        enableRefresh: true,
-        alternatives: true,
-        voiceInstructionsEnabled: true,
-        bannerInstructionsEnabled: true,
-        allowsUTurnAtWayPoints: true,
-        mode: MapBoxNavigationMode.cycling,
-        units: VoiceUnits.imperial,
-        simulateRoute: true, //uncomment for debugging
-        animateBuildRoute: true,
-        language: "en");
-  }
+  Navigation(this._context);
 
   void navigate() async {
     for (int i = 0; i < _stops.length; i++) {
@@ -82,42 +42,11 @@ class Navigation {
 
   Future<void> buildWalkingRouteBetweenTwoPoints(
       LatLng start, LatLng stop) async {
-    var wayPoints = <WayPoint>[];
-    wayPoints.add(WayPoint(
-        name: "Start", latitude: start.latitude, longitude: start.longitude));
-    wayPoints.add(WayPoint(
-        name: "Stop", latitude: stop.latitude, longitude: stop.longitude));
-
-    await _directions.startNavigation(
-        wayPoints: wayPoints, options: _walkingOptions);
+    await openMapsSheet(_context, start, stop, DirectionsMode.walking);
   }
 
   Future<void> buildCyclingRouteBetweenTwoPoints(
       LatLng start, LatLng stop) async {
-    var wayPoints = <WayPoint>[];
-    wayPoints.add(WayPoint(
-        name: "Start", latitude: start.latitude, longitude: start.longitude));
-    wayPoints.add(WayPoint(
-        name: "Stop", latitude: stop.latitude, longitude: stop.longitude));
-
-    await _directions.startNavigation(
-        wayPoints: wayPoints, options: _cyclingOptions);
-  }
-
-  Future<void> _onEmbeddedRouteEvent(RouteEvent e) async {
-    switch (e.eventType) {
-      case MapBoxEvent.on_arrival:
-        await Future.delayed(const Duration(seconds: 6));
-        await _directions.finishNavigation();
-        break;
-      case MapBoxEvent.navigation_cancelled:
-        await _directions.finishNavigation();
-        break;
-      case MapBoxEvent.navigation_finished:
-        await _directions.finishNavigation();
-        break;
-      default:
-        break;
-    }
+    await openMapsSheet(_context, start, stop, DirectionsMode.bicycling);
   }
 }

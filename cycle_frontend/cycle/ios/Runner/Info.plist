@@ -34,6 +34,21 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    <string>comgooglemaps</string>
+    <string>baidumap</string>
+    <string>iosamap</string>
+    <string>waze</string>
+    <string>yandexmaps</string>
+    <string>yandexnavi</string>
+    <string>citymapper</string>
+    <string>mapswithme</string>
+    <string>osmandmaps</string>
+    <string>dgis</string>
+    <string>qqmap</string>
+    <string>here-location</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

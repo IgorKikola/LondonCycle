@@ -275,7 +275,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             child: InkWell(
                               splashColor: Colors.lightBlue,
                               onTap: () {
-                                Navigation navigation = Navigation();
+                                Navigation navigation = Navigation(context);
                                 navigation.navigate();
                               },
                               child: Row(
