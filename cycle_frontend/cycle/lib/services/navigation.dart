@@ -16,7 +16,7 @@ class Navigation {
   Navigation(this._context);
 
   void navigate() async {
-    for (int i = 0; i < _stops.length; i++) {
+    for (int i = 0; i < _stops.length - 1; i++) {
       await buildRouteBetweenTwoPoints(
           _stops[i], _stops[i + 1], numberOfRiders);
     }
@@ -29,24 +29,19 @@ class Navigation {
     DockingStation stopDockingStation =
         await getClosestDockingStationWithEmptyDocks(stop, numberOfRiders);
 
-    await buildWalkingRouteBetweenTwoPoints(
-        start, LatLng(startDockingStation.lat, startDockingStation.lon));
+    await walk(start, LatLng(startDockingStation.lat, startDockingStation.lon));
 
-    await buildCyclingRouteBetweenTwoPoints(
-        LatLng(startDockingStation.lat, startDockingStation.lon),
+    await cycle(LatLng(startDockingStation.lat, startDockingStation.lon),
         LatLng(stopDockingStation.lat, stopDockingStation.lon));
 
-    await buildWalkingRouteBetweenTwoPoints(
-        LatLng(stopDockingStation.lat, stopDockingStation.lon), stop);
+    await walk(LatLng(stopDockingStation.lat, stopDockingStation.lon), stop);
   }
 
-  Future<void> buildWalkingRouteBetweenTwoPoints(
-      LatLng start, LatLng stop) async {
+  Future<void> walk(LatLng start, LatLng stop) async {
     await openMapsSheet(_context, start, stop, DirectionsMode.walking);
   }
 
-  Future<void> buildCyclingRouteBetweenTwoPoints(
-      LatLng start, LatLng stop) async {
+  Future<void> cycle(LatLng start, LatLng stop) async {
     await openMapsSheet(_context, start, stop, DirectionsMode.bicycling);
   }
 }
