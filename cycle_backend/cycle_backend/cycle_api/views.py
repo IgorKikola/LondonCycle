@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from django.utils.decorators import method_decorator
 from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
 from .models import Place, Stop
-from mergedeep import merge
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
@@ -14,9 +13,10 @@ from cycle_backend.cycle_api.serializers import UserSerializer, PlaceSerializer
 from cycle_backend.cycle_api.models import Place
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from jsonmerge import Merger
+from urllib.request import urlopen
 from .helpers import *
 import requests
+import json
 
 
 @api_view()
@@ -32,19 +32,30 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @api_view()
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-
+    coordinatesList=[]
+    currentStop=[]
+    nextStop=[]
     listStops = stringOfStops.split(";")
     i = 0
-    base = Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'))
-    while i+1 <= len(listStops):
-        currentStop= listStops[i]
-        nextStop= listStops[i+i]
-        result= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'))
-        merge(base, result)
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?mode=cycle,walking&journeyPreference=LeastTime'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
+    while i+1 < len(listStops):
+        currentStop = listStops[i]
+        nextStop = listStops[i+1]
+        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?mode=cycle,walking&journeyPreference=LeastTime'
+        result_response = urlopen(result)
+        result_json = json.loads(result_response.read())        
+        coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
         i+=1
-    end= Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'))
-    merge(base, end)
-    return base
+    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?mode=cycle,walking&journeyPreference=LeastTime'
+    end_response = urlopen(end)
+    end_json = json.loads(end_response.read())    
+    coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])   
+    coordinatesJSON = json.dumps(coordinatesList)
+    return coordinatesJSON
+
 
 @api_view()
 @permission_classes([])
