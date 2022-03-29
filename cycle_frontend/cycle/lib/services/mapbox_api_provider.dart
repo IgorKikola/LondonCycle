@@ -24,7 +24,13 @@ class MapBoxApiProvider {
     });
 
     final response = await client.get(url);
-    mapBoxRoute = MapBoxRoute.fromJson(json.decode(response.body));
+    if (response.statusCode == 200) {
+      mapBoxRoute = MapBoxRoute.fromJson(json.decode(response.body));
+    } else {
+      return MapBoxRoute(
+          geometry: Geometry(coordinates: Coordinates(coordinatesList: [[]])));
+    }
+
     return mapBoxRoute;
   }
 
