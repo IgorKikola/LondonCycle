@@ -95,6 +95,7 @@ class _StopsState extends State<Stops> {
           children: [
             FloatingActionButton(
               heroTag: "deleteALl",
+              tooltip: "Delete all stops and routes",
               backgroundColor: Colors.red,
               onPressed: () {
                 setState(() {
@@ -108,6 +109,7 @@ class _StopsState extends State<Stops> {
             FloatingActionButton(
               child: const Icon(Icons.add, color: Colors.white),
               backgroundColor: Colors.lightBlue[200],
+              tooltip: "Add Stop",
               onPressed: () {
                 showDialog(
                     context: context,
