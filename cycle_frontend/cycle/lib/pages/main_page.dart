@@ -264,8 +264,8 @@ class _MapWidgetState extends State<MapWidget> {
               heroTag: 'navigation',
               backgroundColor: Colors.red,
               onPressed: () {
-                Navigation navigation = Navigation();
-                navigation.navigate();
+                // Navigation navigation = Navigation();
+                // navigation.navigate();
               },
               child: const Icon(
                 Icons.navigation,
