@@ -6,7 +6,6 @@ void main() {
   testWidgets('Testing riderText widget is present',
       (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -18,7 +17,6 @@ void main() {
 
   testWidgets('Testing riderValue widget is present',
       (WidgetTester tester) async {
-//final riderValue = find.text('0'); //TODO: should really start with one
     final riderValue = find.byKey(ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
@@ -31,7 +29,6 @@ void main() {
 
   testWidgets('Testing riderText font colour', (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -43,8 +40,6 @@ void main() {
   });
 
   testWidgets('Testing riderValue font colour', (WidgetTester tester) async {
-//final riderValue = find.text('0'); //TODO: should really start with one
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     final riderValue = find.byKey(ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
@@ -59,7 +54,6 @@ void main() {
   testWidgets('Testing riderText FontFamily package',
       (WidgetTester tester) async {
     final riderText = find.byKey(ValueKey('RiderText'));
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -72,8 +66,6 @@ void main() {
 
   testWidgets('Testing riderValue FontFamily package',
       (WidgetTester tester) async {
-//final riderValue = find.text('0'); //TODO: should really start with one
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     final riderValue = find.byKey(ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
@@ -88,7 +80,6 @@ void main() {
   testWidgets('Testing the riderIcon is the correct design ',
       (WidgetTester tester) async {
     final riderIcon = find.byIcon(Icons.person_add);
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -101,7 +92,6 @@ void main() {
 
   testWidgets('Testing riderIcon colour ', (WidgetTester tester) async {
     final riderIcon = find.byIcon(Icons.person_add);
-//final riderContainer = find.byKey(ValueKey('RiderContainer'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
