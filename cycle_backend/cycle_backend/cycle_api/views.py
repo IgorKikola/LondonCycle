@@ -53,7 +53,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     end_response = urlopen(end)
     end_json = json.loads(end_response.read())
     coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])
-    return Response(coordinatesList)
+    return HttpResponse(coordinatesList, content_type='application/json')
 
 
 @api_view()
