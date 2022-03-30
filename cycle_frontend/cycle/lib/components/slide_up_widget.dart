@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 
 import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
+import '../services/navigation.dart';
 import '../services/route.dart';
 import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -165,7 +166,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           SizedBox(width: 10),
                           Container(
                             height: 30,
-                            width: 80,
+                            width: 30,
                             decoration: BoxDecoration(
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -182,6 +183,41 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.search, color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Material(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: InkWell(
+                                splashColor: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () {
+                                  if (isRouteComplete()) {
+                                    Navigation navigation = Navigation(
+                                        context,
+                                        widget.myRoute
+                                            .getRouteAsList()
+                                            .map((coordinate) => LatLng(
+                                            coordinate.latitude,
+                                            coordinate.longitude))
+                                            .toList(),
+                                        numOfRiders);
+                                    navigation.navigate();
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.navigation, color: Colors.white),
                                   ],
                                 ),
                               ),
@@ -288,6 +324,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),
