@@ -206,6 +206,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0),
                                 child: InkWell(
+                                  key: ValueKey('RiderInkwell'),
                                   splashColor: Colors.lightBlue,
                                   onTap: () => {
                                     showDialog<String>(
@@ -220,6 +221,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                         ),
                                         content: new TextField(
+                                          key: ValueKey('RiderTextField'),
                                           controller: riderNumController,
                                           style: TextStyle(
                                             color: Colors.white,
@@ -261,7 +263,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         ],
                                       ),
                                     ),
-                                    updateNumberOfRiders(),
                                   },
                                   child: Row(
                                     mainAxisAlignment:
