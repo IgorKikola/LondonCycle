@@ -1,5 +1,6 @@
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/menu_pages/edit_user_profile_page.dart';
+import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/starting_page.dart';
@@ -21,9 +22,9 @@ void main() async {
   // Checks cache if user's credentials are still saved so that user does not need
   // to login every time the app is opened.
   bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
-  if (_isLoggedIn) {
-    _defaultPageId = HomePage.id;
-  }
+  // if (_isLoggedIn) {
+  _defaultPageId = HomePage.id;
+  // }
   runApp(const MyApp());
 }
 
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
         StartingPage.id: (context) => StartingPage(),
+        NavigationPage.id: (context) => NavigationPage(),
       },
     );
   }

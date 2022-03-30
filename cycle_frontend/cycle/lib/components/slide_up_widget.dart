@@ -1,5 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
@@ -311,16 +312,29 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               splashColor: Colors.lightBlue,
                               onTap: () {
                                 if (isRouteComplete()) {
-                                  Navigation navigation = Navigation(
-                                      context,
-                                      widget.myRoute
-                                          .getRouteAsList()
-                                          .map((coordinate) => LatLng(
-                                              coordinate.latitude,
-                                              coordinate.longitude))
-                                          .toList(),
-                                      numOfRiders);
-                                  navigation.navigate();
+                                  // Navigation navigation = Navigation(
+                                  //     context,
+                                  //     widget.myRoute
+                                  //         .getRouteAsList()
+                                  //         .map((coordinate) => LatLng(
+                                  //             coordinate.latitude,
+                                  //             coordinate.longitude))
+                                  //         .toList(),
+                                  //     numOfRiders);
+                                  // navigation.navigate();
+                                  Navigator.pushNamed(
+                                    context,
+                                    NavigationPage.id,
+                                    arguments: NavigationPageArguments(
+                                        context,
+                                        widget.myRoute
+                                            .getRouteAsList()
+                                            .map((coordinate) => LatLng(
+                                                coordinate.latitude,
+                                                coordinate.longitude))
+                                            .toList(),
+                                        numOfRiders),
+                                  );
                                 }
                               },
                               child: Row(
