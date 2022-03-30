@@ -23,7 +23,7 @@ class SearchBox extends StatelessWidget {
   final Waypoint searchboxType;
   StopLocation stop = StopLocation();
   MarkerLocation marker = MarkerLocation();
-  // MapController mapController = MapControllerProvider.mapController;
+  MapController mapController = MapControllerProvider.mapController;
 
   void onSelected(String suggestion) {
     String suggestionFullName = suggestion.toString().split('|').elementAt(0);
@@ -42,14 +42,14 @@ class SearchBox extends StatelessWidget {
       case Waypoint.START:
         myRoute.setStartingLocation(selectedLocation);
         marker.setStartingLocation(selectedLocation);
-        // mapController.move(
-        //     LatLng(selectedLocation.latitude, selectedLocation.longitude), 16);
+        mapController.move(
+            LatLng(selectedLocation.latitude, selectedLocation.longitude), 16);
         break;
       case Waypoint.FINISH:
         myRoute.setFinishingLocation(selectedLocation);
         marker.setDestination(selectedLocation);
-        // mapController.move(
-        //     LatLng(selectedLocation.latitude, selectedLocation.longitude), 16);
+        mapController.move(
+            LatLng(selectedLocation.latitude, selectedLocation.longitude), 16);
         break;
       case Waypoint.MIDPOINT:
         myRoute.addWaypoint(selectedLocation);

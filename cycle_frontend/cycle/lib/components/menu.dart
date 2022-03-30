@@ -152,10 +152,7 @@ Widget buildMap(BuildContext context) => Container(
               style: kMenuItemTextStyle,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
+              Navigator.popUntil(context, ModalRoute.withName('home_page'));
             },
           ),
         ),

@@ -400,7 +400,7 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
   }
 
   late final int bikeStationId;
-  MapController mapController = MapController();
+  MapController mapController = MapControllerProvider.mapController;
   Map<String, String> _bikeStationPair = {'loading': '0km'};
   Map<double, double> bikestationCoordinates = {0: 0};
 
