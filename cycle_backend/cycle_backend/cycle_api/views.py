@@ -33,7 +33,6 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     coordinatesString=""
-    coordinatesList=[]
     currentStop=[]
     nextStop=[]
     listStops = stringOfStops.split(";")
