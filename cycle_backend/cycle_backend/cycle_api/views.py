@@ -58,7 +58,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
     splitList=[item.split(',') for item in filteredCoordinates]
     splitList = [list(map(float, lst)) for lst in splitList]
-    return Resposne(splitList)
+    return Response(splitList)
 
 
 @api_view()
