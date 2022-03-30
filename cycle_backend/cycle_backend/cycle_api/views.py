@@ -17,7 +17,7 @@ from urllib.request import urlopen
 from .helpers import *
 import requests
 import json
-
+import re
 
 @api_view()
 @permission_classes([])
@@ -32,7 +32,7 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @api_view()
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    coordinatesList=[]
+    coordinatesString=""
     currentStop=[]
     nextStop=[]
     listStops = stringOfStops.split(";")
@@ -40,21 +40,24 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle,walking&journeyPreference=LeastTime'
     base_response = urlopen(base)
     base_json = json.loads(base_response.read())
-    coordinatesList.append(base_json['journeys'][0]['legs'][0]['path']['lineString'])
+    coordinatesString=base_json['journeys'][0]['legs'][0]['path']['lineString']
     while i+1 < len(listStops):
         currentStop = listStops[i]
         nextStop = listStops[i+1]
         result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle,walking&journeyPreference=LeastTime'
         result_response = urlopen(result)
         result_json = json.loads(result_response.read())
-        coordinatesList.append(result_json['journeys'][0]['legs'][0]['path']['lineString'])
+        coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][0]['path']['lineString']
         i+=1
     end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle,walking&journeyPreference=LeastTime'
     end_response = urlopen(end)
     end_json = json.loads(end_response.read())
-    coordinatesList.append(end_json['journeys'][0]['legs'][0]['path']['lineString'])
-    coordinatesJSON = json.dumps(coordinatesList)
-    return Response(coordinatesJSON)
+    coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][0]['path']['lineString']
+    coordinatesString=coordinatesString.replace(" ","").replace("[[","[").replace("]]","]")
+    coordinatesString="["+coordinatesString+"]"
+    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString)
+    filteredCoordinates=filteredCoordinates.replace(" ",",")
+    return Response(filteredCoordinates)
 
 
 @api_view()
