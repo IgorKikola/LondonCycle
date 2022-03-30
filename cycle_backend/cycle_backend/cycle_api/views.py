@@ -33,6 +33,7 @@ def get_route_single_stop(request, fromPlace, firstStop, toPlace):
 @permission_classes([])
 def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     coordinatesString=""
+    coordinatesList=[]
     currentStop=[]
     nextStop=[]
     listStops = stringOfStops.split(";")
@@ -54,7 +55,9 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     end_json = json.loads(end_response.read())
     coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][0]['path']['lineString']
     coordinatesString=coordinatesString.replace(" ","").replace("[[","[").replace("]]","]")
-    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
+    coordinatesString="["+coordinatesString+"]"
+    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString)
+    filteredCoordinates=filteredCoordinates.replace(" ",",")
     return Response(filteredCoordinates)
 
 
