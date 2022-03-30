@@ -35,10 +35,12 @@ class Navigation {
   }
 
   Future<void> walk(LatLng start, LatLng stop) async {
-    await openMapsSheet(_context, start, stop, DirectionsMode.walking);
+    MapManager mapManager = MapManager(_context);
+    await mapManager.openMapsSheet(start, stop, DirectionsMode.walking);
   }
 
   Future<void> cycle(LatLng start, LatLng stop) async {
-    await openMapsSheet(_context, start, stop, DirectionsMode.bicycling);
+    MapManager mapManager = MapManager(_context);
+    await mapManager.openMapsSheet(start, stop, DirectionsMode.bicycling);
   }
 }

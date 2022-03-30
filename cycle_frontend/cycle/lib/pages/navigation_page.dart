@@ -42,8 +42,12 @@ class _NavigationPageState extends State<NavigationPage> {
                     title: const Text('One-line with leading widget'),
                     tileColor: Colors.lightBlueAccent,
                     onTap: () {
+                      List<LatLng> stops = [];
+                      stops.add(args._stops[args._stops.indexOf(e) - 1]);
+                      stops.add(e);
+
                       Navigation navigation = Navigation(
-                          args._context, args._stops, args._numberOfRiders);
+                          args._context, stops, args._numberOfRiders);
                       navigation.navigate();
                     },
                   ),
