@@ -1,4 +1,4 @@
-import 'package:cycle/main.dart';
+
 import 'package:cycle/pages/menu_pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
@@ -13,6 +13,19 @@ import 'package:cycle/pages/menu_pages/trip_history.dart';
 import 'package:cycle/pages/menu_pages/profile.dart';
 import 'package:cycle/pages/menu_pages/trip_history.dart';
 import 'package:flutter/material.dart';
+import 'package:cycle/main.dart';
+import 'package:cycle/pages/menu_pages/favorites.dart';
+import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
+import 'package:cycle/pages/menu_pages/settings.dart';
+import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:cycle/pages/starting_page.dart';
+import 'package:cycle/services/user_details_helper.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../utilities/constants.dart';
+import 'package:cycle/pages/menu_pages/trip_history.dart';
+import 'package:cycle/pages/menu_pages/profile.dart';
+import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
   @override
@@ -22,8 +35,10 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(10),
         children: [
-          SizedBox(height: 70),
-          buildProfileColumn(context),
+          SizedBox(height: 30),
+          buildMenuText(context),
+          SizedBox(height: 10),
+          buildProfile(context),
           SizedBox(height: 10),
           buildMap(context),
           SizedBox(height: 10),
@@ -49,51 +64,53 @@ class Menu extends StatelessWidget {
   }
 }
 
-Widget buildProfileColumn(BuildContext context) => Container(
-      height: 150,
+Widget buildProfile(BuildContext context) => Container(
+      height: 50,
       child: Material(
         color: Colors.lightBlue[200],
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const ViewProfileLoadingScreen()),
-            );
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding: const EdgeInsets.all(5)),
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.network(
-                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                        width: 100,
-                      )),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "John Doe",
-                        style: kMenuProfileTextStyle,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+          child: ListTile(
+            leading: Icon(
+              Icons.contacts,
+            ),
+            title: Text(
+              'My Profile',
+              style: kMenuItemTextStyle,
+            ),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => StartingPage()),
+              // );
+            },
           ),
         ),
       ),
+    );
+
+Widget buildMenuText(BuildContext context) => Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: const Text('Menu', style: kMenuTextStyle),
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
+        Container(
+          width: 260,
+          height: 1,
+          decoration: BoxDecoration(
+            color: Colors.lightBlue[200],
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+        ),
+      ],
     );
 
 Widget buildFavorites(BuildContext context) => Container(
@@ -103,6 +120,7 @@ Widget buildFavorites(BuildContext context) => Container(
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
           child: ListTile(
             leading: Icon(Icons.favorite),
             title: Text(
@@ -134,10 +152,7 @@ Widget buildMap(BuildContext context) => Container(
               style: kMenuItemTextStyle,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
+              Navigator.popUntil(context, ModalRoute.withName('home_page'));
             },
           ),
         ),
