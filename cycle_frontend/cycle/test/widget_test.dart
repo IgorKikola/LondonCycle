@@ -141,4 +141,32 @@ void main() {
     Icon icon = tester.firstWidget(riderIcon);
     expect(icon.color, Colors.red);
   });
+
+  testWidgets('Testing the AlertDialog after tapping riders ',
+      (WidgetTester tester) async {
+    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
+    await tester.tap(riderInkwell);
+    await tester.pump();
+    expect(find.byType(AlertDialog), findsOneWidget);
+  });
+
+  testWidgets('Testing the buttons load in AlertDialog ',
+      (WidgetTester tester) async {
+    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
+    await tester.pumpWidget(MaterialApp(
+        home: SlideUpWidget(
+      controller: ScrollController(),
+      mapRefreshCallback: () {},
+    )));
+    await tester.tap(riderInkwell);
+    await tester.pump();
+    expect(find.text('OK'), findsOneWidget);
+    expect(find.text('Cancel'), findsOneWidget);
+    expect(find.byType(AlertDialog), findsOneWidget);
+  });
 }
