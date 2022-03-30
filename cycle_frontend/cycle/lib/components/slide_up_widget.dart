@@ -1,9 +1,11 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -308,8 +310,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             child: InkWell(
                               splashColor: Colors.lightBlue,
                               onTap: () {
-                                //Navigation navigation = Navigation();
-                                //navigation.navigate();
+                                if (isRouteComplete()) {
+                                  Navigation navigation = Navigation(
+                                      context,
+                                      widget.myRoute
+                                          .getRouteAsList()
+                                          .map((coordinate) => LatLng(
+                                              coordinate.latitude,
+                                              coordinate.longitude))
+                                          .toList(),
+                                      numOfRiders);
+                                  navigation.navigate();
+                                }
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
