@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
-import 'package:cycle/services/directions.dart';
+import 'package:cycle/pages/main_page.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
@@ -8,12 +9,10 @@ import 'package:cycle/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
-import '../services/navigation.dart';
 import '../services/route.dart';
-import '../animations/animate.dart';
-import 'journey_stop_pages/journey_stops.dart';
-import 'journey_stop_pages/stored_stops.dart';
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -94,7 +93,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
       print('finishing point: ${widget.myRoute.finishingLocation}');
     }
 
-    await DirectionsService.getCoordinatesForRoute(widget.myRoute);
+    await RoutingService.updateCoordinatesForRoute(widget.myRoute);
 
     print('route found.');
 
@@ -283,18 +282,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   ],
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            ),),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       );
+
 
   Widget buildWidgetGrid() => Center(
         child: Container(

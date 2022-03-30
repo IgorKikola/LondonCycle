@@ -20,8 +20,6 @@ class FirstNameField extends StatefulWidget {
 }
 
 class FirstNameFieldState extends State<FirstNameField> {
-  final _validator = StringValidator();
-
   @override
   void dispose() {
     super.dispose();
@@ -34,9 +32,9 @@ class FirstNameFieldState extends State<FirstNameField> {
         if (value == null || value.isEmpty) {
           return 'Please enter your name';
         }
-        ValidatorMessage message = _validator.isFirstName(value);
+        ValidatorMessage message = StringValidator.isFirstName(value);
         if (message != ValidatorMessage.defaultMessage) {
-          return _validator.getText(message);
+          return StringValidator.getText(message);
         } else {
           return null;
         }

@@ -28,6 +28,6 @@ urlpatterns = [
     path('bikepoints/<str:bikepoint_id>/number_of_empty_docks/', views.bikepoint_number_of_empty_docks, name = "number_of_empty_docks"),
     path('signup/', views.signup_view, name = "signup"),
     path('login/', obtain_auth_token, name = "login"),
-    path('users/update', views.update_profile_view, name = "update_user"),
-    path('users/get', views.get_user_details_view, name = "get_user_details"),
+    path('users/update/', views.update_profile_view, name = "update_user"),
+    path('users/get/', views.get_user_details_view, name = "get_user_details"),
 ]

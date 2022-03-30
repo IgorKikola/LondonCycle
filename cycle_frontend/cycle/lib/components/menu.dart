@@ -1,16 +1,30 @@
-import 'package:cycle/main.dart';
-import 'package:cycle/pages/favorites.dart';
+
+import 'package:cycle/pages/menu_pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
-import 'package:cycle/pages/settings.dart';
+import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
+import 'package:cycle/pages/menu_pages/settings.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../utilities/constants.dart';
-import 'trip_history.dart';
-import 'profile.dart';
-import 'package:cycle/pages/trip_history.dart';
+import 'package:cycle/pages/menu_pages/trip_history.dart';
+import 'package:cycle/pages/menu_pages/profile.dart';
+import 'package:cycle/pages/menu_pages/trip_history.dart';
+import 'package:flutter/material.dart';
+import 'package:cycle/main.dart';
+import 'package:cycle/pages/menu_pages/favorites.dart';
+import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
+import 'package:cycle/pages/menu_pages/settings.dart';
+import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:cycle/pages/starting_page.dart';
+import 'package:cycle/services/user_details_helper.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../utilities/constants.dart';
+import 'package:cycle/pages/menu_pages/trip_history.dart';
+import 'package:cycle/pages/menu_pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -33,10 +47,9 @@ class Menu extends StatelessWidget {
           buildHistory(context),
           SizedBox(height: 10),
           buildSettings(context),
-          SizedBox(height: 50),
-          // EDIT THIS PART ACCORDING TO YOUR DESIGN
+          SizedBox(height: 10),
           buildEditProfile(context),
-
+          SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               UserDetailsHelper.logout(context);
@@ -67,10 +80,10 @@ Widget buildProfile(BuildContext context) => Container(
               style: kMenuItemTextStyle,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Profile()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => StartingPage()),
+              // );
             },
           ),
         ),
@@ -139,10 +152,7 @@ Widget buildMap(BuildContext context) => Container(
               style: kMenuItemTextStyle,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
+              Navigator.popUntil(context, ModalRoute.withName('home_page'));
             },
           ),
         ),
@@ -205,14 +215,14 @@ Widget buildEditProfile(BuildContext context) => Container(
         child: InkWell(
           splashColor: Colors.lightBlue,
           child: ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(
+            leading: const Icon(Icons.person),
+            title: const Text(
               'Edit Profile',
               style: kMenuItemTextStyle,
             ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditProfileLoadingScreen();
+                return const EditProfileLoadingScreen();
               }));
             },
           ),

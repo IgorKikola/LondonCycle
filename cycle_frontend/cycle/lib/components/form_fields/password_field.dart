@@ -20,7 +20,6 @@ class PasswordField extends StatefulWidget {
 }
 
 class PasswordFieldState extends State<PasswordField> {
-  final _validator = StringValidator();
   bool hidePassword = true;
 
   @override
@@ -43,9 +42,9 @@ class PasswordFieldState extends State<PasswordField> {
           if (value == null || value.isEmpty) {
             return 'Please enter your password';
           }
-          ValidatorMessage message = _validator.isValidPassword(value);
+          ValidatorMessage message = StringValidator.isValidPassword(value);
           if (message != ValidatorMessage.defaultMessage) {
-            return _validator.getText(message);
+            return StringValidator.getText(message);
           } else {
             return null;
           }
