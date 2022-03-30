@@ -1,10 +1,12 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/pages/main_page.dart';
+import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -282,18 +284,18 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   ],
                                 ),
                               ),
-                            ),),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       );
-
 
   Widget buildWidgetGrid() => Center(
         child: Container(

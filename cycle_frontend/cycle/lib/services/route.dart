@@ -40,6 +40,13 @@ class MyRoute {
     return result;
   }
 
+  List<Coordinate> getRouteAsList() {
+    List<Coordinate> routeAsList = List.from(waypoints);
+    routeAsList.insert(0, startingLocation!);
+    routeAsList.add(finishingLocation!);
+    return routeAsList;
+  }
+
   String getFormattedWaypoints() {
     String waypointsFormatted = '';
     if (waypoints.isNotEmpty) {
