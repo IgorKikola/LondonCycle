@@ -22,7 +22,20 @@ import re
 @api_view()
 @permission_classes([])
 def get_route(request, fromPlace, toPlace):
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'))
+    coordinatesString=""    
+    base_leg=0
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    while base_leg < len(base_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
+        base_leg+=1
+    coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
+    coordinatesString=coordinatesString[1:]
+    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
+    splitList=[item.split(',') for item in filteredCoordinates]
+    splitList = [list(map(float, lst)) for lst in splitList]
+    return Response(splitList)
 
 @api_view()
 @permission_classes([])
