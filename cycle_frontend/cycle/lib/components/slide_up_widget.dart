@@ -342,50 +342,48 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   Widget buildWidgetGrid() => Center(
         child: Container(
             padding: EdgeInsets.all(1.0),
-            alignment: Alignment(-1.0, 0.0),
-            child: Container(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    height: 230,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlueAccent,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BottomSectionLabel(
-                            labelText: 'Bikepoints:',
-                            myBikeStationItemWidgetStateRefreshCallback:
-                                myBikeStationItemWidgetStateRefresh),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 0,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 1,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 2,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 3,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
-                      ],
-                    ),
-                  ),
+            Padding(
+              padding: EdgeInsets.all(6),
+              child: Container(
+                padding: EdgeInsets.all(20.0),
+                height: 230,
+                width: 400,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent,
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BottomSectionLabel(
+                        labelText: 'Bikepoints:',
+                        myBikeStationItemWidgetStateRefreshCallback:
+                            myBikeStationItemWidgetStateRefresh),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 0,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 1,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 2,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 3,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(3)),
+                  ],
+                ),
+              ),
+            ),
               ],
-            ))),
+            )),
       );
 }
 
