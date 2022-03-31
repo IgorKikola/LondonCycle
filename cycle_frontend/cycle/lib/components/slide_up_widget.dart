@@ -36,7 +36,7 @@ class SlideUpWidget extends StatefulWidget {
         super(key: key);
 
   @override
-  State<SlideUpWidget> createState() => _SlideUpWidgetState();
+  _SlideUpWidgetState createState() => _SlideUpWidgetState();
 }
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
@@ -239,6 +239,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               color: Colors.lightBlue[200],
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
+                                key: ValueKey('RiderInkwell'),
                                 splashColor: Colors.lightBlue,
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () => {
@@ -254,6 +255,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         ),
                                       ),
                                       content: new TextField(
+                                        key: ValueKey('RiderTextField'),
                                         controller: riderNumController,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -294,7 +296,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       ],
                                     ),
                                   ),
-                                  updateNumberOfRiders(),
                                 },
                                 child: Row(
                                   mainAxisAlignment:

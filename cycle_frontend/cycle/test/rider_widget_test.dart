@@ -1,4 +1,4 @@
-import 'package:cycle/pages/slide_up_widget.dart';
+import 'package:cycle/components/slide_up_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

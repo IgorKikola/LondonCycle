@@ -1,6 +1,6 @@
 import 'package:cycle/pages/main_page.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cycle/pages/slide_up_widget.dart';
+import 'package:cycle/components/slide_up_widget.dart';
 import 'package:cycle/services/coordinate.dart';
 import 'package:flutter/material.dart';
 import 'package:cycle/services/marker_location.dart';
