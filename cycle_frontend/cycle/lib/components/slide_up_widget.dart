@@ -162,7 +162,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          StopsWidget(),
+                          Flexible(child: StopsWidget()),
                           SizedBox(width: 10),
                           Container(
                             height: 30,
@@ -188,6 +188,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               ),
                             ),
                           ),
+                          SizedBox(width: 3.0),
                           Container(
                             height: 30,
                             width: 30,
@@ -207,8 +208,8 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         widget.myRoute
                                             .getRouteAsList()
                                             .map((coordinate) => LatLng(
-                                            coordinate.latitude,
-                                            coordinate.longitude))
+                                                coordinate.latitude,
+                                                coordinate.longitude))
                                             .toList(),
                                         numOfRiders);
                                     navigation.navigate();
@@ -224,100 +225,100 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             ),
                           ),
                           SizedBox(width: 10),
-                          Container(
-                            height: 30,
-                            width: 130,
-                            key: Key('RiderContainer'),
-                            decoration: BoxDecoration(
+                          Flexible(
+                            child: Container(
+                              height: 30,
+                              width: 130,
+                              key: Key('RiderContainer'),
+                              decoration: BoxDecoration(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              child: Material(
                                 color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.lightBlue[200],
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () => {
-                                  showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      backgroundColor: Colors.lightBlue[200],
-                                      title: const Text(
-                                        'Add riders (Min: 1 | Max: 5)',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: InkWell(
+                                  splashColor: Colors.lightBlue,
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () => {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        backgroundColor: Colors.lightBlue[200],
+                                        title: const Text(
+                                          'Add riders (Min: 1 | Max: 5)',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      content: new TextField(
-                                        controller: riderNumController,
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                        content: new TextField(
+                                          controller: riderNumController,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          decoration: new InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              labelText:
+                                                  "Enter the number of riders."),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
-                                        decoration: new InputDecoration(
-                                            labelStyle:
-                                                TextStyle(color: Colors.white),
-                                            labelText:
-                                                "Enter the number of riders."),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, 'OK');
+                                              updateNumberOfRiders();
+                                            },
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text(
-                                            'Cancel',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context, 'OK');
-                                            updateNumberOfRiders();
-                                          },
-                                          child: const Text(
-                                            'OK',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
                                     ),
-                                  ),
-                                  updateNumberOfRiders(),
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Icon(Icons.person_add,
+                                    updateNumberOfRiders(),
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(Icons.person_add,
                                           key: Key('RiderIcon'),
                                           color: Colors.red),
-                                    ),
-                                    Text(
-                                      ':',
-                                      key: Key('RiderText'),
-                                      style: kSlideUpWidgetLabelTextStyle,
-                                    ),
-                                    SizedBox(width: 30),
-                                    Container(
-                                      //padding: EdgeInsets.only(right: 70),
-                                      child: Text(
-                                        numOfRiders.toString(),
-                                        key: Key('RiderValue'),
+                                      Text(
+                                        ':',
+                                        key: Key('RiderText'),
                                         style: kSlideUpWidgetLabelTextStyle,
                                       ),
-                                    ),
-                                    SizedBox(width: 50),
-                                  ],
+                                      SizedBox(width: 30),
+                                      Container(
+                                        //padding: EdgeInsets.only(right: 70),
+                                        child: Text(
+                                          numOfRiders.toString(),
+                                          key: Key('RiderValue'),
+                                          style: kSlideUpWidgetLabelTextStyle,
+                                        ),
+                                      ),
+                                      Flexible(child: SizedBox(width: 50)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
