@@ -52,12 +52,12 @@ class _NavigationPageState extends State<NavigationPage> {
                       Navigation navigation = Navigation(
                           args._context, stops, args._numberOfRiders);
                       await navigation.navigate();
-                      if (enabledTileIndex == args._stops.length) {
-                        showAlert(context);
-                      }
                       setState(() {
                         enabledTileIndex++;
                       });
+                      if (enabledTileIndex == args._stops.length) {
+                        showAlert(context);
+                      }
                     },
                   ),
                 ),
