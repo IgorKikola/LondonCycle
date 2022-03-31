@@ -3,16 +3,18 @@ import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class EditProfileLoadingScreen extends StatefulWidget {
-  const EditProfileLoadingScreen({Key? key}) : super(key: key);
+import '../../pages/menu_pages/profile.dart';
+
+class ViewProfileLoadingScreen extends StatefulWidget {
+  const ViewProfileLoadingScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _EditProfileLoadingScreenState();
+    return _ViewProfileLoadingScreenState();
   }
 }
 
-class _EditProfileLoadingScreenState extends State<EditProfileLoadingScreen> {
+class _ViewProfileLoadingScreenState extends State<ViewProfileLoadingScreen> {
   @override
   void initState() {
     super.initState();
@@ -23,7 +25,7 @@ class _EditProfileLoadingScreenState extends State<EditProfileLoadingScreen> {
     var userData = await UserDetailsHelper.userDetails();
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return EditProfilePage(
+      return ProfilePage(
         userData: userData!,
       );
     }));

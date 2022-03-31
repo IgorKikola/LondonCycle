@@ -60,6 +60,12 @@ const kMenuItemTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   color: Colors.white,
 );
+const kMenuTextStyle = TextStyle(
+  fontFamily: 'Lato',
+  fontStyle: FontStyle.normal,
+  fontSize: 30,
+  color: Colors.white,
+);
 
 const kSlideUpWidgetLabelTextStyle = TextStyle(
   fontFamily: 'Lato',
@@ -80,7 +86,8 @@ const kSlideUpWidgetLeftBottomSectionItemTextStyle = TextStyle(
 );
 
 const kSlideUpWidgetRightBottomSectionItemTextStyle = TextStyle(
-  fontSize: 10,
+  fontFamily: 'Lato',
+  fontSize: 14,
   fontStyle: FontStyle.normal,
   color: Colors.white,
 );

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
 import 'main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:cycle/pages/slide_up_widget.dart';
-import 'package:cycle/pages/menu.dart';
+import 'package:cycle/components/slide_up_widget.dart';
+import 'package:cycle/components/menu.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';
@@ -26,16 +26,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-        title: Text(
-          'Map',
-          style: kAppBarTextStyle,
+          title: Text(
+            'Map',
+            style: kAppBarTextStyle,
+          ),
+          backgroundColor: Colors.lightBlue,
         ),
-        backgroundColor: Colors.lightBlue,
-      ),
+
       body: SlidingUpPanel(
         color: Colors.lightBlue,
         minHeight: 185,
-        maxHeight: 450,
+        maxHeight: 430,
         parallaxEnabled: true,
         parallaxOffset: 1.0,
         isDraggable: true,

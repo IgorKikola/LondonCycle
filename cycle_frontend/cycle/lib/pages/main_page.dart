@@ -1,15 +1,18 @@
 import 'dart:async';
 
 import 'package:cycle/services/data_manager.dart';
-import 'package:cycle/services/directions.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/location_manager.dart';
+import 'package:cycle/services/mapcontroller_provider.dart';
 import 'package:cycle/services/marker_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-
+import '../services/navigation.dart';
+import '../services/mapcontroller_provider.dart';
 import '../services/marker_location.dart';
+import '../services/routing.dart';
 
 const String kMapUrl =
     'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
@@ -65,7 +68,7 @@ class _MapWidgetState extends State<MapWidget> {
   late StreamController<double?> _centerCurrentLocationStreamController;
   List<Marker> markers = [];
   MarkerLocation searchMarker = MarkerLocation();
-  MapController mapController = MapController();
+  MapController mapController = MapControllerProvider.mapController;
 
   void _myMapWidgetRefresh() {
     setState(() {});
@@ -148,7 +151,7 @@ class _MapWidgetState extends State<MapWidget> {
               ),
               PolylineLayerWidget(
                 options: PolylineLayerOptions(
-                    polylines: DirectionsService.getPolylines()),
+                    polylines: RoutingService.getPolylines()),
               ),
             ],
             layers: [
@@ -254,6 +257,22 @@ class _MapWidgetState extends State<MapWidget> {
               ),
             ),
           ),
+          // Positioned(
+          //   left: 10,
+          //   bottom: 280,
+          //   child: FloatingActionButton.small(
+          //     heroTag: 'navigation',
+          //     backgroundColor: Colors.red,
+          //     onPressed: () {
+          //       Navigation navigation = Navigation();
+          //       navigation.navigate();
+          //     },
+          //     child: const Icon(
+          //       Icons.navigation,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

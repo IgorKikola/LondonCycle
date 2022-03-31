@@ -15,7 +15,7 @@ Marker getLandmarkMarker(Landmark landmark) {
   return getMarker(
       LatLng(landmark.lat, landmark.lon),
       const Icon(
-        Icons.museum,
+        Icons.push_pin,
         color: Colors.amber,
       ));
 }
@@ -26,5 +26,6 @@ Marker getDockingStationMarker(DockingStation dockingStation) {
       const Icon(
         Icons.pedal_bike,
         color: Colors.blue,
+        size: 15,
       ));
 }
