@@ -72,33 +72,39 @@ class _StartingPageState extends State<StartingPage>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomBlueButton(
-                      text: "Signup",
-                      onPressed: () =>
-                          Navigator.pushNamed(context, SignupPage.id),
+                    Flexible(
+                      child: CustomBlueButton(
+                        text: "Signup",
+                        onPressed: () =>
+                            Navigator.pushNamed(context, SignupPage.id),
+                      ),
                     ),
                     const SizedBox(
-                      width: 20.0,
+                      width: 10.0,
                     ),
-                    CustomBlueButton(
-                      text: "Login",
-                      onPressed: () =>
-                          Navigator.pushNamed(context, LoginPage.id),
+                    Flexible(
+                      child: CustomBlueButton(
+                        text: "Login",
+                        onPressed: () =>
+                            Navigator.pushNamed(context, LoginPage.id),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 40.0,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomBlueButton(
-                      text: "Continue as Guest",
-                      onPressed: () =>
-                          Navigator.pushNamed(context, HomePage.id),
-                    ),
-                  ],
+                Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomBlueButton(
+                        text: "Continue as Guest",
+                        onPressed: () =>
+                            Navigator.pushNamed(context, HomePage.id),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
