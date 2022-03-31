@@ -102,10 +102,11 @@ class _StopsState extends State<Stops> {
                   addStop();
                 });
               },
-              child: const Icon(Icons.delete_forever_outlined),
+              child: const Icon(Icons.delete_forever_outlined, color: Colors.black),
             ),
             FloatingActionButton(
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.add, color: Colors.white),
+              backgroundColor: Colors.lightBlue[200],
               onPressed: () {
                 showDialog(
                     context: context,

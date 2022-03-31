@@ -69,10 +69,18 @@ class BackendService {
 
   static Future<Map<String, String>> getNBikeStationForCurrentLocation(
       int n) async {
-    List<Map<String, String>> bikeStationsList =
+    List bikeStationsList =
         await _getClosestBikeStationsForCurrentLocation();
 
-    return bikeStationsList.elementAt(n);
+    return bikeStationsList[0].elementAt(n);
+  }
+
+  static Future<Map<double, double>> getNBikeStationForCurrentLocationCoordinates(
+      int n) async {
+    List bikeStationsList =
+    await _getClosestBikeStationsForCurrentLocation();
+
+    return bikeStationsList[1].elementAt(n);
   }
 
   static String _getLocationDetails(
@@ -158,8 +166,10 @@ class BackendService {
     return landmarksList;
   }
 
-  static Future<List<Map<String, String>>>
+  static Future<List>
       _getClosestBikeStationsForCurrentLocation() async {
+    List bikeStations = [];
+    List<Map<double, double>> bikeStationsCoordinates = List.empty(growable: true);
     List<Map<String, String>> bikeStationsList = List.empty(growable: true);
 
     Position currentPosition = await getPosition();
@@ -186,14 +196,19 @@ class BackendService {
           locationTitle: _getDistanceBetween(currentPosition.latitude,
               currentPosition.longitude, locationLatitude, locationLongitude)
         };
-
+        Map<double, double> coordinatesPair = {
+          locationLatitude: locationLongitude
+        };
         bikeStationsList.add(bikeStationPair);
+        bikeStationsCoordinates.add(coordinatesPair);
       }
+      bikeStations.add(bikeStationsList);
+      bikeStations.add(bikeStationsCoordinates);
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
 
-    return bikeStationsList;
+    return bikeStations;
   }
 
   static String _getDistanceBetween(double latitude1, double longitude1,
