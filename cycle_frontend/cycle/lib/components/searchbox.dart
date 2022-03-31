@@ -85,8 +85,7 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Container(
+    return  Container(
         height: 30,
         width: 300,
         decoration: BoxDecoration(
@@ -104,7 +103,7 @@ class SearchBox extends StatelessWidget {
             style: kSearchBoxTextStyle,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.white),
+              hintStyle: TextStyle(color: Colors.white ),
               border: kOutlineInputBorder,
             ),
           ),
@@ -130,7 +129,6 @@ class SearchBox extends StatelessWidget {
           onSuggestionSelected: onSelected,
         ),
         // ),
-      ),
     );
   }
 }

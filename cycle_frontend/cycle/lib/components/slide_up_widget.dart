@@ -588,10 +588,12 @@ class StartingLocationSearchBar extends StatelessWidget {
           Icons.my_location_rounded,
           color: Colors.red,
         ),
-        SearchBox(
-          searchboxType: Waypoint.START,
-          myRoute: myRoute,
-          typeAheadController: startingPointSearchboxTypeAheadController,
+        Flexible(
+          child: SearchBox(
+            searchboxType: Waypoint.START,
+            myRoute: myRoute,
+            typeAheadController: startingPointSearchboxTypeAheadController,
+          ),
         ),
         const SizedBox(width: 20),
       ],
@@ -616,10 +618,12 @@ class FinishingLocationSearchBar extends StatelessWidget {
           Icons.location_on_outlined,
           color: Colors.red,
         ),
-        SearchBox(
-          searchboxType: Waypoint.FINISH,
-          myRoute: myRoute,
-          typeAheadController: finishingPointSearchboxTypeAheadController,
+        Flexible(
+          child: SearchBox(
+            searchboxType: Waypoint.FINISH,
+            myRoute: myRoute,
+            typeAheadController: finishingPointSearchboxTypeAheadController,
+          ),
         ),
         const SizedBox(width: 20),
       ],
