@@ -1,16 +1,20 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/main_page.dart';
+import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/constants.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
+import '../services/navigation.dart';
 import '../services/route.dart';
 import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -159,11 +163,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          StopsWidget(),
+                          Flexible(child: StopsWidget()),
                           SizedBox(width: 10),
                           Container(
                             height: 30,
-                            width: 80,
+                            width: 30,
                             decoration: BoxDecoration(
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(15.0)),
@@ -185,163 +189,201 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: 3.0),
                           Container(
                             height: 30,
-                            width: 130,
-                            key: Key('RiderContainer'),
+                            width: 30,
                             decoration: BoxDecoration(
-                                color: Colors.lightBlue[200],
+                                color: Colors.red,
                                 borderRadius: BorderRadius.circular(15.0)),
                             child: Material(
-                              color: Colors.lightBlue[200],
+                              color: Colors.red,
                               borderRadius: BorderRadius.circular(15.0),
                               child: InkWell(
                                 splashColor: Colors.lightBlue,
                                 borderRadius: BorderRadius.circular(20),
-                                onTap: () => {
-                                  showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      backgroundColor: Colors.lightBlue[200],
-                                      title: const Text(
-                                        'Add riders (Min: 1 | Max: 5)',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      content: new TextField(
-                                        controller: riderNumController,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: new InputDecoration(
-                                            labelStyle:
-                                                TextStyle(color: Colors.white),
-                                            labelText:
-                                                "Enter the number of riders."),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text(
-                                            'Cancel',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context, 'OK');
-                                            updateNumberOfRiders();
-                                          },
-                                          child: const Text(
-                                            'OK',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  updateNumberOfRiders(),
+                                onTap: () {
+                                  if (isRouteComplete()) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      NavigationPage.id,
+                                      arguments: NavigationPageArguments(
+                                          context,
+                                          widget.myRoute
+                                              .getRouteAsList()
+                                              .map((coordinate) => LatLng(
+                                                  coordinate.latitude,
+                                                  coordinate.longitude))
+                                              .toList(),
+                                          numOfRiders),
+                                    );
+                                  }
                                 },
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Icon(Icons.person_add,
-                                          key: Key('RiderIcon'),
-                                          color: Colors.red),
-                                    ),
-                                    Text(
-                                      ':',
-                                      key: Key('RiderText'),
-                                      style: kSlideUpWidgetLabelTextStyle,
-                                    ),
-                                    SizedBox(width: 30),
-                                    Container(
-                                      //padding: EdgeInsets.only(right: 70),
-                                      child: Text(
-                                        numOfRiders.toString(),
-                                        key: Key('RiderValue'),
-                                        style: kSlideUpWidgetLabelTextStyle,
-                                      ),
-                                    ),
-                                    SizedBox(width: 50),
+                                    Icon(Icons.navigation, color: Colors.white),
                                   ],
                                 ),
                               ),
-                            ),),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Flexible(
+                            child: Container(
+                              height: 30,
+                              width: 130,
+                              key: Key('RiderContainer'),
+                              decoration: BoxDecoration(
+                                  color: Colors.lightBlue[200],
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              child: Material(
+                                color: Colors.lightBlue[200],
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: InkWell(
+                                  splashColor: Colors.lightBlue,
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () => {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        backgroundColor: Colors.lightBlue[200],
+                                        title: const Text(
+                                          'Add riders (Min: 1 | Max: 5)',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        content: new TextField(
+                                          controller: riderNumController,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          decoration: new InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              labelText:
+                                                  "Enter the number of riders."),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, 'OK');
+                                              updateNumberOfRiders();
+                                            },
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    updateNumberOfRiders(),
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(Icons.person_add,
+                                          key: Key('RiderIcon'),
+                                          color: Colors.red),
+                                      Text(
+                                        ':',
+                                        key: Key('RiderText'),
+                                        style: kSlideUpWidgetLabelTextStyle,
+                                      ),
+                                      SizedBox(width: 30),
+                                      Container(
+                                        //padding: EdgeInsets.only(right: 70),
+                                        child: Text(
+                                          numOfRiders.toString(),
+                                          key: Key('RiderValue'),
+                                          style: kSlideUpWidgetLabelTextStyle,
+                                        ),
+                                      ),
+                                      Flexible(child: SizedBox(width: 50)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       );
-
 
   Widget buildWidgetGrid() => Center(
         child: Container(
             padding: EdgeInsets.all(1.0),
-            alignment: Alignment(-1.0, 0.0),
-            child: Container(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    height: 230,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlueAccent,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BottomSectionLabel(
-                            labelText: 'Bikepoints:',
-                            myBikeStationItemWidgetStateRefreshCallback:
-                                myBikeStationItemWidgetStateRefresh),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 0,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 1,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 2,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                        SizedBox(height: 10),
-                        BikeStationItemWidget(
-                            bikeStationId: 3,
-                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
-                      ],
-                    ),
-                  ),
+            Padding(
+              padding: EdgeInsets.all(6),
+              child: Container(
+                padding: EdgeInsets.all(20.0),
+                height: 230,
+                width: 400,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent,
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BottomSectionLabel(
+                        labelText: 'Bikepoints:',
+                        myBikeStationItemWidgetStateRefreshCallback:
+                            myBikeStationItemWidgetStateRefresh),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 0,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 1,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 2,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                    SizedBox(height: 10),
+                    BikeStationItemWidget(
+                        bikeStationId: 3,
+                        key: globalBikeStationWidgetItemsKeys.elementAt(3)),
+                  ],
+                ),
+              ),
+            ),
               ],
-            ))),
+            )),
       );
 }
 
@@ -544,10 +586,12 @@ class StartingLocationSearchBar extends StatelessWidget {
           Icons.my_location_rounded,
           color: Colors.red,
         ),
-        SearchBox(
-          searchboxType: Waypoint.START,
-          myRoute: myRoute,
-          typeAheadController: startingPointSearchboxTypeAheadController,
+        Flexible(
+          child: SearchBox(
+            searchboxType: Waypoint.START,
+            myRoute: myRoute,
+            typeAheadController: startingPointSearchboxTypeAheadController,
+          ),
         ),
         const SizedBox(width: 20),
       ],
@@ -572,10 +616,12 @@ class FinishingLocationSearchBar extends StatelessWidget {
           Icons.location_on_outlined,
           color: Colors.red,
         ),
-        SearchBox(
-          searchboxType: Waypoint.FINISH,
-          myRoute: myRoute,
-          typeAheadController: finishingPointSearchboxTypeAheadController,
+        Flexible(
+          child: SearchBox(
+            searchboxType: Waypoint.FINISH,
+            myRoute: myRoute,
+            typeAheadController: finishingPointSearchboxTypeAheadController,
+          ),
         ),
         const SizedBox(width: 20),
       ],

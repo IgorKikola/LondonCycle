@@ -11,12 +11,15 @@ class CustomBlueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: kCustomBlueButtonStyle,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-        child: Text(text, style: kCustomBlueButtonTextStyle),
+    return SizedBox(
+      width: 200,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: kCustomBlueButtonStyle,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Text(text, style: kCustomBlueButtonTextStyle),
+        ),
       ),
     );
   }

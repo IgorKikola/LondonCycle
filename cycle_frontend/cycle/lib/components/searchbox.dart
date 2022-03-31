@@ -96,7 +96,6 @@ class SearchBox extends StatelessWidget {
       child: TypeAheadField(
         textFieldConfiguration: TextFieldConfiguration(
           controller: typeAheadController,
-          textInputAction: TextInputAction.none,
           // autofocus: true,
           textAlign: TextAlign.center,
           textAlignVertical: TextAlignVertical.bottom,

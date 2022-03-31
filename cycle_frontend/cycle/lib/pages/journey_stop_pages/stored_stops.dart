@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cycle/models/stop.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/my_route_provider.dart';
 import '../../services/route.dart';
 import '../../services/stop_location.dart';
 import '../../utilities/constants.dart';
+
 
 class Stops extends StatefulWidget {
   const Stops({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class Stops extends StatefulWidget {
 }
 
 class _StopsState extends State<Stops> {
-
   @override
   void initState() {
     super.initState();
@@ -31,13 +31,12 @@ class _StopsState extends State<Stops> {
 
   serializeStops() async {
     prefs = await SharedPreferences.getInstance();
-    String? stringTodo = prefs.getString('stop');
-    List stops = jsonDecode(stringTodo!);
+    String? localStops = prefs.getString('stop');
+    List stops = jsonDecode(localStops!);
     for (var stop in stops) {
       int index = 0;
       setState(() {
-        stopObjects
-            .add(Stop(index + 1, stringTodo, 0, 0).fromJson(stop));
+        stopObjects.add(Stop(index + 1, localStops, 0, 0).fromJson(stop));
       });
     }
   }
@@ -52,10 +51,11 @@ class _StopsState extends State<Stops> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child:  AppBar(
-        title: const Text("Stops", style: kJourneyStopsTextStyle),
-        backgroundColor: Colors.lightBlue,
-      ),),
+        child: AppBar(
+          title: const Text("Stops", style: kJourneyStopsTextStyle),
+          backgroundColor: Colors.lightBlue,
+        ),
+      ),
       backgroundColor: Colors.lightBlue,
       body: ListView.builder(
           itemCount: stopObjects.length,
@@ -115,9 +115,8 @@ class _StopsState extends State<Stops> {
                     context: context,
                     builder: (BuildContext dialogContext) {
                       return AlertDialog(
-                        title: const Text(
-                          'Add a stop', style: kJourneyStopsTextStyle
-                        ),
+                        title: const Text('Add a stop',
+                            style: kJourneyStopsTextStyle),
                         backgroundColor: Colors.lightBlue[200],
                         content: SearchBox(
                             searchboxType: Waypoint.MIDPOINT,
@@ -143,12 +142,11 @@ class _StopsState extends State<Stops> {
                                         double stopLon = stopCoordinates
                                             .getStopLocation()
                                             .longitude;
-                                        final Stop newStop =
-                                            Stop(
-                                                index + 1,
-                                                textController.text,
-                                                stopLat,
-                                                stopLon);
+                                        final Stop newStop = Stop(
+                                            index + 1,
+                                            textController.text,
+                                            stopLat,
+                                            stopLon);
                                         textController.clear();
                                         stopObjects.add(newStop);
                                       });

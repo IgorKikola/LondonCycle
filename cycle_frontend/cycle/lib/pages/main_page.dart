@@ -257,22 +257,22 @@ class _MapWidgetState extends State<MapWidget> {
               ),
             ),
           ),
-          Positioned(
-            left: 10,
-            bottom: 280,
-            child: FloatingActionButton.small(
-              heroTag: 'navigation',
-              backgroundColor: Colors.red,
-              onPressed: () {
-                Navigation navigation = Navigation();
-                navigation.navigate();
-              },
-              child: const Icon(
-                Icons.navigation,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 10,
+          //   bottom: 280,
+          //   child: FloatingActionButton.small(
+          //     heroTag: 'navigation',
+          //     backgroundColor: Colors.red,
+          //     onPressed: () {
+          //       Navigation navigation = Navigation();
+          //       navigation.navigate();
+          //     },
+          //     child: const Icon(
+          //       Icons.navigation,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
