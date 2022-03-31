@@ -1,5 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/main_page.dart';
 import 'package:cycle/services/coordinate.dart';
 import 'package:cycle/services/routing.dart';
@@ -203,16 +204,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
                                   if (isRouteComplete()) {
-                                    Navigation navigation = Navigation(
-                                        context,
-                                        widget.myRoute
-                                            .getRouteAsList()
-                                            .map((coordinate) => LatLng(
-                                                coordinate.latitude,
-                                                coordinate.longitude))
-                                            .toList(),
-                                        numOfRiders);
-                                    navigation.navigate();
+                                    Navigator.pushNamed(
+                                      context,
+                                      NavigationPage.id,
+                                      arguments: NavigationPageArguments(
+                                          context,
+                                          widget.myRoute
+                                              .getRouteAsList()
+                                              .map((coordinate) => LatLng(
+                                                  coordinate.latitude,
+                                                  coordinate.longitude))
+                                              .toList(),
+                                          numOfRiders),
+                                    );
                                   }
                                 },
                                 child: Row(
