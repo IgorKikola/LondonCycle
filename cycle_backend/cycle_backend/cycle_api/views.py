@@ -38,23 +38,33 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
     nextStop=[]
     listStops = stringOfStops.split(";")
     i = 0
+    base_leg=0
+    result_leg=0
+    end_leg=0
     base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle,walking&journeyPreference=LeastTime'
     base_response = urlopen(base)
     base_json = json.loads(base_response.read())
-    coordinatesString=base_json['journeys'][0]['legs'][0]['path']['lineString']
+    while base_leg < len(base_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
+        base_leg+=1
     while i+1 < len(listStops):
         currentStop = listStops[i]
         nextStop = listStops[i+1]
         result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle,walking&journeyPreference=LeastTime'
         result_response = urlopen(result)
         result_json = json.loads(result_response.read())
-        coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][0]['path']['lineString']
+        while result_leg < len(result_json['journeys'][0]['legs']):
+            coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][result_leg]['path']['lineString']
+            result_leg+=1    
         i+=1
     end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle,walking&journeyPreference=LeastTime'
     end_response = urlopen(end)
     end_json = json.loads(end_response.read())
-    coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][0]['path']['lineString']
+    while end_leg < len(end_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][end_leg]['path']['lineString']
+        end_leg+=1
     coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
+    coordinatesString=coordinatesString[1:]
     filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
     splitList=[item.split(',') for item in filteredCoordinates]
     splitList = [list(map(float, lst)) for lst in splitList]
