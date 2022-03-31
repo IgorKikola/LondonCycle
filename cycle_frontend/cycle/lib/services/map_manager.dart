@@ -1,3 +1,4 @@
+import 'package:cycle/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -5,14 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class MapManager {
-  bool lock = false;
   var context;
 
   MapManager(this.context);
 
   Future<void> openMapsSheet(LatLng startLocation, LatLng endLocation,
       DirectionsMode directionsMode) async {
-    lock = true;
     try {
       final availableMaps = await MapLauncher.installedMaps;
       await showModalBottomSheet(
@@ -32,11 +31,7 @@ class MapManager {
                                 endLocation.latitude, endLocation.longitude),
                             directionsMode: directionsMode);
 
-                        showAlertDialog(context);
-
-                        // while (lock) {}
-
-                        // Navigator.pop(context);
+                        showAlert(context);
                       },
                       title: Text(map.mapName),
                       leading: SvgPicture.asset(
@@ -56,75 +51,25 @@ class MapManager {
     }
   }
 
-  Future<void> _onAlertButtonsPressed(context) async {
+  Future<void> showAlert(context) async {
     Alert(
       context: context,
       type: AlertType.info,
-      title: "RFLUTTER ALERT",
-      desc: "Flutter is more awesome with RFlutter Alert.",
+      title: "HOORAY",
+      desc: "Let's continue your journey",
       buttons: [
         DialogButton(
           child: const Text(
-            "FLAT",
+            "Continue",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
           onPressed: () {
             Navigator.pop(context);
             Navigator.pop(context);
-            lock = false;
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-        ),
-        DialogButton(
-          child: const Text(
-            "FLAT",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            lock = false;
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
         ),
       ],
     ).show();
-  }
-
-  Future<void> showAlertDialog(BuildContext context) async {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: const Text("Whoops"),
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        lock = false;
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text("Yes"),
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        lock = false;
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: const Text("Are you on route?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }

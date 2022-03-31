@@ -12,7 +12,7 @@ class Navigation {
 
   Navigation(this._context, this._stops, this._numberOfRiders);
 
-  void navigate() async {
+  Future<void> navigate() async {
     for (int i = 0; i < _stops.length - 1; i++) {
       await buildRouteBetweenTwoPoints(
           _stops[i], _stops[i + 1], _numberOfRiders);
@@ -36,11 +36,13 @@ class Navigation {
 
   Future<void> walk(LatLng start, LatLng stop) async {
     MapManager mapManager = MapManager(_context);
+    await Future.delayed(const Duration(milliseconds: 500));
     await mapManager.openMapsSheet(start, stop, DirectionsMode.walking);
   }
 
   Future<void> cycle(LatLng start, LatLng stop) async {
     MapManager mapManager = MapManager(_context);
+    await Future.delayed(const Duration(milliseconds: 500));
     await mapManager.openMapsSheet(start, stop, DirectionsMode.bicycling);
   }
 }
