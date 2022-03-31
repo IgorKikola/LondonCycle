@@ -8,6 +8,7 @@ import '../../services/route.dart';
 import '../../services/stop_location.dart';
 import '../../utilities/constants.dart';
 
+
 class Stops extends StatefulWidget {
   const Stops({Key? key}) : super(key: key);
 
@@ -30,12 +31,12 @@ class _StopsState extends State<Stops> {
 
   serializeStops() async {
     prefs = await SharedPreferences.getInstance();
-    String? stringTodo = prefs.getString('stop');
-    List stops = jsonDecode(stringTodo!);
+    String? localStops = prefs.getString('stop');
+    List stops = jsonDecode(localStops!);
     for (var stop in stops) {
       int index = 0;
       setState(() {
-        stopObjects.add(Stop(index + 1, stringTodo, 0, 0).fromJson(stop));
+        stopObjects.add(Stop(index + 1, localStops, 0, 0).fromJson(stop));
       });
     }
   }
