@@ -3,18 +3,18 @@ import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
+import '../../components/menu.dart';
 
-class StartingPage extends StatefulWidget {
-  static const String id = 'starting_page';
+class SignUpOrLoginPage extends StatefulWidget {
+  static const String id = 'sign_up_or_login_page';
 
-  const StartingPage({Key? key}) : super(key: key);
+  const SignUpOrLoginPage({Key? key}) : super(key: key);
 
   @override
-  _StartingPageState createState() => _StartingPageState();
+  _SignUpOrLoginPageState createState() => _SignUpOrLoginPageState();
 }
 
-class _StartingPageState extends State<StartingPage>
+class _SignUpOrLoginPageState extends State<SignUpOrLoginPage>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation animation;
@@ -45,6 +45,14 @@ class _StartingPageState extends State<StartingPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Menu(),
+      appBar: AppBar(
+        title: Text(
+          'My Profile',
+          // style: kAppBarTextStyle,
+        ),
+        backgroundColor: Colors.lightBlue,
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -90,21 +98,6 @@ class _StartingPageState extends State<StartingPage>
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomBlueButton(
-                        text: "Continue as Guest",
-                        onPressed: () =>
-                            Navigator.pushNamed(context, HomePage.id),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),

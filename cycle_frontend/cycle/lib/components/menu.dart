@@ -1,9 +1,11 @@
 
+import 'package:cycle/pages/menu_pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/menu_pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:cycle/pages/menu_pages/settings.dart';
+import 'package:cycle/pages/signup_login_pages/signup_login_option_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
@@ -28,6 +30,9 @@ import 'package:cycle/pages/menu_pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
+  final Future<bool> _isLoggedIn = UserDetailsHelper.isLoggedIn() ;
+
+  get userData => null;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -48,47 +53,48 @@ class Menu extends StatelessWidget {
           SizedBox(height: 10),
           buildSettings(context),
           SizedBox(height: 10),
-          buildEditProfile(context),
           SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              UserDetailsHelper.logout(context);
-              Navigator.pushNamedAndRemoveUntil(
-                  context, StartingPage.id, (route) => false);
-            },
-            child: const Text('Log out'),
-          )
         ],
       ),
     );
   }
-}
-
-Widget buildProfile(BuildContext context) => Container(
-      height: 50,
-      child: Material(
-        color: Colors.lightBlue[200],
-        borderRadius: BorderRadius.circular(15.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          child: ListTile(
-            leading: Icon(
-              Icons.contacts,
+  Widget buildProfile(BuildContext context) =>
+      Container(
+        height: 50,
+        child: Material(
+          color: Colors.lightBlue[200],
+          borderRadius: BorderRadius.circular(15.0),
+          child: InkWell(
+            splashColor: Colors.lightBlue,
+            child: ListTile(
+              leading: Icon(
+                Icons.contacts,
+              ),
+              title: Text(
+                'My Profile',
+                style: kMenuItemTextStyle,
+              ),
+              onTap: () {
+                if (_isLoggedIn == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfilePage(userData: userData)),
+                  );
+                }
+                else{
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpOrLoginPage()),
+                  );
+                }
+              },
             ),
-            title: Text(
-              'My Profile',
-              style: kMenuItemTextStyle,
-            ),
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => StartingPage()),
-              // );
-            },
           ),
         ),
-      ),
-    );
+      );
+}
+
+
 
 Widget buildMenuText(BuildContext context) => Column(
       children: [
