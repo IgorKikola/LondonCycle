@@ -30,7 +30,7 @@ class SlideUpWidget extends StatefulWidget {
         super(key: key);
 
   @override
-  State<SlideUpWidget> createState() => _SlideUpWidgetState();
+  _SlideUpWidgetState createState() => _SlideUpWidgetState();
 }
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {

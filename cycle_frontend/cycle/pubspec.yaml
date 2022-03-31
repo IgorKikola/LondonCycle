@@ -57,6 +57,8 @@ dependencies:
   flutter_mapbox_navigation: ^0.0.26
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 
