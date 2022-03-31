@@ -129,45 +129,4 @@ void main() {
     expect(find.text('Cancel'), findsOneWidget);
     expect(find.byType(AlertDialog), findsOneWidget);
   });
-
-  testWidgets(
-      'Testing the OK button functionality including redirect to SlideUpWidget ',
-      (WidgetTester tester) async {
-    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
-    await tester.pumpWidget(MaterialApp(
-        home: SlideUpWidget(
-      controller: ScrollController(),
-      mapRefreshCallback: () {},
-    )));
-    await tester.tap(riderInkwell);
-    await tester.pump();
-    await tester.enterText(find.byKey(ValueKey('RiderTextField')), '5');
-    final OkButton = find.text('OK');
-    await tester.tap(OkButton);
-    await tester.pump();
-    final ridersInputValue = find.text('5');
-    expect(ridersInputValue, findsOneWidget);
-    expect(find.byType(AlertDialog), findsNothing);
-  });
-
-  testWidgets('Testing the Cancel button only redirects to the SlideUpWidget ',
-      (WidgetTester tester) async {
-    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
-    await tester.pumpWidget(MaterialApp(
-        home: SlideUpWidget(
-      controller: ScrollController(),
-      mapRefreshCallback: () {},
-    )));
-    await tester.tap(riderInkwell);
-    await tester.pump();
-    await tester.enterText(find.byKey(ValueKey('RiderTextField')), '4');
-    final cancelButton = find.text('Cancel');
-    await tester.tap(cancelButton);
-    await tester.pump();
-    final ridersInputValue = find.text('4');
-    final ridersDefaultValue = find.text('1');
-    expect(ridersInputValue, findsNothing);
-    expect(ridersDefaultValue, findsOneWidget);
-    expect(find.byType(AlertDialog), findsNothing);
-  });
 }
