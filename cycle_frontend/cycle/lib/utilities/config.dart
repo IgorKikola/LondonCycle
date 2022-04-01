@@ -1,6 +1,6 @@
 class Config {
   static const String localhostURL = "localhost:8000";
-  static const String backendUrl = 'https://agile-citadel-13372.herokuapp.com';
+  static const String backendURL = 'https://agile-citadel-13372.herokuapp.com';
   static const String loginPath = "/login/";
   static const String signupPath = "/signup/";
   static const String getUserProfilePath = "/users/get/";

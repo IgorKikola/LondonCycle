@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:cycle/services/route.dart';
-import 'package:cycle/utilities/api_constants.dart';
 import 'package:http/http.dart' show Client;
 
+import '../utilities/config.dart';
 import '../models/route_coordinates.dart';
 
 class RoutingApiProvider {
@@ -31,7 +31,7 @@ class RoutingApiProvider {
       apiCallPath = 'get_route/from/$startingLocation/to/$finishingLocation/';
     }
 
-    var url = Uri.https(kBackendApiURL, apiCallPath, {
+    var url = Uri.https(Config.backendURL, apiCallPath, {
       'format': 'json',
     });
 

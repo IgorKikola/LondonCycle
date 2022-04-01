@@ -6,12 +6,12 @@ import 'package:cycle/models/landmark.dart';
 import 'package:cycle/models/stop.dart';
 import 'package:cycle/services/network_helper.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:cycle/config.dart';
+import 'package:cycle/utilities/config.dart';
 
 Future<DockingStation> getClosestDockingStationWithBikesAvailable(
     LatLng latLng, int numberOfBikes) async {
   var response = await NetworkHelper.get(
-      domain: Config.backendUrl,
+      domain: Config.backendURL,
       path: (Config.closestBikePointPath +
           "/with/$numberOfBikes/bikes/from/${latLng.latitude}/${latLng.longitude}"));
   DockingStation dockingStation =
@@ -23,7 +23,7 @@ Future<DockingStation> getClosestDockingStationWithBikesAvailable(
 Future<DockingStation> getClosestDockingStationWithEmptyDocks(
     LatLng latLng, int numberOfBikes) async {
   var response = await NetworkHelper.get(
-      domain: Config.backendUrl,
+      domain: Config.backendURL,
       path: (Config.closestBikePointPath +
           "/with/$numberOfBikes/empty_docks/from/${latLng.latitude}/${latLng.longitude}"));
   DockingStation dockingStation =
@@ -34,7 +34,7 @@ Future<DockingStation> getClosestDockingStationWithEmptyDocks(
 
 Future<List<DockingStation>> getDockingStations() async {
   List<DockingStation> dockingStations = (await NetworkHelper.getJsonList(
-          domain: Config.backendUrl, path: Config.bikePointsPath))
+          domain: Config.backendURL, path: Config.bikePointsPath))
       .map((dockingStation) => DockingStation.fromJson(dockingStation))
       .toList();
 
@@ -43,7 +43,7 @@ Future<List<DockingStation>> getDockingStations() async {
 
 Future<List<Landmark>> getLandmarks() async {
   List<Landmark> landmarks = (await NetworkHelper.getJsonList(
-          domain: Config.backendUrl, path: Config.landmarksPath))
+          domain: Config.backendURL, path: Config.landmarksPath))
       .map((landmark) => Landmark.fromJson(landmark))
       .toList();
 
@@ -52,7 +52,7 @@ Future<List<Landmark>> getLandmarks() async {
 
 Future<List<JourneyStop>> getStops() async {
   List<JourneyStop> journeyStops = (await NetworkHelper.getJsonList(
-          domain: Config.backendUrl, path: Config.landmarksPath))
+          domain: Config.backendURL, path: Config.landmarksPath))
       .map((journeyStop) => JourneyStop.fromJson(journeyStop))
       .toList();
 

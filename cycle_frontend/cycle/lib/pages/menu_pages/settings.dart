@@ -1,4 +1,4 @@
-import 'package:cycle/utilities/constants.dart';
+import 'package:cycle/utilities/home_page_design_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:cycle/components/menu.dart';
 

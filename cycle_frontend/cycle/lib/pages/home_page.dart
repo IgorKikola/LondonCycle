@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/constants.dart';
+import '../utilities/home_page_design_contants.dart';
 import 'main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:cycle/components/slide_up_widget.dart';
@@ -26,13 +26,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: Menu(),
       appBar: AppBar(
-          title: Text(
-            'Map',
-            style: kAppBarTextStyle,
-          ),
-          backgroundColor: Colors.lightBlue,
+        title: Text(
+          'Map',
+          style: kAppBarTextStyle,
         ),
-
+        backgroundColor: Colors.lightBlue,
+      ),
       body: SlidingUpPanel(
         color: Colors.lightBlue,
         minHeight: 185,

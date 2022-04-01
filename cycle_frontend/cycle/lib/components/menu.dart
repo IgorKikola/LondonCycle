@@ -2,7 +2,7 @@ import 'package:cycle/pages/menu_pages/favorites.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:cycle/pages/menu_pages/settings.dart';
-import '../utilities/constants.dart';
+import '../utilities/home_page_design_contants.dart';
 import 'package:cycle/pages/menu_pages/trip_history.dart';
 import 'package:flutter/material.dart';
 

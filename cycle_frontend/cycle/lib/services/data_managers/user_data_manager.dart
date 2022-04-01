@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cycle/config.dart';
+import 'package:cycle/utilities/config.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/update_profile_response_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';

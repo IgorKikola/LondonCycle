@@ -1,4 +1,4 @@
-import 'package:cycle/constants.dart';
+import 'package:cycle/utilities/user_related_design_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomBlueButton extends StatelessWidget {
