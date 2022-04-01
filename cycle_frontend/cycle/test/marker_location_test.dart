@@ -12,14 +12,16 @@ void main() {
 
   test('Marker start location is initialised correctly', () {
     MarkerLocation searchMarker = MarkerLocation();
-    Coordinate start = Coordinate(latitude: 51.50, longitude: 0.12);
+    Coordinate start =
+        Coordinate(latitude: 51.50, longitude: 0.12, name: 'starting marker');
     searchMarker.setStartingLocation(start);
     expect(searchMarker.getStartingLocation(), start);
   });
 
   test('Marker destination is initialised correctly', () {
     MarkerLocation searchMarker = MarkerLocation();
-    Coordinate destination = Coordinate(latitude: 51.50, longitude: 0.12);
+    Coordinate destination = Coordinate(
+        latitude: 51.50, longitude: 0.12, name: 'destination marker');
     searchMarker.setDestination(destination);
     expect(searchMarker.getDestination(), destination);
   });
