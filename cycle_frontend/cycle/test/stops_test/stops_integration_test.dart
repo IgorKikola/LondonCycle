@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:cycle/components/searchbox.dart';
-import 'package:cycle/pages/main_page.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cycle/components/slide_up_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:integration_test/integration_test.dart';
@@ -16,12 +14,12 @@ void main() {
   group('Stops Integration Tests', () {
 
     testWidgets('Check initial default capacity of riders',
-        (WidgetTester tester) async {
-      app.main();
-      final _StopsState = Stops().createState();
-      int numberOfStopObjects= _StopsState.stopObjects.length;
-      expect(numberOfStopObjects, 0);
-    });
+            (WidgetTester tester) async {
+          app.main();
+          final _StopsState = Stops().createState();
+          int numberOfStopObjects= _StopsState.stopObjects.length;
+          expect(numberOfStopObjects, 0);
+        });
     testWidgets('Test for creating a new Stop and then deleting it', (WidgetTester tester) async {
       SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
       final addButton = find.byTooltip("Add Stop");

@@ -7,29 +7,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   testWidgets('Test text on scaffold appbar', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
+    await tester.pumpWidget(MaterialApp(home: const Stops()));
+    await tester.pump();
     expect(find.text('Stops'), findsOneWidget);
   });
 
   testWidgets('Test location of add stop floatingActionButton',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.pump();
     expect(addButton, findsOneWidget);
   });
 
   testWidgets('Test location of remove stop floatingActionButton',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final removeButton = find.byTooltip("Delete all stops and routes");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(MaterialApp(home: const Stops()));
     await tester.pump();
     expect(removeButton, findsOneWidget);
   });
 
   testWidgets('Test for AlertDialog to appear', (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(MaterialApp(home: const Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.byType(AlertDialog), findsOneWidget);
@@ -37,6 +42,7 @@ void main() {
 
   testWidgets('Test for ElevatedButton Icon in AlertDialog',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -46,6 +52,7 @@ void main() {
 
   testWidgets('Test for ElevatedButton in AlertDialog',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -54,6 +61,7 @@ void main() {
   });
 
   testWidgets('Test for AlertDialog header text', (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -63,6 +71,7 @@ void main() {
 
   testWidgets('Test for Searchbox component in AlertDialog',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -73,6 +82,7 @@ void main() {
   testWidgets(
       'Test for no activity when ElevatedButton is pressed with invalid input',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -88,6 +98,7 @@ void main() {
 
   testWidgets('Test for no activity after pressing enter key on keyboard',
       (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
@@ -101,6 +112,7 @@ void main() {
   });
 
   testWidgets('Test for valid input in Searchbar', (WidgetTester tester) async {
+    SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
     await tester.pumpWidget(MaterialApp(home: Stops()));
     await tester.tap(addButton);
