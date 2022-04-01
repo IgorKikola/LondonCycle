@@ -87,6 +87,7 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: Key('Searchbar'),
       height: 30,
       width: 300,
       decoration: BoxDecoration(
