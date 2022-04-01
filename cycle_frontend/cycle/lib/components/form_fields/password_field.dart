@@ -1,5 +1,5 @@
 import 'package:cycle/utilities/user_related_design_constants.dart';
-import 'package:cycle/services/validator_messages.dart';
+import 'package:cycle/utilities/validator_messages.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/string_validator.dart';

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
         StartingPage.id: (context) => StartingPage(),
-        NavigationPage.id: (context) => NavigationPage(),
+        // NavigationPage.id: (context) => NavigationPage(),
       },
     );
   }
