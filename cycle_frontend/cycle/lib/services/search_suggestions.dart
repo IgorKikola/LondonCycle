@@ -1,8 +1,9 @@
+import 'dart:convert' as convert;
+
+import 'package:cycle/config.dart';
+import 'package:cycle/services/location_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-import 'package:cycle/services/location_manager.dart';
-import '../utilities/api_constants.dart';
 import 'package:latlong2/latlong.dart';
 
 const String kApiKey =
@@ -69,16 +70,14 @@ class BackendService {
 
   static Future<Map<String, String>> getNBikeStationForCurrentLocation(
       int n) async {
-    List bikeStationsList =
-        await _getClosestBikeStationsForCurrentLocation();
+    List bikeStationsList = await _getClosestBikeStationsForCurrentLocation();
 
     return bikeStationsList[0].elementAt(n);
   }
 
-  static Future<Map<double, double>> getNBikeStationForCurrentLocationCoordinates(
-      int n) async {
-    List bikeStationsList =
-    await _getClosestBikeStationsForCurrentLocation();
+  static Future<Map<double, double>>
+      getNBikeStationForCurrentLocationCoordinates(int n) async {
+    List bikeStationsList = await _getClosestBikeStationsForCurrentLocation();
 
     return bikeStationsList[1].elementAt(n);
   }
@@ -137,7 +136,7 @@ class BackendService {
     String longitude = currentPosition.longitude.toString();
 
     var url = Uri.https(
-        kBackendApiURL, '/closest/5/landmarks/from/$latitude/$longitude/', {
+        Config.apiURL, '/closest/5/landmarks/from/$latitude/$longitude/', {
       'format': 'json',
     });
 
@@ -166,10 +165,10 @@ class BackendService {
     return landmarksList;
   }
 
-  static Future<List>
-      _getClosestBikeStationsForCurrentLocation() async {
+  static Future<List> _getClosestBikeStationsForCurrentLocation() async {
     List bikeStations = [];
-    List<Map<double, double>> bikeStationsCoordinates = List.empty(growable: true);
+    List<Map<double, double>> bikeStationsCoordinates =
+        List.empty(growable: true);
     List<Map<String, String>> bikeStationsList = List.empty(growable: true);
 
     Position currentPosition = await getPosition();
@@ -177,7 +176,7 @@ class BackendService {
     String longitude = currentPosition.longitude.toString();
 
     var url = Uri.https(
-        kBackendApiURL, '/closest/5/bikepoints/from/$latitude/$longitude/', {
+        Config.apiURL, '/closest/5/bikepoints/from/$latitude/$longitude/', {
       'format': 'json',
     });
 
