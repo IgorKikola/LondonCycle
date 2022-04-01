@@ -8,7 +8,6 @@ import '../../services/route.dart';
 import '../../services/stop_location.dart';
 import '../../utilities/constants.dart';
 
-
 class Stops extends StatefulWidget {
   const Stops({Key? key}) : super(key: key);
 
