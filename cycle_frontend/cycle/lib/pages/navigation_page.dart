@@ -1,3 +1,4 @@
+import 'package:cycle/pages/loading_screens/navigation_page_loading_screen.dart';
 import 'package:cycle/services/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -52,6 +53,16 @@ class _NavigationPageState extends State<NavigationPage> {
                       Navigation navigation = Navigation(
                           args._context, stops, args._numberOfRiders);
                       await navigation.navigate();
+
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return NavigationPageLoadingScreen(action: () async {
+                      //     Navigation navigation = Navigation(
+                      //         args._context, stops, args._numberOfRiders);
+                      //     await navigation.navigate();
+                      //   });
+                      // }));
+
                       setState(() {
                         enabledTileIndex++;
                       });

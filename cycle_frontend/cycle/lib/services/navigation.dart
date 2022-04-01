@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:cycle/models/docking_station.dart';
+import 'package:cycle/pages/loading_screens/navigation_page_loading_screen.dart';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/map_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
 
@@ -9,6 +11,8 @@ class Navigation {
   List<LatLng> _stops = [];
   final _context;
   int _numberOfRiders;
+  late DockingStation _startDockingStation;
+  late DockingStation _stopDockingStation;
 
   Navigation(this._context, this._stops, this._numberOfRiders);
 
@@ -21,17 +25,21 @@ class Navigation {
 
   Future<void> buildRouteBetweenTwoPoints(
       LatLng start, LatLng stop, int numberOfRiders) async {
-    DockingStation startDockingStation =
-        await getClosestDockingStationWithBikesAvailable(start, numberOfRiders);
-    DockingStation stopDockingStation =
-        await getClosestDockingStationWithEmptyDocks(stop, numberOfRiders);
+    // await _getDockingStations(start, stop);
 
-    await walk(start, LatLng(startDockingStation.lat, startDockingStation.lon));
+    await Navigator.push(_context, MaterialPageRoute(builder: (context) {
+      return NavigationPageLoadingScreen(action: () async {
+        await _getDockingStations(start, stop);
+      });
+    }));
 
-    await cycle(LatLng(startDockingStation.lat, startDockingStation.lon),
-        LatLng(stopDockingStation.lat, stopDockingStation.lon));
+    await walk(
+        start, LatLng(_startDockingStation.lat, _startDockingStation.lon));
 
-    await walk(LatLng(stopDockingStation.lat, stopDockingStation.lon), stop);
+    await cycle(LatLng(_startDockingStation.lat, _startDockingStation.lon),
+        LatLng(_stopDockingStation.lat, _stopDockingStation.lon));
+
+    await walk(LatLng(_stopDockingStation.lat, _stopDockingStation.lon), stop);
   }
 
   Future<void> walk(LatLng start, LatLng stop) async {
@@ -44,5 +52,12 @@ class Navigation {
     MapManager mapManager = MapManager(_context);
     await Future.delayed(const Duration(milliseconds: 500));
     await mapManager.openMapsSheet(start, stop, DirectionsMode.bicycling);
+  }
+
+  Future<void> _getDockingStations(LatLng start, LatLng stop) async {
+    _startDockingStation = await getClosestDockingStationWithBikesAvailable(
+        start, _numberOfRiders);
+    _stopDockingStation =
+        await getClosestDockingStationWithEmptyDocks(stop, _numberOfRiders);
   }
 }
