@@ -5,14 +5,11 @@ import 'package:cycle/models/stop.dart';
 import 'package:cycle/services/network_helper.dart';
 import 'package:latlong2/latlong.dart';
 
-const String kBackEndUrl = 'https://agile-citadel-13372.herokuapp.com/';
-
-const String kBikePointsPath = 'bikepoints/?format=json';
-const String kClosestBikePointPath = 'closest/bikepoint';
-const String kLandmarksPath = 'landmarks/?format=json';
+import '../config.dart';
 
 Future<List<DockingStation>> getDockingStations() async {
-  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl + kBikePointsPath);
+  NetworkHelper networkHelper =
+      NetworkHelper(Config.fullApiURL + Config.bikePointsAPI);
 
   List<DockingStation> dockingStations =
       (await networkHelper.getDataAsJsonList())
@@ -24,12 +21,12 @@ Future<List<DockingStation>> getDockingStations() async {
 
 Future<DockingStation> getClosestDockingStationWithBikesAvailable(
     LatLng latLng, int numberOfBikes) async {
-  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl +
-      kClosestBikePointPath +
+  NetworkHelper networkHelper = NetworkHelper(Config.fullApiURL +
+      Config.closestBikePointAPI +
       "/with/$numberOfBikes/bikes/from/${latLng.latitude}/${latLng.longitude}");
 
-  print(kBackEndUrl +
-      kClosestBikePointPath +
+  print(Config.fullApiURL +
+      Config.closestBikePointAPI +
       "/with/$numberOfBikes/bikes/from/${latLng.latitude}/${latLng.longitude}");
   DockingStation dockingStation =
       DockingStation.fromJson(await networkHelper.getData());
@@ -39,8 +36,8 @@ Future<DockingStation> getClosestDockingStationWithBikesAvailable(
 
 Future<DockingStation> getClosestDockingStationWithEmptyDocks(
     LatLng latLng, int numberOfBikes) async {
-  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl +
-      kClosestBikePointPath +
+  NetworkHelper networkHelper = NetworkHelper(Config.fullApiURL +
+      Config.closestBikePointAPI +
       "/with/$numberOfBikes/empty_docks/from/${latLng.latitude}/${latLng.longitude}");
 
   DockingStation dockingStation =
@@ -50,7 +47,8 @@ Future<DockingStation> getClosestDockingStationWithEmptyDocks(
 }
 
 Future<List<Landmark>> getLandmarks() async {
-  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl + kLandmarksPath);
+  NetworkHelper networkHelper =
+      NetworkHelper(Config.fullApiURL + Config.landmarksAPI);
 
   List<Landmark> landmarks = (await networkHelper.getDataAsJsonList())
       .map((landmark) => Landmark.fromJson(landmark))
@@ -60,7 +58,8 @@ Future<List<Landmark>> getLandmarks() async {
 }
 
 Future<List<JourneyStop>> getStops() async {
-  NetworkHelper networkHelper = NetworkHelper(kBackEndUrl + kLandmarksPath);
+  NetworkHelper networkHelper =
+      NetworkHelper(Config.fullApiURL + Config.landmarksAPI);
 
   List<JourneyStop> journeyStops = (await networkHelper.getDataAsJsonList())
       .map((journeyStop) => JourneyStop.fromJson(journeyStop))

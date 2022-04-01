@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:cycle/config.dart';
 import 'package:cycle/services/route.dart';
-import 'package:cycle/utilities/api_constants.dart';
 import 'package:http/http.dart' show Client;
 
 import '../models/route_coordinates.dart';
@@ -23,15 +23,16 @@ class RoutingApiProvider {
 
     if (myRoute.waypoints.length > 1) {
       apiCallPath =
-          'get_route_multiple_stop/from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
+          '${Config.routingMultipleStopsAPI}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
     } else if (myRoute.waypoints.length == 1) {
       apiCallPath =
-          'get_route_single_stop/from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
+          '${Config.routingSingleStopAPI}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
     } else {
-      apiCallPath = 'get_route/from/$startingLocation/to/$finishingLocation/';
+      apiCallPath =
+          '${Config.routingAPI}from/$startingLocation/to/$finishingLocation/';
     }
 
-    var url = Uri.https(kBackendApiURL, apiCallPath, {
+    var url = Uri.https(Config.apiURL, apiCallPath, {
       'format': 'json',
     });
 
