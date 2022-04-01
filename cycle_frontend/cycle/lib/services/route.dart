@@ -62,4 +62,23 @@ class MyRoute {
     }
     return waypointsFormatted;
   }
+
+  String getFormattedWaypointsLatLongOrder() {
+    String waypointsFormatted = '';
+    if (waypoints.isNotEmpty) {
+      for (int i = 0; i < waypoints.length; i++) {
+        String waypointLatitude = waypoints.elementAt(i).latitude.toString();
+        String waypointLongitude = waypoints.elementAt(i).longitude.toString();
+
+        waypointsFormatted = waypointsFormatted +
+            waypointLatitude +
+            ',' +
+            waypointLongitude +
+            ';';
+      }
+      waypointsFormatted =
+          waypointsFormatted.substring(0, waypointsFormatted.length - 2);
+    }
+    return waypointsFormatted;
+  }
 }
