@@ -1,4 +1,4 @@
-import 'package:cycle/constants.dart';
+import 'package:cycle/utilities/constants-sign-up-login.dart';
 import 'package:cycle/services/validator_messages.dart';
 import 'package:flutter/material.dart';
 
