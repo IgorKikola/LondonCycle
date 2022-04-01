@@ -102,9 +102,11 @@ class SignupFormState extends State<SignupForm> {
                               );
                             },
                           ),
-                          CheckboxText(
-                              termsAndPolicyWereNotChecked:
-                                  termsAndPolicyWereNotChecked),
+                          Flexible(
+                            child: CheckboxText(
+                                termsAndPolicyWereNotChecked:
+                                    termsAndPolicyWereNotChecked),
+                          ),
                         ],
                       );
                     },

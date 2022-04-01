@@ -9,6 +9,7 @@ import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/terms_policy_pages/terms_of_use_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/main_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:cycle/components/slide_up_widget.dart';
@@ -25,6 +26,8 @@ void main() async {
   // if (_isLoggedIn) {
   _defaultPageId = HomePage.id;
   // }
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
   runApp(const MyApp());
 }
 
