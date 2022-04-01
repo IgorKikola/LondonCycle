@@ -23,9 +23,9 @@ void main() async {
   // Checks cache if user's credentials are still saved so that user does not need
   // to login every time the app is opened.
   bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
-  // if (_isLoggedIn) {
-  _defaultPageId = HomePage.id;
-  // }
+  if (_isLoggedIn) {
+    _defaultPageId = HomePage.id;
+  }
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.clear();
   runApp(const MyApp());
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
         StartingPage.id: (context) => StartingPage(),
-        NavigationPage.id: (context) => NavigationPage(),
+        //NavigationPage.id: (context) => NavigationPage(),
       },
     );
   }

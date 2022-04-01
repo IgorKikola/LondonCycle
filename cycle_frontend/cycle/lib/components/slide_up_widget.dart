@@ -204,19 +204,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
                                   if (isRouteComplete()) {
-                                    Navigator.pushNamed(
-                                      context,
-                                      NavigationPage.id,
-                                      arguments: NavigationPageArguments(
-                                          context,
-                                          widget.myRoute
-                                              .getRouteAsList()
-                                              .map((coordinate) => LatLng(
-                                                  coordinate.latitude,
-                                                  coordinate.longitude))
-                                              .toList(),
-                                          numOfRiders),
-                                    );
+                                    // Navigator.pushNamed(
+                                    //   context,
+                                    //   NavigationPage.id,
+                                    //   arguments: NavigationPageArguments(
+                                    //       context,
+                                    //       widget.myRoute
+                                    //           .getRouteAsList()
+                                    //           .map((coordinate) => LatLng(
+                                    //               coordinate.latitude,
+                                    //               coordinate.longitude))
+                                    //           .toList(),
+                                    //       numOfRiders),
+                                    // );
                                   }
                                 },
                                 child: Row(
@@ -345,43 +345,43 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            Padding(
-              padding: EdgeInsets.all(6),
-              child: Container(
-                padding: EdgeInsets.all(20.0),
-                height: 230,
-                width: 400,
-                decoration: BoxDecoration(
-                  color: Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.circular(20.0),
+                Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    height: 230,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlueAccent,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BottomSectionLabel(
+                            labelText: 'Bikepoints:',
+                            myBikeStationItemWidgetStateRefreshCallback:
+                                myBikeStationItemWidgetStateRefresh),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 0,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 1,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 2,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 3,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BottomSectionLabel(
-                        labelText: 'Bikepoints:',
-                        myBikeStationItemWidgetStateRefreshCallback:
-                            myBikeStationItemWidgetStateRefresh),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 0,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 1,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 2,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 3,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(3)),
-                  ],
-                ),
-              ),
-            ),
               ],
             )),
       );

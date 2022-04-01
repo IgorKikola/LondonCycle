@@ -1,4 +1,3 @@
-
 import 'package:cycle/pages/menu_pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/menu_pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
@@ -30,9 +29,6 @@ import 'package:cycle/pages/menu_pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
-  final Future<bool> _isLoggedIn = UserDetailsHelper.isLoggedIn() ;
-
-  get userData => null;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -58,8 +54,8 @@ class Menu extends StatelessWidget {
       ),
     );
   }
-  Widget buildProfile(BuildContext context) =>
-      Container(
+
+  Widget buildProfile(BuildContext context) => Container(
         height: 50,
         child: Material(
           color: Colors.lightBlue[200],
@@ -75,26 +71,17 @@ class Menu extends StatelessWidget {
                 style: kMenuItemTextStyle,
               ),
               onTap: () {
-                if (_isLoggedIn == true) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditProfilePage(userData: userData)),
-                  );
-                }
-                else{
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpOrLoginPage()),
-                  );
-                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ViewProfileLoadingScreen()),
+                );
               },
             ),
           ),
         ),
       );
 }
-
-
 
 Widget buildMenuText(BuildContext context) => Column(
       children: [
