@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:cycle/config.dart';
+import 'package:cycle/utilities/config.dart';
 import 'package:cycle/services/route.dart';
 import 'package:http/http.dart' show Client;
 
+import '../utilities/config.dart';
 import '../models/route_coordinates.dart';
 
 class RoutingApiProvider {
@@ -23,16 +24,16 @@ class RoutingApiProvider {
 
     if (myRoute.waypoints.length > 1) {
       apiCallPath =
-          '${Config.routingMultipleStopsAPI}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
+          '${Config.routingMultipleStopsPath}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
     } else if (myRoute.waypoints.length == 1) {
       apiCallPath =
-          '${Config.routingSingleStopAPI}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
+          '${Config.routingSingleStopPath}from/$startingLocation/via/$viaLocations/to/$finishingLocation/';
     } else {
       apiCallPath =
-          '${Config.routingAPI}from/$startingLocation/to/$finishingLocation/';
+          '${Config.routingPath}from/$startingLocation/to/$finishingLocation/';
     }
 
-    var url = Uri.https(Config.apiURL, apiCallPath, {
+    var url = Uri.https(Config.backendURL, apiCallPath, {
       'format': 'json',
     });
 

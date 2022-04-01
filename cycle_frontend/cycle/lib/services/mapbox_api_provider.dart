@@ -1,4 +1,4 @@
-import 'package:cycle/config.dart';
+import 'package:cycle/utilities/map_box_config.dart';
 import 'package:cycle/models/map_box_route.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
@@ -8,13 +8,13 @@ class MapBoxApiProvider {
   late MapBoxRoute mapBoxRoute;
 
   Future<MapBoxRoute> fetchRoute(String locationsToVisit) async {
-    var url = Uri.https(
-        Config.mapBoxURL, '${Config.mapBoxRoutingAPI}$locationsToVisit', {
+    var url = Uri.https(MapBoxConfig.mapBoxURL,
+        '${MapBoxConfig.mapBoxRoutingAPI}$locationsToVisit', {
       'geometries': 'geojson',
       'language': 'en',
       'overview': 'simplified',
       'steps': 'true',
-      'access_token': Config.mapBoxAPIKey
+      'access_token': MapBoxConfig.mapBoxAPIKey
     });
 
     final response = await client.get(url);

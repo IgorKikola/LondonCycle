@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
-
-import '../../utilities/constants-sign-up-login.dart';
+import '../../utilities/user_related_design_constants.dart';
 
 /// Email field used in the sign-up form.
 class EmailField extends StatefulWidget {

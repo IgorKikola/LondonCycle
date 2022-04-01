@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../utilities/constants-sign-up-login.dart';
+import '../../utilities/user_related_design_constants.dart';
 
 /// Password repeat field used in the sign-up form.
 class PasswordRepeatField extends StatefulWidget {

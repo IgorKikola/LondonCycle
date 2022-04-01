@@ -1,7 +1,7 @@
 import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/services/stop_location.dart';
-import 'package:cycle/utilities/constants.dart';
+import 'package:cycle/utilities/home_page_design_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';

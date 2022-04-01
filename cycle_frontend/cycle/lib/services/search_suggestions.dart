@@ -1,10 +1,12 @@
 import 'dart:convert' as convert;
 
-import 'package:cycle/config.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
+
+import '../utilities/config.dart';
+import '../utilities/map_box_config.dart';
 
 // bounding box coordinates restrict search results
 // to a square containing London area
@@ -22,12 +24,12 @@ class BackendService {
       String pattern) async {
     List<String> resultsList = await _getClosestLandmarksForCurrentLocation();
 
-    var url = Uri.https(
-        Config.mapBoxURL, '${Config.mapBoxGeocodingAPI}$pattern.json', {
+    var url = Uri.https(MapBoxConfig.mapBoxURL,
+        '${MapBoxConfig.mapBoxGeocodingAPI}$pattern.json', {
       'bbox':
           '$kBoundingBoxMinLongitude,$kBoundingBoxMinLatitude,$kBoundingBoxMaxLongitude,$kBoundingBoxMaxLatitude',
       'proximity': '$kProximityCenterLongitude, $kProximityCenterLatitude',
-      'access_token': Config.mapBoxAPIKey
+      'access_token': MapBoxConfig.mapBoxAPIKey
     });
 
     var response = await http.get(url);
@@ -131,8 +133,8 @@ class BackendService {
     String latitude = currentPosition.latitude.toString();
     String longitude = currentPosition.longitude.toString();
 
-    var url = Uri.https(Config.apiURL,
-        '${Config.fiveClosestLandmarksAPI}$latitude/$longitude/', {
+    var url = Uri.https(Config.backendURL,
+        '${Config.fiveClosestLandmarksPath}$latitude/$longitude/', {
       'format': 'json',
     });
 
@@ -171,8 +173,8 @@ class BackendService {
     String latitude = currentPosition.latitude.toString();
     String longitude = currentPosition.longitude.toString();
 
-    var url = Uri.https(Config.apiURL,
-        '${Config.fiveClosestBikePointsAPI}$latitude/$longitude/', {
+    var url = Uri.https(Config.backendURL,
+        '${Config.fiveClosestBikePointsPath}$latitude/$longitude/', {
       'format': 'json',
     });
 

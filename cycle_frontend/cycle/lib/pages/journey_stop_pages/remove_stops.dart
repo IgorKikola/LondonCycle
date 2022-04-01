@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cycle/services/stops_manager.dart';
 import '../../services/route.dart';
-import '../../utilities/constants.dart';
+import '../../utilities/home_page_design_contants.dart';
 import '../../components/menu.dart';
 
 void main() {

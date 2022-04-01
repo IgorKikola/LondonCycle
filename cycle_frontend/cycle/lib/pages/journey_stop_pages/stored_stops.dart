@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/my_route_provider.dart';
 import '../../services/route.dart';
 import '../../services/stop_location.dart';
-import '../../utilities/constants.dart';
+import '../../utilities/home_page_design_contants.dart';
 
 class Stops extends StatefulWidget {
   const Stops({Key? key}) : super(key: key);
@@ -103,7 +103,8 @@ class _StopsState extends State<Stops> {
                   addStop();
                 });
               },
-              child: const Icon(Icons.delete_forever_outlined, color: Colors.black),
+              child: const Icon(Icons.delete_forever_outlined,
+                  color: Colors.black),
             ),
             FloatingActionButton(
               child: const Icon(Icons.add, color: Colors.white),
