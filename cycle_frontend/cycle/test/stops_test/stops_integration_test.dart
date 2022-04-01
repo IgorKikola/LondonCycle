@@ -13,7 +13,7 @@ void main() {
 
   group('Stops Integration Tests', () {
 
-    testWidgets('Check initial default capacity of riders',
+    testWidgets('Test for checking if stop objects is empty',
             (WidgetTester tester) async {
           app.main();
           final _StopsState = Stops().createState();
