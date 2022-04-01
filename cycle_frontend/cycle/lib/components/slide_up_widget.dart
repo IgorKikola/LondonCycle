@@ -239,31 +239,39 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                   borderRadius: BorderRadius.circular(15.0)),
                               child: Material(
                                 color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.lightBlue[200],
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                key: ValueKey('RiderInkwell'),
-                                splashColor: Colors.lightBlue,
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () => {
-                                  showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      backgroundColor: Colors.lightBlue[200],
-                                      title: const Text(
-                                        'Add riders (Min: 1 | Max: 5)',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: InkWell(
+                                  key: ValueKey('RiderInkwell'),
+                                  splashColor: Colors.lightBlue,
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () => {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        backgroundColor: Colors.lightBlue[200],
+                                        title: const Text(
+                                          'Add riders (Min: 1 | Max: 5)',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      content: new TextField(
-                                        key: ValueKey('RiderTextField'),
-                                        controller: riderNumController,
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                        content: new TextField(
+                                          key: ValueKey('RiderTextField'),
+                                          controller: riderNumController,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          decoration: new InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              labelText:
+                                                  "Enter the number of riders."),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                         ),
                                         actions: <Widget>[
                                           TextButton(
@@ -291,17 +299,17 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         ],
                                       ),
                                     ),
-                                  ),
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Icon(Icons.person_add,
-                                          key: Key('RiderIcon'),
-                                          color: Colors.red),
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Icon(Icons.person_add,
+                                            key: Key('RiderIcon'),
+                                            color: Colors.red),
+                                      ),
                                       Text(
                                         ':',
                                         key: Key('RiderText'),
@@ -341,43 +349,43 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            Padding(
-              padding: EdgeInsets.all(6),
-              child: Container(
-                padding: EdgeInsets.all(20.0),
-                height: 230,
-                width: 400,
-                decoration: BoxDecoration(
-                  color: Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.circular(20.0),
+                Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    height: 230,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlueAccent,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BottomSectionLabel(
+                            labelText: 'Bikepoints:',
+                            myBikeStationItemWidgetStateRefreshCallback:
+                                myBikeStationItemWidgetStateRefresh),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 0,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 1,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 2,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 3,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BottomSectionLabel(
-                        labelText: 'Bikepoints:',
-                        myBikeStationItemWidgetStateRefreshCallback:
-                            myBikeStationItemWidgetStateRefresh),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 0,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 1,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 2,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 3,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(3)),
-                  ],
-                ),
-              ),
-            ),
               ],
             )),
       );
