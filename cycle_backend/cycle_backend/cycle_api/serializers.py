@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from cycle_backend.cycle_api.models import Place, Stop, User
+from cycle_backend.cycle_api.models import Place, User
 from rest_framework import serializers
 
 
@@ -7,13 +7,6 @@ class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ['id', 'name', 'lat', 'lon']
-
-
-# Stop Serializer
-class StopSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Stop
-        fields = ['id', 'name', 'lat', 'lon', 'created']
 
 
 # User Serializer
@@ -39,4 +32,3 @@ class SignupSerializer(serializers.ModelSerializer):
         )
         user.save()
         return user
-
