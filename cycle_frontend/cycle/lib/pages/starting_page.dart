@@ -1,6 +1,7 @@
 import 'package:cycle/components/custom_blue_button.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -92,16 +93,24 @@ class _StartingPageState extends State<StartingPage>
                   ],
                 ),
                 const SizedBox(
-                  height: 40.0,
+                  height: 10.0,
                 ),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                RichText(
+                  text: TextSpan(
                     children: [
-                      CustomBlueButton(
-                        text: "Continue as Guest",
-                        onPressed: () =>
-                            Navigator.pushNamed(context, HomePage.id),
+                      TextSpan(
+                        text: "Continue as a guest",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Lobster',
+                          fontSize: 18.0,
+                          //decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, HomePage.id, (route) => route.isFirst);
+                          },
                       ),
                     ],
                   ),

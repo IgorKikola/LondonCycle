@@ -1,4 +1,4 @@
-import 'package:cycle/services/coordinate.dart';
+import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/constants.dart';
@@ -36,7 +36,8 @@ class SearchBox extends StatelessWidget {
     String latitude = suggestion.toString().split('|').elementAt(3);
     double long = double.parse(longitude);
     double lat = double.parse(latitude);
-    Coordinate selectedLocation = Coordinate(latitude: lat, longitude: long);
+    NamedLatLng selectedLocation =
+        NamedLatLng(latitude: lat, longitude: long, name: suggestionFullName);
 
     switch (searchboxType) {
       case Waypoint.START:

@@ -1,6 +1,5 @@
 import 'package:cycle/components/forms/edit_profile_form.dart';
 import 'package:cycle/models/user_details_response_model.dart';
-import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {

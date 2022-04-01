@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:cycle/components/form_fields/email_field.dart';
 import 'package:cycle/components/form_fields/first_name_field.dart';
 import 'package:cycle/components/form_fields/last_name_field.dart';
@@ -7,9 +6,7 @@ import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/pages/loading_screens/update_details_loading_screen.dart';
-import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
-import '../../services/api_service.dart';
 import '../custom_blue_button.dart';
 
 /// Form for editing user profile.

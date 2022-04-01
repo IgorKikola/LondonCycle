@@ -1,23 +1,23 @@
-import 'coordinate.dart';
+import '../models/named_lat_lng.dart';
 
 enum Waypoint { START, MIDPOINT, FINISH }
 
 class MyRoute {
-  Coordinate? startingLocation;
-  Coordinate? finishingLocation;
-  List<Coordinate> waypoints = List.empty(growable: true);
+  NamedLatLng? startingLocation;
+  NamedLatLng? finishingLocation;
+  List<NamedLatLng> waypoints = List.empty(growable: true);
 
   MyRoute();
 
-  setStartingLocation(Coordinate location) {
+  setStartingLocation(NamedLatLng location) {
     startingLocation = location;
   }
 
-  setFinishingLocation(Coordinate location) {
+  setFinishingLocation(NamedLatLng location) {
     finishingLocation = location;
   }
 
-  addWaypoint(Coordinate location) {
+  addWaypoint(NamedLatLng location) {
     waypoints.add(location);
   }
 
@@ -40,8 +40,8 @@ class MyRoute {
     return result;
   }
 
-  List<Coordinate> getRouteAsList() {
-    List<Coordinate> routeAsList = List.from(waypoints);
+  List<NamedLatLng> getRouteAsList() {
+    List<NamedLatLng> routeAsList = List.from(waypoints);
     routeAsList.insert(0, startingLocation!);
     routeAsList.add(finishingLocation!);
     return routeAsList;
@@ -59,6 +59,25 @@ class MyRoute {
             waypointLatitude +
             ';';
       }
+    }
+    return waypointsFormatted;
+  }
+
+  String getFormattedWaypointsLatLongOrder() {
+    String waypointsFormatted = '';
+    if (waypoints.isNotEmpty) {
+      for (int i = 0; i < waypoints.length; i++) {
+        String waypointLatitude = waypoints.elementAt(i).latitude.toString();
+        String waypointLongitude = waypoints.elementAt(i).longitude.toString();
+
+        waypointsFormatted = waypointsFormatted +
+            waypointLatitude +
+            ',' +
+            waypointLongitude +
+            ';';
+      }
+      waypointsFormatted =
+          waypointsFormatted.substring(0, waypointsFormatted.length - 2);
     }
     return waypointsFormatted;
   }

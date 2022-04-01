@@ -2,7 +2,7 @@ import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/main_page.dart';
-import 'package:cycle/services/coordinate.dart';
+import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
@@ -204,19 +204,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
                                   if (isRouteComplete()) {
-                                    Navigator.pushNamed(
-                                      context,
-                                      NavigationPage.id,
-                                      arguments: NavigationPageArguments(
-                                          context,
-                                          widget.myRoute
-                                              .getRouteAsList()
-                                              .map((coordinate) => LatLng(
-                                                  coordinate.latitude,
-                                                  coordinate.longitude))
-                                              .toList(),
-                                          numOfRiders),
-                                    );
+                                    // Navigator.pushNamed(
+                                    //   context,
+                                    //   NavigationPage.id,
+                                    //   arguments: NavigationPageArguments(
+                                    //       context,
+                                    //       widget.myRoute
+                                    //           .getRouteAsList()
+                                    //           .map((coordinate) => LatLng(
+                                    //               coordinate.latitude,
+                                    //               coordinate.longitude))
+                                    //           .toList(),
+                                    //       numOfRiders),
+                                    // );
                                   }
                                 },
                                 child: Row(
