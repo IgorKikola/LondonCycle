@@ -3,16 +3,16 @@ import 'coordinate.dart';
 enum StopType { MIDPOINT }
 
 class StopLocation {
-  static Coordinate stopLocation =
-      Coordinate(latitude: 0.0, longitude: 0.0, name: '');
+  static NamedLatLng stopLocation =
+      NamedLatLng(latitude: 0.0, longitude: 0.0, name: '');
 
   StopLocation();
 
-  void setStopLocation(Coordinate midpoint) {
+  void setStopLocation(NamedLatLng midpoint) {
     stopLocation = midpoint;
   }
 
-  Coordinate getStopLocation() {
+  NamedLatLng getStopLocation() {
     return stopLocation;
   }
 }

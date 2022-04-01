@@ -1,10 +1,10 @@
-class Coordinate {
-  double latitude;
-  double longitude;
+import 'package:latlng/latlng.dart';
+
+class NamedLatLng extends LatLng {
   String name;
 
-  Coordinate(
-      {required this.latitude, required this.longitude, required this.name});
+  NamedLatLng({required latitude, required longitude, required this.name})
+      : super(latitude, longitude);
 
   @override
   String toString() {

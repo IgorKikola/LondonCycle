@@ -36,8 +36,8 @@ class SearchBox extends StatelessWidget {
     String latitude = suggestion.toString().split('|').elementAt(3);
     double long = double.parse(longitude);
     double lat = double.parse(latitude);
-    Coordinate selectedLocation =
-        Coordinate(latitude: lat, longitude: long, name: suggestionFullName);
+    NamedLatLng selectedLocation =
+        NamedLatLng(latitude: lat, longitude: long, name: suggestionFullName);
 
     switch (searchboxType) {
       case Waypoint.START:

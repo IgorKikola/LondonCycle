@@ -3,26 +3,26 @@ import 'coordinate.dart';
 enum MarkerType { START, FINISH }
 
 class MarkerLocation {
-  static Coordinate startingLocation =
-      Coordinate(latitude: 0.0, longitude: 0.0, name: '');
-  static Coordinate destination =
-      Coordinate(latitude: 0.0, longitude: 0.0, name: '');
+  static NamedLatLng startingLocation =
+      NamedLatLng(latitude: 0.0, longitude: 0.0, name: '');
+  static NamedLatLng destination =
+      NamedLatLng(latitude: 0.0, longitude: 0.0, name: '');
 
   MarkerLocation();
 
-  void setStartingLocation(Coordinate start) {
+  void setStartingLocation(NamedLatLng start) {
     startingLocation = start;
   }
 
-  void setDestination(Coordinate end) {
+  void setDestination(NamedLatLng end) {
     destination = end;
   }
 
-  Coordinate getStartingLocation() {
+  NamedLatLng getStartingLocation() {
     return startingLocation;
   }
 
-  Coordinate getDestination() {
+  NamedLatLng getDestination() {
     return destination;
   }
 }
