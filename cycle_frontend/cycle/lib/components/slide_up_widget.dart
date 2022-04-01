@@ -36,7 +36,7 @@ class SlideUpWidget extends StatefulWidget {
         super(key: key);
 
   @override
-  State<SlideUpWidget> createState() => _SlideUpWidgetState();
+  _SlideUpWidgetState createState() => _SlideUpWidgetState();
 }
 
 class _SlideUpWidgetState extends State<SlideUpWidget> {
@@ -241,6 +241,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0),
                                 child: InkWell(
+                                  key: ValueKey('RiderInkwell'),
                                   splashColor: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(20),
                                   onTap: () => {
@@ -256,6 +257,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                           ),
                                         ),
                                         content: new TextField(
+                                          key: ValueKey('RiderTextField'),
                                           controller: riderNumController,
                                           style: TextStyle(
                                             color: Colors.white,
@@ -297,15 +299,17 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                         ],
                                       ),
                                     ),
-                                    updateNumberOfRiders(),
                                   },
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(Icons.person_add,
-                                          key: Key('RiderIcon'),
-                                          color: Colors.red),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Icon(Icons.person_add,
+                                            key: Key('RiderIcon'),
+                                            color: Colors.red),
+                                      ),
                                       Text(
                                         ':',
                                         key: Key('RiderText'),
@@ -345,43 +349,43 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            Padding(
-              padding: EdgeInsets.all(6),
-              child: Container(
-                padding: EdgeInsets.all(20.0),
-                height: 230,
-                width: 400,
-                decoration: BoxDecoration(
-                  color: Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.circular(20.0),
+                Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    height: 230,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlueAccent,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BottomSectionLabel(
+                            labelText: 'Bikepoints:',
+                            myBikeStationItemWidgetStateRefreshCallback:
+                                myBikeStationItemWidgetStateRefresh),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 0,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(0)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 1,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(1)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 2,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(2)),
+                        SizedBox(height: 10),
+                        BikeStationItemWidget(
+                            bikeStationId: 3,
+                            key: globalBikeStationWidgetItemsKeys.elementAt(3)),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BottomSectionLabel(
-                        labelText: 'Bikepoints:',
-                        myBikeStationItemWidgetStateRefreshCallback:
-                            myBikeStationItemWidgetStateRefresh),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 0,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 1,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 2,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                    SizedBox(height: 10),
-                    BikeStationItemWidget(
-                        bikeStationId: 3,
-                        key: globalBikeStationWidgetItemsKeys.elementAt(3)),
-                  ],
-                ),
-              ),
-            ),
               ],
             )),
       );
