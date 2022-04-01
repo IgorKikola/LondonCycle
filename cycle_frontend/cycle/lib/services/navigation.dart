@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cycle/models/docking_station.dart';
-import 'package:cycle/pages/loading_screens/navigation_page_loading_screen.dart';
+import 'package:cycle/pages/loading_screens/navigation_loading_screen.dart';
 import 'package:cycle/services/data_manager.dart';
 import 'package:cycle/services/map_manager.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 class Navigation {
-  List<LatLng> _stops = [];
-  final _context;
-  int _numberOfRiders;
+  final List<LatLng> _stops;
+  final dynamic _context;
+  final int _numberOfRiders;
   late DockingStation _startDockingStation;
   late DockingStation _stopDockingStation;
 
@@ -28,7 +28,7 @@ class Navigation {
     // await _getDockingStations(start, stop);
 
     await Navigator.push(_context, MaterialPageRoute(builder: (context) {
-      return NavigationPageLoadingScreen(action: () async {
+      return NavigationLoadingScreen(action: () async {
         await _getDockingStations(start, stop);
       });
     }));

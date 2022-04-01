@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class NavigationPageLoadingScreen extends StatefulWidget {
+class NavigationLoadingScreen extends StatefulWidget {
   final Function action;
-  const NavigationPageLoadingScreen({Key? key, required this.action})
+  const NavigationLoadingScreen({Key? key, required this.action})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _NavigationPageLoadingScreenState();
+    return _NavigationLoadingScreenState();
   }
 }
 
-class _NavigationPageLoadingScreenState
-    extends State<NavigationPageLoadingScreen> {
+class _NavigationLoadingScreenState extends State<NavigationLoadingScreen> {
   @override
   void initState() {
     super.initState();
@@ -28,6 +27,7 @@ class _NavigationPageLoadingScreenState
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.lightBlue,
       body: Center(
         child: SpinKitDoubleBounce(
           color: Colors.white,
