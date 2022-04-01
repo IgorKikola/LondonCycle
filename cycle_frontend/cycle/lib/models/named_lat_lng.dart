@@ -1,4 +1,4 @@
-import 'package:latlng/latlng.dart';
+import 'package:latlong2/latlong.dart';
 
 class NamedLatLng extends LatLng {
   String name;
