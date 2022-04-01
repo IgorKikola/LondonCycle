@@ -1,31 +1,9 @@
-import 'package:cycle/pages/menu_pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/menu_pages/favorites.dart';
-import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:cycle/pages/menu_pages/settings.dart';
-import 'package:cycle/pages/signup_login_pages/signup_login_option_page.dart';
-import 'package:cycle/pages/signup_login_pages/signup_page.dart';
-import 'package:cycle/pages/starting_page.dart';
-import 'package:cycle/services/user_details_helper.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../utilities/constants.dart';
 import 'package:cycle/pages/menu_pages/trip_history.dart';
-import 'package:cycle/pages/menu_pages/profile.dart';
-import 'package:cycle/pages/menu_pages/trip_history.dart';
-import 'package:flutter/material.dart';
-import 'package:cycle/main.dart';
-import 'package:cycle/pages/menu_pages/favorites.dart';
-import 'package:cycle/pages/home_page.dart';
-import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
-import 'package:cycle/pages/menu_pages/settings.dart';
-import 'package:cycle/pages/signup_login_pages/signup_page.dart';
-import 'package:cycle/pages/starting_page.dart';
-import 'package:cycle/services/user_details_helper.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../utilities/constants.dart';
-import 'package:cycle/pages/menu_pages/trip_history.dart';
-import 'package:cycle/pages/menu_pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {

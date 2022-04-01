@@ -1,5 +1,5 @@
 import 'package:cycle/pages/home_page.dart';
-import 'package:cycle/pages/menu_pages/edit_user_profile_page.dart';
+import 'package:cycle/pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
