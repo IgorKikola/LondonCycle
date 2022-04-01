@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cycle/services/data_manager.dart';
+import 'package:cycle/services/data_managers/bikepoint_data_manager.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
