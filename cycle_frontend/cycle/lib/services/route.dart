@@ -1,23 +1,23 @@
-import 'coordinate.dart';
+import '../models/named_lat_lng.dart';
 
 enum Waypoint { START, MIDPOINT, FINISH }
 
 class MyRoute {
-  Coordinate? startingLocation;
-  Coordinate? finishingLocation;
-  List<Coordinate> waypoints = List.empty(growable: true);
+  NamedLatLng? startingLocation;
+  NamedLatLng? finishingLocation;
+  List<NamedLatLng> waypoints = List.empty(growable: true);
 
   MyRoute();
 
-  setStartingLocation(Coordinate location) {
+  setStartingLocation(NamedLatLng location) {
     startingLocation = location;
   }
 
-  setFinishingLocation(Coordinate location) {
+  setFinishingLocation(NamedLatLng location) {
     finishingLocation = location;
   }
 
-  addWaypoint(Coordinate location) {
+  addWaypoint(NamedLatLng location) {
     waypoints.add(location);
   }
 
@@ -40,8 +40,8 @@ class MyRoute {
     return result;
   }
 
-  List<Coordinate> getRouteAsList() {
-    List<Coordinate> routeAsList = List.from(waypoints);
+  List<NamedLatLng> getRouteAsList() {
+    List<NamedLatLng> routeAsList = List.from(waypoints);
     routeAsList.insert(0, startingLocation!);
     routeAsList.add(finishingLocation!);
     return routeAsList;

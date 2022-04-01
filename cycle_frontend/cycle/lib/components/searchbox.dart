@@ -1,4 +1,4 @@
-import 'package:cycle/services/coordinate.dart';
+import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/constants.dart';
@@ -36,7 +36,8 @@ class SearchBox extends StatelessWidget {
     String latitude = suggestion.toString().split('|').elementAt(3);
     double long = double.parse(longitude);
     double lat = double.parse(latitude);
-    Coordinate selectedLocation = Coordinate(latitude: lat, longitude: long);
+    NamedLatLng selectedLocation =
+        NamedLatLng(latitude: lat, longitude: long, name: suggestionFullName);
 
     switch (searchboxType) {
       case Waypoint.START:
@@ -85,50 +86,50 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-        height: 30,
-        width: 300,
-        decoration: BoxDecoration(
-            color: Colors.lightBlue[200],
-            borderRadius: BorderRadius.circular(15.0)),
-        // child: Padding(
-        // padding: const EdgeInsets.all(10.0),
-        child: TypeAheadField(
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: typeAheadController,
-            // autofocus: true,
-            textAlign: TextAlign.center,
-            textAlignVertical: TextAlignVertical.bottom,
-            // style: const TextStyle(fontSize: 12.0, color: Colors.black),
-            style: kSearchBoxTextStyle,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: TextStyle(color: Colors.white ),
-              border: kOutlineInputBorder,
-            ),
+    return Container(
+      height: 30,
+      width: 300,
+      decoration: BoxDecoration(
+          color: Colors.lightBlue[200],
+          borderRadius: BorderRadius.circular(15.0)),
+      // child: Padding(
+      // padding: const EdgeInsets.all(10.0),
+      child: TypeAheadField(
+        textFieldConfiguration: TextFieldConfiguration(
+          controller: typeAheadController,
+          // autofocus: true,
+          textAlign: TextAlign.center,
+          textAlignVertical: TextAlignVertical.bottom,
+          // style: const TextStyle(fontSize: 12.0, color: Colors.black),
+          style: kSearchBoxTextStyle,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(color: Colors.white),
+            border: kOutlineInputBorder,
           ),
-          suggestionsCallback: (pattern) =>
-              BackendService.getSuggestionsFromGeocoding(pattern),
-          itemBuilder: (context, suggestion) {
-            return ListTile(
-              leading: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.location_on),
-              ),
-              tileColor: Colors.lightBlueAccent,
-              title: Text(
-                suggestion.toString().split('|').first,
-                style: kSearchBoxSuggestionTitleTextStyle,
-              ), //suggestion['name']
-              subtitle: Text(
-                suggestion.toString().split('|').elementAt(1),
-                style: kSearchBoxSuggestionSubtitleTextStyle,
-              ),
-            );
-          },
-          onSuggestionSelected: onSelected,
         ),
-        // ),
+        suggestionsCallback: (pattern) =>
+            BackendService.getSuggestionsFromGeocoding(pattern),
+        itemBuilder: (context, suggestion) {
+          return ListTile(
+            leading: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.location_on),
+            ),
+            tileColor: Colors.lightBlueAccent,
+            title: Text(
+              suggestion.toString().split('|').first,
+              style: kSearchBoxSuggestionTitleTextStyle,
+            ), //suggestion['name']
+            subtitle: Text(
+              suggestion.toString().split('|').elementAt(1),
+              style: kSearchBoxSuggestionSubtitleTextStyle,
+            ),
+          );
+        },
+        onSuggestionSelected: onSelected,
+      ),
+      // ),
     );
   }
 }
