@@ -1,4 +1,4 @@
-import 'package:cycle/services/coordinate.dart';
+import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/constants.dart';

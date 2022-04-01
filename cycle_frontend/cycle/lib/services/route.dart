@@ -1,4 +1,4 @@
-import 'coordinate.dart';
+import '../models/named_lat_lng.dart';
 
 enum Waypoint { START, MIDPOINT, FINISH }
 
