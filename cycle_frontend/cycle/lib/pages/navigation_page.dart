@@ -44,7 +44,11 @@ class _NavigationPageState extends State<NavigationPage> {
                       color: Color.fromRGBO(183, 28, 28, 1),
                     ),
                     title: Text(e.name),
-                    tileColor: Colors.lightBlueAccent,
+
+                    tileColor: args._stops.indexOf(e) > enabledTileIndex
+                        ? const Color.fromARGB(255, 79, 184, 123)
+                        : Colors.lightBlueAccent,
+                    // tileColor: Colors.lightBlueAccent,
                     onTap: () async {
                       List<LatLng> stops = [];
                       stops.add(args._stops[args._stops.indexOf(e) - 1]);
