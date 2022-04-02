@@ -3,10 +3,11 @@ import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/update_profile_response_model.dart';
 import 'package:cycle/pages/home_page.dart';
+import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../services/api_service.dart';
+import '../../services/data_managers/user_data_manager.dart';
 import '../../services/user_details_helper.dart';
 import '../signup_login_pages/login_page.dart';
 
@@ -35,7 +36,10 @@ class _UpdateUserDetailsLoadingScreenState
         if (response.statusCode == 200) {
           // Update was successful.
           UserDetailsHelper.updateUserDetails(response);
-          Navigator.popUntil(context, (route) => route.isFirst);
+          //Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const ViewProfileLoadingScreen();
+          }));
           Flushbar(
             icon: const Icon(
               Icons.check,

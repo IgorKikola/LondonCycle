@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cycle/services/data_manager.dart';
+import 'package:cycle/services/data_managers/bikepoint_data_manager.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
@@ -9,15 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
+import '../utilities/map_box_config.dart';
 import '../services/navigation.dart';
 import '../services/mapcontroller_provider.dart';
 import '../services/marker_location.dart';
 import '../services/routing.dart';
-
-const String kMapUrl =
-    'https://api.mapbox.com/styles/v1/mariangartu/ckzjt4a9d000v14s451ltur5q/tiles/256/{z}/{x}/{y}@2x';
-const String kAccessToken =
-    'pk.eyJ1IjoibWFyaWFuZ2FydHUiLCJhIjoiY2t6aWh3Yjg1MjZmNTJ1bzZudjQ3NW45NSJ9.LJQ8MpEySa-SINNUc8z9rQ';
 
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
@@ -135,7 +131,7 @@ class _MapWidgetState extends State<MapWidget> {
             children: [
               TileLayerWidget(
                 options: TileLayerOptions(
-                  urlTemplate: '$kMapUrl?access_token=$kAccessToken',
+                  urlTemplate: MapBoxConfig.mapBoxMapAPI,
                   maxZoom: 19,
                 ),
               ),

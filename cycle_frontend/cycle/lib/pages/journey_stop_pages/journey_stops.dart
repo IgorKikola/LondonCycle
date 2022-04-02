@@ -9,7 +9,7 @@ import 'package:cycle/services/stops_manager.dart';
 import 'package:cycle/components/searchbox.dart';
 import '../../models/journey_stop.dart';
 import '../../services/route.dart';
-import '../../utilities/constants.dart';
+import '../../utilities/home_page_design_contants.dart';
 import '../home_page.dart';
 import '../../components/menu.dart';
 

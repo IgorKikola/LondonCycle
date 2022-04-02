@@ -2,7 +2,7 @@ import 'package:cycle/services/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../utilities/constants.dart';
+import '../utilities/home_page_design_contants.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:cycle/components/menu.dart';
 

@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.utils.decorators import method_decorator
-from .serializers import PlaceSerializer, SignupSerializer, UserSerializer, StopSerializer
-from .models import Place, Stop
+from .serializers import PlaceSerializer, SignupSerializer, UserSerializer
+from .models import Place
 from geopy import distance
 from queue import PriorityQueue
 from rest_framework import permissions
@@ -22,7 +22,7 @@ import re
 @api_view()
 @permission_classes([])
 def get_route(request, fromPlace, toPlace):
-    coordinatesString=""    
+    coordinatesString=""
     base_leg=0
     base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'
     base_response = urlopen(base)
@@ -68,7 +68,7 @@ def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
         result_json = json.loads(result_response.read())
         while result_leg < len(result_json['journeys'][0]['legs']):
             coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][result_leg]['path']['lineString']
-            result_leg+=1    
+            result_leg+=1
         i+=1
     end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'
     end_response = urlopen(end)
@@ -178,14 +178,6 @@ class LandmarkViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.filter(id__startswith='Landmark')
     serializer_class = PlaceSerializer
     permission_classes = []
-
-
-class StopViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows stops to be viewed or edited.
-    """
-    queryset = Stop.objects.all()
-    serializer_class = StopSerializer
 
 
 # Signup view

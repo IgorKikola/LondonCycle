@@ -1,4 +1,4 @@
-/// Message types to show to the user during the sign-up.
+/// Message types to show to the user during the sign-up and profile update.
 enum ValidatorMessage {
   firstLetterOfNameMustBeCapital,
   firstLetterOfSurnameMustBeCapital,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../utilities/config.dart';
 import '../models/journey_stop.dart';
 
 class StopProvider with ChangeNotifier {
@@ -16,8 +17,7 @@ class StopProvider with ChangeNotifier {
   }
 
   void addStop(JourneyStop stop) async {
-    final url = 'https://agile-citadel-13372.herokuapp.com/stops/';
-    final response = await http.post(Uri.parse(url),
+    final response = await http.post(Uri.parse(Config.stopsURL),
         headers: {"Content-Type": "application/json"}, body: json.encode(stop));
     if (response.statusCode == 201) {
       _stops.add(stop);
@@ -26,7 +26,7 @@ class StopProvider with ChangeNotifier {
   }
 
   void deleteStop(JourneyStop stop) async {
-    final url = 'https://agile-citadel-13372.herokuapp.com/stops/${stop.id}/';
+    final url = '${Config.stopsURL}${stop.id}/';
     final response = await http.delete(Uri.parse(url),
         headers: {"Content-Type": "application/json"}, body: json.encode(stop));
     if (response.statusCode == 204) {
@@ -36,7 +36,7 @@ class StopProvider with ChangeNotifier {
   }
 
   getStops() async {
-    final url = 'https://agile-citadel-13372.herokuapp.com/stops/?format=json';
+    final url = '${Config.stopsURL}';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body)['results'] as List;

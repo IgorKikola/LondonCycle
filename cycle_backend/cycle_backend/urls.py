@@ -10,7 +10,6 @@ router = routers.DefaultRouter()
 router.register(r'places', views.PlaceViewSet, basename='places')
 router.register(r'bikepoints', views.BikePointViewSet, basename='bikepoints')
 router.register(r'landmarks', views.LandmarkViewSet, basename='landmarks')
-router.register(r'stops', views.StopViewSet, basename='stops')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -20,7 +19,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('get_route_multiple_stop/from/<str:fromPlace>/via/<str:stringOfStops>/to/<str:toPlace>/', views.get_route_multiple_stop , name = 'get_route_multiple_stop'),
     path('get_route_single_stop/from/<str:fromPlace>/via/<str:firstStop>/to/<str:toPlace>/', views.get_route_single_stop , name = 'get_route_single_stop'),
-    path('get_route/from/<str:fromPlace>/to/<str:toPlace>/', views.get_route , name = 'get_route'),    
+    path('get_route/from/<str:fromPlace>/to/<str:toPlace>/', views.get_route , name = 'get_route'),
     path('closest/bikepoint/with/<int:n>/empty_docks/from/<str:lat>/<str:lon>/', views.get_closest_bikepoint_with_at_least_n_empty_docks, name = "get_closest_bikepoint_with_at_least_n_empty_docks"),
     path('closest/bikepoint/with/<int:n>/bikes/from/<str:lat>/<str:lon>/', views.get_closest_bikepoint_with_at_least_n_bikes, name = "get_closest_bikepoint_with_at_least_n_bikes"),
     path('closest/<int:n>/bikepoints/from/<str:lat>/<str:lon>/', views.get_n_closest_bikepoints, name = "closest_bikepoints"),
