@@ -1,11 +1,11 @@
 import 'package:cycle/components/slide_up_widget_elements/individual_components/bike_station_item.dart';
 import 'package:cycle/components/slide_up_widget_elements/individual_components/bottom_section_label.dart';
 import 'package:cycle/components/slide_up_widget_elements/individual_components/finishing_location_search_bar.dart';
+import 'package:cycle/components/slide_up_widget_elements/individual_components/navigate_button.dart';
 import 'package:cycle/components/slide_up_widget_elements/individual_components/starting_location_search_bar.dart';
 import 'package:cycle/components/slide_up_widget_elements/riders_widget.dart';
 import 'package:cycle/components/slide_up_widget_elements/searchbox_widget.dart';
 import 'package:cycle/components/slide_up_widget_elements/stops_widget.dart';
-import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +123,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           const SizedBox(width: 10),
                           buildFindRouteButton(),
                           const SizedBox(width: 3.0),
-                          buildNavigateButton(context),
+                          const NavigateButton(),
                           const SizedBox(width: 10),
                           const Flexible(child: RidersWidget()),
                         ],
@@ -137,41 +137,6 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           ],
         ),
       );
-
-  Container buildNavigateButton(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 30,
-      decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(15.0)),
-      child: Material(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(15.0),
-        child: InkWell(
-          splashColor: Colors.lightBlue,
-          borderRadius: BorderRadius.circular(20),
-          onTap: () {
-            if (MyRouteProvider.myRoute.isRouteComplete()) {
-              Navigator.pushNamed(
-                context,
-                NavigationPage.id,
-                arguments: NavigationPageArguments(
-                    context,
-                    widget.myRoute.getRouteAsList(),
-                    MyRouteProvider.myRoute.numOfRiders),
-              );
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.navigation, color: Colors.white),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   Container buildFindRouteButton() {
     return Container(
