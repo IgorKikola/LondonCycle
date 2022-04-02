@@ -204,19 +204,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
                                   if (isRouteComplete()) {
-                                    // Navigator.pushNamed(
-                                    //   context,
-                                    //   NavigationPage.id,
-                                    //   arguments: NavigationPageArguments(
-                                    //       context,
-                                    //       widget.myRoute
-                                    //           .getRouteAsList()
-                                    //           .map((coordinate) => LatLng(
-                                    //               coordinate.latitude,
-                                    //               coordinate.longitude))
-                                    //           .toList(),
-                                    //       numOfRiders),
-                                    // );
+                                    Navigator.pushNamed(
+                                      context,
+                                      NavigationPage.id,
+                                      arguments: NavigationPageArguments(
+                                          context,
+                                          widget.myRoute
+                                              .getRouteAsList()
+                                              .map((coordinate) => LatLng(
+                                                  coordinate.latitude,
+                                                  coordinate.longitude))
+                                              .toList(),
+                                          numOfRiders),
+                                    );
                                   }
                                 },
                                 child: Row(

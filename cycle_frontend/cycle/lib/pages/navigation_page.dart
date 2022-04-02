@@ -52,6 +52,7 @@ class _NavigationPageState extends State<NavigationPage> {
                       Navigation navigation = Navigation(
                           args._context, stops, args._numberOfRiders);
                       await navigation.navigate();
+
                       setState(() {
                         enabledTileIndex++;
                       });
@@ -70,9 +71,9 @@ class _NavigationPageState extends State<NavigationPage> {
 }
 
 class NavigationPageArguments {
-  List<LatLng> _stops = [];
-  final _context;
-  int _numberOfRiders;
+  final List<LatLng> _stops;
+  final dynamic _context;
+  final int _numberOfRiders;
 
   NavigationPageArguments(this._context, this._stops, this._numberOfRiders);
 }

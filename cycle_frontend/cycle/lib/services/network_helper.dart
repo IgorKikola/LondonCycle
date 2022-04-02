@@ -9,6 +9,7 @@ class NetworkHelper {
   static Future<http.Response>? get(
       {required String domain, required String path}) async {
     var url = Uri.https(domain, path);
+    print("URL" + url.toString());
     return await client.get(url);
   }
 

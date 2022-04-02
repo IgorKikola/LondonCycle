@@ -8,9 +8,9 @@ class Config {
   static const String signupPath = "/signup/";
   static const String getUserProfilePath = "/users/get/";
   static const String updateUserProfilePath = "/users/update/";
-  static const String bikePointsPath = '/bikepoints/?format=json';
+  static const String bikePointsPath = '/bikepoints';
   static const String closestBikePointPath = '/closest/bikepoint';
-  static const String landmarksPath = '/landmarks/?format=json';
+  static const String landmarksPath = '/landmarks';
   static const String fiveClosestLandmarksPath = '/closest/5/landmarks/from/';
   static const String fiveClosestBikePointsPath = '/closest/5/bikepoints/from/';
   static const String routingPath = 'get_route/';
