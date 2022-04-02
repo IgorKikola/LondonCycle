@@ -142,165 +142,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         children: [
                           const Flexible(child: StopsWidget()),
                           const SizedBox(width: 10),
-                          Container(
-                            height: 30,
-                            width: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () {
-                                  findRoute();
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(Icons.search, color: Colors.white),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          buildFindRouteButton(),
                           const SizedBox(width: 3.0),
-                          Container(
-                            height: 30,
-                            width: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Material(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: InkWell(
-                                splashColor: Colors.lightBlue,
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () {
-                                  if (isRouteComplete()) {
-                                    Navigator.pushNamed(
-                                      context,
-                                      NavigationPage.id,
-                                      arguments: NavigationPageArguments(
-                                          context,
-                                          widget.myRoute.getRouteAsList(),
-                                          numOfRiders),
-                                    );
-                                  }
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(Icons.navigation, color: Colors.white),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          buildNavigateButton(context),
                           const SizedBox(width: 10),
-                          Flexible(
-                            child: Container(
-                              height: 30,
-                              width: 130,
-                              key: const Key('RiderContainer'),
-                              decoration: BoxDecoration(
-                                  color: Colors.lightBlue[200],
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Material(
-                                color: Colors.lightBlue[200],
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: InkWell(
-                                  key: const ValueKey('RiderInkwell'),
-                                  splashColor: Colors.lightBlue,
-                                  borderRadius: BorderRadius.circular(20),
-                                  onTap: () => {
-                                    showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                        backgroundColor: Colors.lightBlue[200],
-                                        title: const Text(
-                                          'Add riders (Min: 1 | Max: 5)',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        content: TextField(
-                                          key: const ValueKey('RiderTextField'),
-                                          controller: riderNumController,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                          decoration: const InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white),
-                                              labelText:
-                                                  "Enter the number of riders."),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                context, 'Cancel'),
-                                            child: const Text(
-                                              'Cancel',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, 'OK');
-                                              updateNumberOfRiders();
-                                            },
-                                            child: const Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Expanded(
-                                        flex: 1,
-                                        child: Icon(Icons.person_add,
-                                            key: Key('RiderIcon'),
-                                            color: Colors.red),
-                                      ),
-                                      const Text(
-                                        ':',
-                                        key: Key('RiderText'),
-                                        style: kSlideUpWidgetLabelTextStyle,
-                                      ),
-                                      const SizedBox(width: 30),
-                                      Text(
-                                        numOfRiders.toString(),
-                                        key: const Key('RiderValue'),
-                                        style: kSlideUpWidgetLabelTextStyle,
-                                      ),
-                                      const Flexible(
-                                          child: SizedBox(width: 50)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          Flexible(child: buildRidersContainer(context)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -312,6 +158,158 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
           ],
         ),
       );
+
+  Container buildRidersContainer(BuildContext context) {
+    return Container(
+      height: 30,
+      width: 130,
+      key: const Key('RiderContainer'),
+      decoration: BoxDecoration(
+          color: Colors.lightBlue[200],
+          borderRadius: BorderRadius.circular(15.0)),
+      child: Material(
+        color: Colors.lightBlue[200],
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          key: const ValueKey('RiderInkwell'),
+          splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                backgroundColor: Colors.lightBlue[200],
+                title: const Text(
+                  'Add riders (Min: 1 | Max: 5)',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                content: TextField(
+                  key: const ValueKey('RiderTextField'),
+                  controller: riderNumController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: const InputDecoration(
+                      labelStyle: TextStyle(color: Colors.white),
+                      labelText: "Enter the number of riders."),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, 'OK');
+                      updateNumberOfRiders();
+                    },
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Expanded(
+                flex: 1,
+                child: Icon(Icons.person_add,
+                    key: Key('RiderIcon'), color: Colors.red),
+              ),
+              const Text(
+                ':',
+                key: Key('RiderText'),
+                style: kSlideUpWidgetLabelTextStyle,
+              ),
+              const SizedBox(width: 30),
+              Text(
+                numOfRiders.toString(),
+                key: const Key('RiderValue'),
+                style: kSlideUpWidgetLabelTextStyle,
+              ),
+              const Flexible(child: SizedBox(width: 50)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildNavigateButton(BuildContext context) {
+    return Container(
+      height: 30,
+      width: 30,
+      decoration: BoxDecoration(
+          color: Colors.red, borderRadius: BorderRadius.circular(15.0)),
+      child: Material(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            if (isRouteComplete()) {
+              Navigator.pushNamed(
+                context,
+                NavigationPage.id,
+                arguments: NavigationPageArguments(
+                    context, widget.myRoute.getRouteAsList(), numOfRiders),
+              );
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.navigation, color: Colors.white),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildFindRouteButton() {
+    return Container(
+      height: 30,
+      width: 30,
+      decoration: BoxDecoration(
+          color: Colors.red, borderRadius: BorderRadius.circular(15.0)),
+      child: Material(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(15.0),
+        child: InkWell(
+          splashColor: Colors.lightBlue,
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            findRoute();
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.search, color: Colors.white),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget buildWidgetGrid() => Center(
         child: Container(
