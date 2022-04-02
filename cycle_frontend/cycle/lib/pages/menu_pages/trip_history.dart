@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cycle/components/menu.dart';
+import 'package:flutter/material.dart';
 
 import '../../utilities/home_page_design_contants.dart';
 

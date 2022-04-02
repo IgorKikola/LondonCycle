@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:cycle/utilities/config.dart';
 import 'package:cycle/services/route.dart';
+import 'package:cycle/utilities/config.dart';
 import 'package:http/http.dart' show Client;
 
-import '../utilities/config.dart';
 import '../models/route_coordinates.dart';
+import '../utilities/config.dart';
 
 class RoutingApiProvider {
   Client client = Client();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../utilities/user_related_design_constants.dart';
 
 /// Password repeat field used in the sign-up form.

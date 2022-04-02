@@ -1,11 +1,11 @@
+import 'package:cycle/components/menu.dart';
 import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../utilities/home_page_design_contants.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:cycle/components/menu.dart';
 
 class NavigationPage extends StatefulWidget {
   static const String id = 'navigation_page';

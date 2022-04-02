@@ -1,4 +1,5 @@
 import 'package:string_validator/string_validator.dart';
+
 import '../utilities/validator_messages.dart';
 
 // Minimum eight characters, at least one letter, one number and

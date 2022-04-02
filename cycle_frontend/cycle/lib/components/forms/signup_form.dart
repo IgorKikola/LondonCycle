@@ -8,6 +8,7 @@ import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/pages/loading_screens/signup_loading_screen.dart';
 import 'package:flutter/material.dart';
+
 import '../custom_blue_button.dart';
 
 /// Form for a sign-up.

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:cycle/components/searchbox.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
-import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:cycle/main.dart' as app;
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

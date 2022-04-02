@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
+
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

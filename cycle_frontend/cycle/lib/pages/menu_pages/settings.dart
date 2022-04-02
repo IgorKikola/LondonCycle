@@ -1,6 +1,6 @@
+import 'package:cycle/components/menu.dart';
 import 'package:cycle/utilities/home_page_design_contants.dart';
 import 'package:flutter/material.dart';
-import 'package:cycle/components/menu.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);

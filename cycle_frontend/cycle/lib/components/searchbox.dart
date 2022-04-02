@@ -1,14 +1,15 @@
 import 'package:cycle/models/named_lat_lng.dart';
+import 'package:cycle/services/mapcontroller_provider.dart';
 import 'package:cycle/services/route.dart';
+import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/home_page_design_contants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:cycle/services/search_suggestions.dart';
-import '../services/marker_location.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:cycle/services/mapcontroller_provider.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../services/marker_location.dart';
 
 const kOutlineInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(10.0)),

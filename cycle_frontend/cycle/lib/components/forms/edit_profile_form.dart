@@ -7,6 +7,7 @@ import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
 import 'package:cycle/pages/loading_screens/update_details_loading_screen.dart';
 import 'package:flutter/material.dart';
+
 import '../custom_blue_button.dart';
 
 /// Form for editing user profile.

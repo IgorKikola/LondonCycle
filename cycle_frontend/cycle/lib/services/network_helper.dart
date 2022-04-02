@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 /// This class is used to handle API calls, decode JSON files and return data contained in them.
 class NetworkHelper {

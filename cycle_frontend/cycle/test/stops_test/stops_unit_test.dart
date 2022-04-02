@@ -1,5 +1,5 @@
-import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:cycle/models/stop.dart';
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,8 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:cycle/models/stop.dart';
+
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/models/stop.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../services/my_route_provider.dart';
 import '../../services/route.dart';
 import '../../services/stop_location.dart';

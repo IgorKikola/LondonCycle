@@ -1,19 +1,18 @@
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:cycle/pages/navigation_page.dart';
-import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
+import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/utilities/home_page_design_contants.dart';
-import 'package:latlong2/latlong.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
 import '../services/route.dart';
-import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
-import 'package:flutter_map/flutter_map.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();

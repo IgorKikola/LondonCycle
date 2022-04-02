@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:cycle/models/docking_station.dart';
 import 'package:cycle/pages/loading_screens/navigation_loading_screen.dart';
 import 'package:cycle/services/data_managers/bikepoint_data_manager.dart';

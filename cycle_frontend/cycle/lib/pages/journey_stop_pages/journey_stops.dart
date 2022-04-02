@@ -1,16 +1,17 @@
-import 'package:cycle/services/my_route_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:cycle/components/menu.dart';
-import 'package:cycle/pages/journey_stop_pages/remove_stops.dart';
-import 'package:cycle/services/stop_location.dart';
-import 'package:provider/provider.dart';
-import 'package:cycle/services/stops_manager.dart';
 import 'package:cycle/components/searchbox.dart';
+import 'package:cycle/pages/journey_stop_pages/remove_stops.dart';
+import 'package:cycle/services/my_route_provider.dart';
+import 'package:cycle/services/stop_location.dart';
+import 'package:cycle/services/stops_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../components/menu.dart';
 import '../../models/journey_stop.dart';
 import '../../services/route.dart';
 import '../../utilities/home_page_design_contants.dart';
 import '../home_page.dart';
-import '../../components/menu.dart';
 
 void main() {
   runApp(const JourneyStops());

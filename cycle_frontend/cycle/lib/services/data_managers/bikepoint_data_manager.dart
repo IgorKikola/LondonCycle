@@ -4,8 +4,8 @@ import 'package:cycle/models/docking_station.dart';
 import 'package:cycle/models/journey_stop.dart';
 import 'package:cycle/models/landmark.dart';
 import 'package:cycle/services/network_helper.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:cycle/utilities/config.dart';
+import 'package:latlong2/latlong.dart';
 
 Future<DockingStation> getClosestDockingStationWithBikesAvailable(
     LatLng latLng, int numberOfBikes) async {
