@@ -1,3 +1,4 @@
+import 'package:cycle/components/form_fields/base_form_field.dart';
 import 'package:cycle/utilities/user_related_design_constants.dart';
 import 'package:cycle/utilities/validator_messages.dart';
 import 'package:flutter/material.dart';
@@ -5,17 +6,10 @@ import 'package:flutter/material.dart';
 import '../../services/string_validator.dart';
 
 /// Password field used in the sign-up form.
-class PasswordField extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-  final String hint;
-
+class PasswordField extends BaseField {
   const PasswordField(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      required this.hint})
-      : super(key: key);
+      {Key? key, required controller, required label, required hint})
+      : super(key: key, controller: controller, label: label, hint: hint);
 
   @override
   PasswordFieldState createState() {
@@ -23,7 +17,7 @@ class PasswordField extends StatefulWidget {
   }
 }
 
-class PasswordFieldState extends State<PasswordField> {
+class PasswordFieldState extends BaseFieldState {
   bool hidePassword = true;
 
   @override

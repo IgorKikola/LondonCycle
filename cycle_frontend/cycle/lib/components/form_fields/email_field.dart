@@ -1,20 +1,14 @@
+import 'package:cycle/components/form_fields/base_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
 import '../../utilities/user_related_design_constants.dart';
 
 /// Email field used in the sign-up form.
-class EmailField extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-  final String hint;
-
+class EmailField extends BaseField {
   const EmailField(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      required this.hint})
-      : super(key: key);
+      {Key? key, required controller, required label, required hint})
+      : super(key: key, controller: controller, label: label, hint: hint);
 
   @override
   EmailFieldState createState() {
@@ -22,7 +16,7 @@ class EmailField extends StatefulWidget {
   }
 }
 
-class EmailFieldState extends State<EmailField> {
+class EmailFieldState extends BaseFieldState {
   @override
   void dispose() {
     super.dispose();
