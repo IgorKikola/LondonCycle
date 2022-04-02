@@ -6,8 +6,13 @@ class MyRoute {
   NamedLatLng? startingLocation;
   NamedLatLng? finishingLocation;
   List<NamedLatLng> waypoints = List.empty(growable: true);
+  var numOfRiders = 1;
 
   MyRoute();
+
+  bool isRouteComplete() {
+    return startingLocation != null && finishingLocation != null;
+  }
 
   setStartingLocation(NamedLatLng location) {
     startingLocation = location;
