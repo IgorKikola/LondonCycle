@@ -15,6 +15,7 @@ class EmailField extends StatefulWidget {
       required this.label,
       required this.hint})
       : super(key: key);
+
   @override
   EmailFieldState createState() {
     return EmailFieldState();
