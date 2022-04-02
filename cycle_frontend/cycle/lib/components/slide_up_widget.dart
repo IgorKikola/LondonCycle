@@ -195,12 +195,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                       NavigationPage.id,
                                       arguments: NavigationPageArguments(
                                           context,
-                                          widget.myRoute
-                                              .getRouteAsList()
-                                              .map((coordinate) => LatLng(
-                                                  coordinate.latitude,
-                                                  coordinate.longitude))
-                                              .toList(),
+                                          widget.myRoute.getRouteAsList(),
+                                          // .map((coordinate) => LatLng(
+                                          //     coordinate.latitude,
+                                          //     coordinate.longitude))
+                                          // .toList(),
                                           numOfRiders),
                                     );
                                   }

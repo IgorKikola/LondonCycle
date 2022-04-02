@@ -1,3 +1,4 @@
+import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -42,7 +43,7 @@ class _NavigationPageState extends State<NavigationPage> {
                       Icons.pin_drop_outlined,
                       color: Color.fromRGBO(183, 28, 28, 1),
                     ),
-                    title: Text('Stop ${args._stops.indexOf(e)}'),
+                    title: Text(e.name),
                     tileColor: Colors.lightBlueAccent,
                     onTap: () async {
                       List<LatLng> stops = [];
@@ -71,7 +72,7 @@ class _NavigationPageState extends State<NavigationPage> {
 }
 
 class NavigationPageArguments {
-  final List<LatLng> _stops;
+  final List<NamedLatLng> _stops;
   final dynamic _context;
   final int _numberOfRiders;
 
