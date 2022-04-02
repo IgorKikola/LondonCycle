@@ -1,7 +1,6 @@
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cycle/components/menu.dart';
-import 'package:cycle/models/stop.dart';
 import 'package:cycle/pages/journey_stop_pages/remove_stops.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +13,12 @@ import '../home_page.dart';
 import '../../components/menu.dart';
 
 void main() {
-  runApp(JourneyStops());
+  runApp(const JourneyStops());
 }
 
 class JourneyStops extends StatelessWidget {
+  const JourneyStops({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -31,8 +32,10 @@ class JourneyStops extends StatelessWidget {
 
 class StopTiles extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
-  StopLocation stopCoordinates = StopLocation();
-  MyRoute myRoute = MyRouteProvider.myRoute;
+  final StopLocation stopCoordinates = StopLocation();
+  final MyRoute myRoute = MyRouteProvider.myRoute;
+
+  StopTiles({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class StopTiles extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
       ),
       backgroundColor: Colors.lightBlue,
-      drawer: Menu(),
+      drawer: const Menu(),
       body: ListView.builder(
         itemCount: allStops.stops.length,
         itemBuilder: (BuildContext context, int index) {
@@ -81,7 +84,7 @@ class StopTiles extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => RemoveStops()),
                 );
               },
-              child: Icon(Icons.delete),
+              child: const Icon(Icons.delete),
             ),
             Container(
               height: 30,
@@ -97,7 +100,7 @@ class StopTiles extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                          builder: (context) => HomePage(),
+                          builder: (context) => const HomePage(),
                         ),
                         (route) => route.isFirst);
                   },
@@ -120,11 +123,11 @@ class StopTiles extends StatelessWidget {
                     context: context,
                     builder: (BuildContext dialogContext) {
                       return AlertDialog(
-                        title:
-                            Text('Add a stop', style: kJourneyStopsTextStyle),
+                        title: const Text('Add a stop',
+                            style: kJourneyStopsTextStyle),
                         backgroundColor: Colors.lightBlue[200],
                         content: SearchBox(
-                            searchboxType: Waypoint.MIDPOINT,
+                            searchboxType: Waypoint.midpoint,
                             myRoute: myRoute,
                             typeAheadController: textController),
                         actions: <Widget>[
@@ -163,7 +166,7 @@ class StopTiles extends StatelessWidget {
                       );
                     });
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             )
           ],
         ),

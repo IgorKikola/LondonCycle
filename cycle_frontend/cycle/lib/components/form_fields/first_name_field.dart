@@ -10,7 +10,11 @@ class FirstNameField extends StatefulWidget {
   final String hint;
 
   const FirstNameField(
-      {required this.controller, required this.label, required this.hint});
+      {Key? key,
+      required this.controller,
+      required this.label,
+      required this.hint})
+      : super(key: key);
 
   @override
   FirstNameFieldState createState() {

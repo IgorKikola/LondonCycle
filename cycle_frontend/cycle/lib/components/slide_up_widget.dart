@@ -1,8 +1,5 @@
-import 'package:csv/csv.dart';
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/pages/navigation_page.dart';
-import 'package:cycle/pages/main_page.dart';
-import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/search_suggestions.dart';
@@ -14,11 +11,9 @@ import 'package:flutter/services.dart';
 
 import '../pages/journey_stop_pages/stored_stops.dart';
 import '../services/mapcontroller_provider.dart';
-import '../services/navigation.dart';
 import '../services/route.dart';
 import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
@@ -27,13 +22,14 @@ final TextEditingController finishingPointSearchboxTypeAheadController =
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
-  final mapRefreshCallback;
+  final dynamic mapRefreshCallback;
   final MyRoute myRoute = MyRouteProvider.myRoute;
 
   SlideUpWidget(
-      {Key? key, required this.controller, required void mapRefreshCallback()})
-      : mapRefreshCallback = mapRefreshCallback,
-        super(key: key);
+      {Key? key,
+      required this.controller,
+      required void this.mapRefreshCallback()})
+      : super(key: key);
 
   @override
   _SlideUpWidgetState createState() => _SlideUpWidgetState();
@@ -89,17 +85,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   }
 
   Future<void> findRoute() async {
-    print('finding route for...');
-    if (widget.myRoute.startingLocation != null) {
-      print('starting point: ${widget.myRoute.startingLocation}');
-    }
-    if (widget.myRoute.finishingLocation != null) {
-      print('finishing point: ${widget.myRoute.finishingLocation}');
-    }
-
     await RoutingService.updateCoordinatesForRoute(widget.myRoute);
-
-    print('route found.');
 
     widget.mapRefreshCallback();
   }
@@ -107,11 +93,11 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
   @override
   Widget build(BuildContext context) => ListView(
         children: <Widget>[
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildSlidingHandle(),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildSearchBar(context),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           buildWidgetGrid(),
         ],
         controller: widget.controller,
@@ -136,9 +122,9 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 height: 150,
                 width: 400,
                 decoration: BoxDecoration(
@@ -154,17 +140,17 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                         searchBar:
                             StartingLocationSearchBar(myRoute: widget.myRoute),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       SearchBoxWidget(
                         searchBar:
                             FinishingLocationSearchBar(myRoute: widget.myRoute),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible(child: StopsWidget()),
-                          SizedBox(width: 10),
+                          const Flexible(child: StopsWidget()),
+                          const SizedBox(width: 10),
                           Container(
                             height: 30,
                             width: 30,
@@ -182,14 +168,14 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Icon(Icons.search, color: Colors.white),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 3.0),
+                          const SizedBox(width: 3.0),
                           Container(
                             height: 30,
                             width: 30,
@@ -221,19 +207,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Icon(Icons.navigation, color: Colors.white),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Flexible(
                             child: Container(
                               height: 30,
                               width: 130,
-                              key: Key('RiderContainer'),
+                              key: const Key('RiderContainer'),
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue[200],
                                   borderRadius: BorderRadius.circular(15.0)),
@@ -241,7 +227,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                 color: Colors.lightBlue[200],
                                 borderRadius: BorderRadius.circular(15.0),
                                 child: InkWell(
-                                  key: ValueKey('RiderInkwell'),
+                                  key: const ValueKey('RiderInkwell'),
                                   splashColor: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(20),
                                   onTap: () => {
@@ -256,13 +242,13 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                             color: Colors.white,
                                           ),
                                         ),
-                                        content: new TextField(
-                                          key: ValueKey('RiderTextField'),
+                                        content: TextField(
+                                          key: const ValueKey('RiderTextField'),
                                           controller: riderNumController,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                           ),
-                                          decoration: new InputDecoration(
+                                          decoration: const InputDecoration(
                                               labelStyle: TextStyle(
                                                   color: Colors.white),
                                               labelText:
@@ -304,27 +290,25 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(
+                                      const Expanded(
                                         flex: 1,
                                         child: Icon(Icons.person_add,
                                             key: Key('RiderIcon'),
                                             color: Colors.red),
                                       ),
-                                      Text(
+                                      const Text(
                                         ':',
                                         key: Key('RiderText'),
                                         style: kSlideUpWidgetLabelTextStyle,
                                       ),
-                                      SizedBox(width: 30),
-                                      Container(
-                                        //padding: EdgeInsets.only(right: 70),
-                                        child: Text(
-                                          numOfRiders.toString(),
-                                          key: Key('RiderValue'),
-                                          style: kSlideUpWidgetLabelTextStyle,
-                                        ),
+                                      const SizedBox(width: 30),
+                                      Text(
+                                        numOfRiders.toString(),
+                                        key: const Key('RiderValue'),
+                                        style: kSlideUpWidgetLabelTextStyle,
                                       ),
-                                      Flexible(child: SizedBox(width: 50)),
+                                      const Flexible(
+                                          child: SizedBox(width: 50)),
                                     ],
                                   ),
                                 ),
@@ -333,7 +317,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -345,14 +329,14 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
 
   Widget buildWidgetGrid() => Center(
         child: Container(
-            padding: EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(1.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child: Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
                     height: 230,
                     width: 400,
                     decoration: BoxDecoration(
@@ -366,19 +350,19 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
                             labelText: 'Bikepoints:',
                             myBikeStationItemWidgetStateRefreshCallback:
                                 myBikeStationItemWidgetStateRefresh),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         BikeStationItemWidget(
                             bikeStationId: 0,
                             key: globalBikeStationWidgetItemsKeys.elementAt(0)),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         BikeStationItemWidget(
                             bikeStationId: 1,
                             key: globalBikeStationWidgetItemsKeys.elementAt(1)),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         BikeStationItemWidget(
                             bikeStationId: 2,
                             key: globalBikeStationWidgetItemsKeys.elementAt(2)),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         BikeStationItemWidget(
                             bikeStationId: 3,
                             key: globalBikeStationWidgetItemsKeys.elementAt(3)),
@@ -392,7 +376,7 @@ class _SlideUpWidgetState extends State<SlideUpWidget> {
 }
 
 class BikeStationItemWidget extends StatefulWidget {
-  BikeStationItemWidget({
+  const BikeStationItemWidget({
     Key? key,
     required this.bikeStationId,
   }) : super(key: key);
@@ -426,32 +410,34 @@ class _BikeStationItemWidgetState extends State<BikeStationItemWidget> {
 }
 
 class BikeStationDataRow extends StatefulWidget {
+  final int bikeStationId;
   const BikeStationDataRow({
     Key? key,
     required this.bikeStationId,
   }) : super(key: key);
 
-  final int bikeStationId;
-
   @override
-  State<BikeStationDataRow> createState() =>
-      _BikeStationDataRowState(bikeStationId);
+  State<BikeStationDataRow> createState() => _BikeStationDataRowState();
 }
 
 class _BikeStationDataRowState extends State<BikeStationDataRow> {
+  late final int bikeStationId;
   void _bikeStationDataRowStateRefresh() {
     setState(() {
-      updateBikeStationPair(this.bikeStationId);
+      updateBikeStationPair(bikeStationId);
     });
   }
 
-  late final int bikeStationId;
   MapController mapController = MapControllerProvider.mapController;
   Map<String, String> _bikeStationPair = {'loading': '0km'};
   Map<double, double> bikestationCoordinates = {0: 0};
 
-  _BikeStationDataRowState(int bikeStationId) {
-    this.bikeStationId = bikeStationId;
+  _BikeStationDataRowState();
+
+  @override
+  void initState() {
+    super.initState();
+    bikeStationId = widget.bikeStationId;
     updateBikeStationPair(bikeStationId);
   }
 
@@ -463,8 +449,8 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
     );
     BackendService.getNBikeStationForCurrentLocationCoordinates(bikeStationId)
         .then(
-      (BikeStationCoordinates) => setState(() {
-        bikestationCoordinates = BikeStationCoordinates;
+      (coordinates) => setState(() {
+        bikestationCoordinates = coordinates;
       }),
     );
   }
@@ -494,8 +480,7 @@ class _BikeStationDataRowState extends State<BikeStationDataRow> {
                 style: kSlideUpWidgetRightBottomSectionItemTextStyle,
               ),
               Text(
-                _bikeStationPair.values
-                    .first, //TODO: implement nearest bikepoints distances
+                _bikeStationPair.values.first,
                 style: kSlideUpWidgetRightBottomSectionItemTextStyle,
               ),
             ],
@@ -510,13 +495,11 @@ class BottomSectionLabel extends StatelessWidget {
   const BottomSectionLabel(
       {Key? key,
       required this.labelText,
-      required void myBikeStationItemWidgetStateRefreshCallback()})
-      : myBikeStationItemWidgetStateRefreshCallback =
-            myBikeStationItemWidgetStateRefreshCallback,
-        super(key: key);
+      required Function this.myBikeStationItemWidgetStateRefreshCallback})
+      : super(key: key);
 
   final String labelText;
-  final myBikeStationItemWidgetStateRefreshCallback;
+  final dynamic myBikeStationItemWidgetStateRefreshCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -542,7 +525,7 @@ class BottomSectionLabel extends StatelessWidget {
               onTap: () {
                 myBikeStationItemWidgetStateRefreshCallback();
               },
-              child: Icon(Icons.refresh),
+              child: const Icon(Icons.refresh),
             ),
           ),
         ],
@@ -586,13 +569,13 @@ class StartingLocationSearchBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(
+        const Icon(
           Icons.my_location_rounded,
           color: Colors.red,
         ),
         Flexible(
           child: SearchBox(
-            searchboxType: Waypoint.START,
+            searchboxType: Waypoint.start,
             myRoute: myRoute,
             typeAheadController: startingPointSearchboxTypeAheadController,
           ),
@@ -616,13 +599,13 @@ class FinishingLocationSearchBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(
+        const Icon(
           Icons.location_on_outlined,
           color: Colors.red,
         ),
         Flexible(
           child: SearchBox(
-            searchboxType: Waypoint.FINISH,
+            searchboxType: Waypoint.finish,
             myRoute: myRoute,
             typeAheadController: finishingPointSearchboxTypeAheadController,
           ),
@@ -655,12 +638,12 @@ class StopsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Stops()),
+              MaterialPageRoute(builder: (context) => const Stops()),
             );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Icon(Icons.add_location_alt, color: Colors.red),
               Text(
                 'Stops',
@@ -675,7 +658,6 @@ class StopsWidget extends StatelessWidget {
   }
 }
 
-//TODO: make string somehow adaptable to the available space
 String sanitiseString(String string, int maxLength) =>
     string.length >= maxLength
         ? string.substring(0, maxLength - 1) + '...'

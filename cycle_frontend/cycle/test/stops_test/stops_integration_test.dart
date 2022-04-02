@@ -12,18 +12,18 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Stops Integration Tests', () {
-
     testWidgets('Test for checking if stop objects is empty',
-            (WidgetTester tester) async {
-          app.main();
-          final _StopsState = Stops().createState();
-          int numberOfStopObjects= _StopsState.stopObjects.length;
-          expect(numberOfStopObjects, 0);
-        });
-    testWidgets('Test for creating a new Stop and then deleting it', (WidgetTester tester) async {
+        (WidgetTester tester) async {
+      app.main();
+      final _stopsState = const Stops().createState();
+      int numberOfStopObjects = _stopsState.stopObjects.length;
+      expect(numberOfStopObjects, 0);
+    });
+    testWidgets('Test for creating a new Stop and then deleting it',
+        (WidgetTester tester) async {
       SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
       final addButton = find.byTooltip("Add Stop");
-      await tester.pumpWidget(MaterialApp(home: Stops()));
+      await tester.pumpWidget(const MaterialApp(home: Stops()));
       await tester.tap(addButton);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(SearchBox));
@@ -33,11 +33,11 @@ void main() {
       await tester.pumpAndSettle();
       final addStop = find.byIcon(Icons.add_circle);
       await tester.tap(addStop);
-      await tester.pumpAndSettle(Duration(seconds: 2));
-      await tester.pumpWidget(MaterialApp(home: Stops()));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+      await tester.pumpWidget(const MaterialApp(home: Stops()));
       final removeButton = find.byTooltip("Delete all stops and routes");
       await tester.tap(removeButton);
-      await tester.pumpAndSettle(Duration(seconds: 2));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.byType(ListTile), findsNothing);
     });
   });

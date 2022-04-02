@@ -36,7 +36,7 @@ class StopProvider with ChangeNotifier {
   }
 
   getStops() async {
-    final url = '${Config.stopsURL}';
+    const url = Config.stopsURL;
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body)['results'] as List;

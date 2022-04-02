@@ -60,7 +60,7 @@ class BackendService {
         resultsList.add(merged);
       }
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      // print('Request failed with status: ${response.statusCode}.');
     }
 
     return resultsList;
@@ -157,7 +157,7 @@ class BackendService {
         landmarksList.add(merged);
       }
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      // print('Request failed with status: ${response.statusCode}.');
     }
 
     return landmarksList;
@@ -202,7 +202,7 @@ class BackendService {
       bikeStations.add(bikeStationsList);
       bikeStations.add(bikeStationsCoordinates);
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      // print('Request failed with status: ${response.statusCode}.');
     }
 
     return bikeStations;

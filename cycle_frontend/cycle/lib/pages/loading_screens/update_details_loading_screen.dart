@@ -1,20 +1,17 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
-import 'package:cycle/models/update_profile_response_model.dart';
-import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/view_profile_loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../services/data_managers/user_data_manager.dart';
 import '../../services/user_details_helper.dart';
-import '../signup_login_pages/login_page.dart';
 
 class UpdateUserDetailsLoadingScreen extends StatefulWidget {
   final UpdateProfileRequestModel model;
 
-  const UpdateUserDetailsLoadingScreen({required this.model});
+  const UpdateUserDetailsLoadingScreen({Key? key, required this.model})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

@@ -14,9 +14,9 @@ class _TripHistoryState extends State<TripHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: const Menu(),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Trip History',
           style: kAppBarTextStyle,
         ),

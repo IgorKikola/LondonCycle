@@ -1,6 +1,6 @@
 import '../models/named_lat_lng.dart';
 
-enum Waypoint { START, MIDPOINT, FINISH }
+enum Waypoint { start, midpoint, finish }
 
 class MyRoute {
   NamedLatLng? startingLocation;

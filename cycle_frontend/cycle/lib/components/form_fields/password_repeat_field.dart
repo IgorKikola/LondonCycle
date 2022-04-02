@@ -9,10 +9,12 @@ class PasswordRepeatField extends StatefulWidget {
   final String hint;
 
   const PasswordRepeatField(
-      {required this.passwordController,
+      {Key? key,
+      required this.passwordController,
       required this.repeatPasswordController,
       required this.label,
-      required this.hint});
+      required this.hint})
+      : super(key: key);
 
   @override
   PasswordRepeatFieldState createState() {

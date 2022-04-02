@@ -1,11 +1,9 @@
-import 'package:cycle/services/routing_api_provider.dart';
 import 'package:cycle/services/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../models/map_box_route.dart';
-import '../models/route_coordinates.dart';
 import 'mapbox_api_provider.dart';
 
 class RoutingService {

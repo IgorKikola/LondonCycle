@@ -10,7 +10,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import '../utilities/map_box_config.dart';
-import '../services/navigation.dart';
 import '../services/mapcontroller_provider.dart';
 import '../services/marker_location.dart';
 import '../services/routing.dart';
@@ -158,15 +157,11 @@ class _MapWidgetState extends State<MapWidget> {
                     height: 45.0,
                     point: LatLng(searchMarker.getStartingLocation().latitude,
                         searchMarker.getStartingLocation().longitude),
-                    builder: (context) => Container(
-                      child: IconButton(
-                        icon: Icon(Icons.location_on),
-                        color: Colors.red[900],
-                        iconSize: 50.0,
-                        onPressed: () {
-                          print('This is the search location');
-                        },
-                      ),
+                    builder: (context) => IconButton(
+                      icon: const Icon(Icons.location_on),
+                      color: Colors.red[900],
+                      iconSize: 50.0,
+                      onPressed: () {},
                     ),
                   ),
                   Marker(
@@ -174,15 +169,11 @@ class _MapWidgetState extends State<MapWidget> {
                     height: 45.0,
                     point: LatLng(searchMarker.getDestination().latitude,
                         searchMarker.getDestination().longitude),
-                    builder: (context) => Container(
-                      child: IconButton(
-                        icon: Icon(Icons.location_on),
-                        color: Colors.blue[900],
-                        iconSize: 50.0,
-                        onPressed: () {
-                          print('This is the destination location');
-                        },
-                      ),
+                    builder: (context) => IconButton(
+                      icon: const Icon(Icons.location_on),
+                      color: Colors.blue[900],
+                      iconSize: 50.0,
+                      onPressed: () {},
                     ),
                   )
                 ],
@@ -253,22 +244,6 @@ class _MapWidgetState extends State<MapWidget> {
               ),
             ),
           ),
-          // Positioned(
-          //   left: 10,
-          //   bottom: 280,
-          //   child: FloatingActionButton.small(
-          //     heroTag: 'navigation',
-          //     backgroundColor: Colors.red,
-          //     onPressed: () {
-          //       Navigation navigation = Navigation();
-          //       navigation.navigate();
-          //     },
-          //     child: const Icon(
-          //       Icons.navigation,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

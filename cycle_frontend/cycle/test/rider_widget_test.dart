@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Testing riderText widget is present',
       (WidgetTester tester) async {
-    final riderText = find.byKey(ValueKey('RiderText'));
+    final riderText = find.byKey(const ValueKey('RiderText'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -17,7 +17,7 @@ void main() {
 
   testWidgets('Testing riderValue widget is present',
       (WidgetTester tester) async {
-    final riderValue = find.byKey(ValueKey('RiderValue'));
+    final riderValue = find.byKey(const ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -28,7 +28,7 @@ void main() {
   });
 
   testWidgets('Testing riderText font colour', (WidgetTester tester) async {
-    final riderText = find.byKey(ValueKey('RiderText'));
+    final riderText = find.byKey(const ValueKey('RiderText'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -40,7 +40,7 @@ void main() {
   });
 
   testWidgets('Testing riderValue font colour', (WidgetTester tester) async {
-    final riderValue = find.byKey(ValueKey('RiderValue'));
+    final riderValue = find.byKey(const ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -53,7 +53,7 @@ void main() {
 
   testWidgets('Testing riderText FontFamily package',
       (WidgetTester tester) async {
-    final riderText = find.byKey(ValueKey('RiderText'));
+    final riderText = find.byKey(const ValueKey('RiderText'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -66,7 +66,7 @@ void main() {
 
   testWidgets('Testing riderValue FontFamily package',
       (WidgetTester tester) async {
-    final riderValue = find.byKey(ValueKey('RiderValue'));
+    final riderValue = find.byKey(const ValueKey('RiderValue'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -104,7 +104,7 @@ void main() {
 
   testWidgets('Testing the AlertDialog after tapping riders ',
       (WidgetTester tester) async {
-    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
+    final riderInkwell = find.byKey(const ValueKey('RiderInkwell'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),
@@ -117,7 +117,7 @@ void main() {
 
   testWidgets('Testing the buttons load in AlertDialog ',
       (WidgetTester tester) async {
-    final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
+    final riderInkwell = find.byKey(const ValueKey('RiderInkwell'));
     await tester.pumpWidget(MaterialApp(
         home: SlideUpWidget(
       controller: ScrollController(),

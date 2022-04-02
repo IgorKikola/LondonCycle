@@ -1,5 +1,4 @@
 import 'package:cycle/pages/home_page.dart';
-import 'package:cycle/pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/navigation_page.dart';
 import 'package:cycle/pages/signup_login_pages/forgot_password_page.dart';
 import 'package:cycle/pages/signup_login_pages/login_page.dart';
@@ -11,12 +10,9 @@ import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/main_page.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:cycle/components/slide_up_widget.dart';
-import 'package:cycle/components/menu.dart';
 
 // Default page for users that are not logged in.
-String _defaultPageId = StartingPage.id;
+String defaultPageId = StartingPage.id;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +20,7 @@ void main() async {
   // to login every time the app is opened.
   bool _isLoggedIn = await UserDetailsHelper.isLoggedIn();
   if (_isLoggedIn) {
-    _defaultPageId = HomePage.id;
+    defaultPageId = HomePage.id;
   }
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.clear();
@@ -42,15 +38,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       initialRoute: StartingPage.id,
       routes: {
-        SignupPage.id: (context) => SignupPage(),
-        TermsOfUsePage.id: (context) => TermsOfUsePage(),
-        PrivacyPolicyPage.id: (context) => PrivacyPolicyPage(),
-        LoginPage.id: (context) => LoginPage(),
-        MainPage.id: (context) => MainPage(),
-        HomePage.id: (context) => HomePage(),
-        ForgotPasswordPage.id: (context) => ForgotPasswordPage(),
-        StartingPage.id: (context) => StartingPage(),
-        NavigationPage.id: (context) => NavigationPage(),
+        SignupPage.id: (context) => const SignupPage(),
+        TermsOfUsePage.id: (context) => const TermsOfUsePage(),
+        PrivacyPolicyPage.id: (context) => const PrivacyPolicyPage(),
+        LoginPage.id: (context) => const LoginPage(),
+        MainPage.id: (context) => const MainPage(),
+        HomePage.id: (context) => const HomePage(),
+        ForgotPasswordPage.id: (context) => const ForgotPasswordPage(),
+        StartingPage.id: (context) => const StartingPage(),
+        NavigationPage.id: (context) => const NavigationPage(),
       },
     );
   }

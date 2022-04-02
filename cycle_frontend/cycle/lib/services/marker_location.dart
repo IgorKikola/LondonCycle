@@ -1,6 +1,6 @@
 import '../models/named_lat_lng.dart';
 
-enum MarkerType { START, FINISH }
+enum MarkerType { start, finish }
 
 class MarkerLocation {
   static NamedLatLng startingLocation =

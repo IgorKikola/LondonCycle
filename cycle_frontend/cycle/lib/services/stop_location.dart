@@ -1,6 +1,6 @@
 import '../models/named_lat_lng.dart';
 
-enum StopType { MIDPOINT }
+enum StopType { midpoint }
 
 class StopLocation {
   static NamedLatLng stopLocation =

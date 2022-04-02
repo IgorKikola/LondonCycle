@@ -24,9 +24,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: const Menu(),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Map',
           style: kAppBarTextStyle,
         ),
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           controller: controller,
           mapRefreshCallback: myHomePageMapRefresh,
         ),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
       ),
     );
   }

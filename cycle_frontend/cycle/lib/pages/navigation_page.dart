@@ -22,7 +22,7 @@ class _NavigationPageState extends State<NavigationPage> {
         ModalRoute.of(context)!.settings.arguments as NavigationPageArguments;
 
     return Scaffold(
-      drawer: Menu(),
+      drawer: const Menu(),
       appBar: AppBar(
         title: const Text(
           'Navigation',

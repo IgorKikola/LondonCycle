@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   testWidgets('Test text on scaffold appbar', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
-    await tester.pumpWidget(MaterialApp(home: const Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.pump();
     expect(find.text('Stops'), findsOneWidget);
   });
@@ -26,7 +26,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final removeButton = find.byTooltip("Delete all stops and routes");
-    await tester.pumpWidget(MaterialApp(home: const Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.pump();
     expect(removeButton, findsOneWidget);
   });
@@ -34,7 +34,7 @@ void main() {
   testWidgets('Test for AlertDialog to appear', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: const Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.byType(AlertDialog), findsOneWidget);
@@ -44,7 +44,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.byIcon(Icons.add_circle), findsOneWidget);
@@ -54,7 +54,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.byType(ElevatedButton), findsOneWidget);
@@ -63,7 +63,7 @@ void main() {
   testWidgets('Test for AlertDialog header text', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.text('Add a stop'), findsOneWidget);
@@ -73,7 +73,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     expect(find.byType(SearchBox), findsOneWidget);
@@ -84,7 +84,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
@@ -100,7 +100,7 @@ void main() {
       (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -114,7 +114,7 @@ void main() {
   testWidgets('Test for valid input in Searchbar', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -130,7 +130,7 @@ void main() {
   testWidgets('Test for new Stop text', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -139,14 +139,16 @@ void main() {
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
     await tester.tap(addStop);
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
     expect(find.text('Test Landmark'), findsOneWidget);
   });
 
-  testWidgets('Test for new Stop ListTile and disappearance of AlertDialog on creation of new Stop', (WidgetTester tester) async {
+  testWidgets(
+      'Test for new Stop ListTile and disappearance of AlertDialog on creation of new Stop',
+      (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -155,7 +157,7 @@ void main() {
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
     await tester.tap(addStop);
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
     expect(find.byType(ListTile), findsOneWidget);
     expect(find.byType(SearchBox), findsNothing);
     expect(find.text('Add a stop'), findsNothing);
@@ -166,7 +168,7 @@ void main() {
   testWidgets('Test for Stop ListTile styling', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -175,16 +177,17 @@ void main() {
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
     await tester.tap(addStop);
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
     Icon icon = tester.firstWidget(find.byIcon(Icons.delete));
     expect(find.byType(ListTile), findsOneWidget);
     expect(icon.color, Colors.red);
   });
 
-  testWidgets('Test for Stop ListTile delete button', (WidgetTester tester) async {
+  testWidgets('Test for Stop ListTile delete button',
+      (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -193,15 +196,16 @@ void main() {
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
     await tester.tap(addStop);
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
     expect(find.byType(ListTile), findsOneWidget);
     expect(find.byIcon(Icons.delete), findsOneWidget);
   });
 
-  testWidgets('Test for Stop ListTile after reloading Stops page', (WidgetTester tester) async {
+  testWidgets('Test for Stop ListTile after reloading Stops page',
+      (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     final addButton = find.byTooltip("Add Stop");
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.tap(addButton);
     await tester.pump();
     await tester.tap(find.byType(SearchBox));
@@ -210,8 +214,8 @@ void main() {
     await tester.pump();
     final addStop = find.byIcon(Icons.add_circle);
     await tester.tap(addStop);
-    await tester.pump(Duration(seconds: 2));
-    await tester.pumpWidget(MaterialApp(home: Stops()));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.pump();
     expect(find.text('Test Landmark'), findsOneWidget);
     expect(find.byType(Container), findsWidgets);

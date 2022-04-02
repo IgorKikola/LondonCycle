@@ -1,7 +1,5 @@
-import 'package:cycle/components/slide_up_widget.dart';
 import 'package:cycle/services/string_validator.dart';
 import 'package:cycle/utilities/validator_messages.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

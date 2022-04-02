@@ -13,9 +13,9 @@ class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: const Menu(),
       appBar: AppBar(
-        title: Text('Favorites', style: kAppBarTextStyle),
+        title: const Text('Favorites', style: kAppBarTextStyle),
         backgroundColor: Colors.lightBlue,
       ),
     );

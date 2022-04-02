@@ -7,33 +7,35 @@ import 'package:cycle/pages/menu_pages/trip_history.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
+  const Menu({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.lightBlue,
       child: ListView(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         children: [
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           buildMenuText(context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildProfile(context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildMap(context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildFavorites(context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildHistory(context),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           buildSettings(context),
-          SizedBox(height: 10),
-          SizedBox(height: 50),
+          const SizedBox(height: 10),
+          const SizedBox(height: 50),
         ],
       ),
     );
   }
 
-  Widget buildProfile(BuildContext context) => Container(
+  Widget buildProfile(BuildContext context) => SizedBox(
         height: 50,
         child: Material(
           color: Colors.lightBlue[200],
@@ -41,10 +43,10 @@ class Menu extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.lightBlue,
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.contacts,
               ),
-              title: Text(
+              title: const Text(
                 'My Profile',
                 style: kMenuItemTextStyle,
               ),
@@ -63,16 +65,14 @@ class Menu extends StatelessWidget {
 
 Widget buildMenuText(BuildContext context) => Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
+        const Padding(
+          padding: EdgeInsets.only(left: 10),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Container(
-              child: const Text('Menu', style: kMenuTextStyle),
-            ),
+            child: Text('Menu', style: kMenuTextStyle),
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Container(
           width: 260,
           height: 1,
@@ -84,7 +84,7 @@ Widget buildMenuText(BuildContext context) => Column(
       ],
     );
 
-Widget buildFavorites(BuildContext context) => Container(
+Widget buildFavorites(BuildContext context) => SizedBox(
       height: 50,
       child: Material(
         color: Colors.lightBlue[200],
@@ -93,8 +93,8 @@ Widget buildFavorites(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           borderRadius: BorderRadius.circular(20),
           child: ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(
+            leading: const Icon(Icons.favorite),
+            title: const Text(
               'Favorites',
               style: kMenuItemTextStyle,
             ),
@@ -109,7 +109,7 @@ Widget buildFavorites(BuildContext context) => Container(
       ),
     );
 
-Widget buildMap(BuildContext context) => Container(
+Widget buildMap(BuildContext context) => SizedBox(
       height: 50,
       child: Material(
         color: Colors.lightBlue[200],
@@ -117,8 +117,8 @@ Widget buildMap(BuildContext context) => Container(
         child: InkWell(
           splashColor: Colors.lightBlue,
           child: ListTile(
-            leading: Icon(Icons.map),
-            title: Text(
+            leading: const Icon(Icons.map),
+            title: const Text(
               'Map',
               style: kMenuItemTextStyle,
             ),
@@ -130,7 +130,7 @@ Widget buildMap(BuildContext context) => Container(
       ),
     );
 
-Widget buildHistory(BuildContext context) => Container(
+Widget buildHistory(BuildContext context) => SizedBox(
       height: 50,
       child: Material(
         color: Colors.lightBlue[200],
@@ -138,8 +138,8 @@ Widget buildHistory(BuildContext context) => Container(
         child: InkWell(
           splashColor: Colors.lightBlue,
           child: ListTile(
-            leading: Icon(Icons.history),
-            title: Text(
+            leading: const Icon(Icons.history),
+            title: const Text(
               'Trip History',
               style: kMenuItemTextStyle,
             ),
@@ -154,7 +154,7 @@ Widget buildHistory(BuildContext context) => Container(
       ),
     );
 
-Widget buildSettings(BuildContext context) => Container(
+Widget buildSettings(BuildContext context) => SizedBox(
       height: 50,
       child: Material(
         color: Colors.lightBlue[200],
@@ -162,8 +162,8 @@ Widget buildSettings(BuildContext context) => Container(
         child: InkWell(
           splashColor: Colors.lightBlue,
           child: ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(
+            leading: const Icon(Icons.settings),
+            title: const Text(
               'Settings',
               style: kMenuItemTextStyle,
             ),
@@ -178,7 +178,7 @@ Widget buildSettings(BuildContext context) => Container(
       ),
     );
 
-Widget buildEditProfile(BuildContext context) => Container(
+Widget buildEditProfile(BuildContext context) => SizedBox(
       height: 50,
       child: Material(
         color: Colors.lightBlue[200],

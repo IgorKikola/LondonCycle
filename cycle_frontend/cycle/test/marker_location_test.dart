@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cycle/models/named_lat_lng.dart';
-import 'package:flutter/material.dart';
 import 'package:cycle/services/marker_location.dart';
-import 'package:latlong2/latlong.dart';
 
 void main() {
   test('Simple unit test.', () {

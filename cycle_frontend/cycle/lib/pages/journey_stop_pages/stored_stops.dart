@@ -49,7 +49,7 @@ class _StopsState extends State<Stops> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(50),
         child: AppBar(
           title: const Text("Stops", style: kJourneyStopsTextStyle),
           backgroundColor: Colors.lightBlue,
@@ -119,7 +119,7 @@ class _StopsState extends State<Stops> {
                             style: kJourneyStopsTextStyle),
                         backgroundColor: Colors.lightBlue[200],
                         content: SearchBox(
-                            searchboxType: Waypoint.MIDPOINT,
+                            searchboxType: Waypoint.midpoint,
                             myRoute: myRoute,
                             typeAheadController: textController),
                         actions: <Widget>[

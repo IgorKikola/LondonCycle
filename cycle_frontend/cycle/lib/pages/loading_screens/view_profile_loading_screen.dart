@@ -1,4 +1,3 @@
-import 'package:cycle/pages/edit_user_profile_page.dart';
 import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';

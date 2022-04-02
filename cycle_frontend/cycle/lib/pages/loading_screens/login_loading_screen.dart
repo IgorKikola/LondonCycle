@@ -1,17 +1,15 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cycle/models/login_request_model.dart';
-import 'package:cycle/models/signup_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../services/data_managers/user_data_manager.dart';
 import '../home_page.dart';
-import '../signup_login_pages/login_page.dart';
 
 class LoginLoadingScreen extends StatefulWidget {
   final LoginRequestModel model;
 
-  const LoginLoadingScreen({required this.model});
+  const LoginLoadingScreen({Key? key, required this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
