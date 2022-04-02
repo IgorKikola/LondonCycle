@@ -16,9 +16,7 @@ class _TermsOfUsePageState extends State<TermsOfUsePage> {
       appBar: AppBar(
         title: const Text('Terms Of Use'),
       ),
-      body: const Center(
-        child: Text('No information yet.')
-      ),
+      body: const Center(child: Text('No information yet.')),
     );
   }
 }

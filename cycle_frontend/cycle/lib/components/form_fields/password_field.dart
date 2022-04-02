@@ -1,6 +1,7 @@
 import 'package:cycle/utilities/user_related_design_constants.dart';
 import 'package:cycle/utilities/validator_messages.dart';
 import 'package:flutter/material.dart';
+
 import '../../services/string_validator.dart';
 
 /// Password field used in the sign-up form.
@@ -10,7 +11,11 @@ class PasswordField extends StatefulWidget {
   final String hint;
 
   const PasswordField(
-      {required this.controller, required this.label, required this.hint});
+      {Key? key,
+      required this.controller,
+      required this.label,
+      required this.hint})
+      : super(key: key);
 
   @override
   PasswordFieldState createState() {

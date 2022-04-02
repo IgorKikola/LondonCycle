@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:cycle/services/string_validator.dart';
 import 'package:cycle/utilities/validator_messages.dart';
+import 'package:flutter/material.dart';
+
 import '../../utilities/user_related_design_constants.dart';
 
 /// First name field used in the sign-up form.
@@ -10,7 +11,11 @@ class LastNameField extends StatefulWidget {
   final String hint;
 
   const LastNameField(
-      {required this.controller, required this.label, required this.hint});
+      {Key? key,
+      required this.controller,
+      required this.label,
+      required this.hint})
+      : super(key: key);
 
   @override
   LastNameFieldState createState() {

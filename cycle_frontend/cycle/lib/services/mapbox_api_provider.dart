@@ -1,7 +1,8 @@
-import 'package:cycle/utilities/map_box_config.dart';
-import 'package:cycle/models/map_box_route.dart';
-import 'package:http/http.dart' show Client;
 import 'dart:convert';
+
+import 'package:cycle/models/map_box_route.dart';
+import 'package:cycle/utilities/map_box_config.dart';
+import 'package:http/http.dart' show Client;
 
 class MapBoxApiProvider {
   Client client = Client();

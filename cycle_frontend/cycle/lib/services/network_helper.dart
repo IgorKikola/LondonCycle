@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 /// This class is used to handle API calls, decode JSON files and return data contained in them.
 class NetworkHelper {
@@ -9,7 +10,6 @@ class NetworkHelper {
   static Future<http.Response>? get(
       {required String domain, required String path}) async {
     var url = Uri.https(domain, path);
-    print("URL" + url.toString());
     return await client.get(url);
   }
 

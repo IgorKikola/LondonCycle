@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
+
 import '../../utilities/user_related_design_constants.dart';
 
 /// Email field used in the sign-up form.
@@ -9,7 +10,11 @@ class EmailField extends StatefulWidget {
   final String hint;
 
   const EmailField(
-      {required this.controller, required this.label, required this.hint});
+      {Key? key,
+      required this.controller,
+      required this.label,
+      required this.hint})
+      : super(key: key);
 
   @override
   EmailFieldState createState() {

@@ -1,25 +1,27 @@
-import 'package:cycle/models/journey_stop.dart';
 import 'package:cycle/pages/journey_stop_pages/journey_stops.dart';
 import 'package:cycle/services/my_route_provider.dart';
+import 'package:cycle/services/stops_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cycle/services/stops_manager.dart';
+
+import '../../components/menu.dart';
 import '../../services/route.dart';
 import '../../utilities/home_page_design_contants.dart';
-import '../../components/menu.dart';
 
 void main() {
   runApp(RemoveStops());
 }
 
 class RemoveStops extends StatelessWidget {
-  MyRoute myRoute = MyRouteProvider.myRoute;
+  final MyRoute myRoute = MyRouteProvider.myRoute;
+
+  RemoveStops({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => StopProvider(),
-      child: Scaffold(
+      child: const Scaffold(
         body: StopTiles(),
       ),
     );
@@ -27,15 +29,17 @@ class RemoveStops extends StatelessWidget {
 }
 
 class StopTiles extends StatelessWidget {
+  const StopTiles({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final stopsP = Provider.of<StopProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Remove Stops', style: kRemoveJourneyStopsTextStyle),
+        title: const Text('Remove Stops', style: kRemoveJourneyStopsTextStyle),
         backgroundColor: Colors.lightBlue,
       ),
-      drawer: Menu(),
+      drawer: const Menu(),
       backgroundColor: Colors.lightBlue,
       body: ListView.builder(
         itemCount: stopsP.stops.length,
@@ -52,7 +56,6 @@ class StopTiles extends StatelessWidget {
                     trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          //TODO: call myRoute.removeWaypointAt(index)
                           MyRouteProvider.myRoute.removeWaypointAt(index);
                           stopsP.deleteStop(stopsP.stops[index]);
                         }),
@@ -68,11 +71,11 @@ class StopTiles extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (context) => JourneyStops(),
+                builder: (context) => const JourneyStops(),
               ),
               (route) => route.isFirst);
         },
-        child: Icon(Icons.reset_tv),
+        child: const Icon(Icons.reset_tv),
         backgroundColor: Colors.green,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

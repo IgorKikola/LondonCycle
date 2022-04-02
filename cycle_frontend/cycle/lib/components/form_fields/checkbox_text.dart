@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import '../../pages/terms_policy_pages/privacy_policy_page.dart';
 import '../../pages/terms_policy_pages/terms_of_use_page.dart';
 

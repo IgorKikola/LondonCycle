@@ -9,7 +9,7 @@ import '../signup_login_pages/login_page.dart';
 class SignupLoadingScreen extends StatefulWidget {
   final SignupRequestModel model;
 
-  const SignupLoadingScreen({required this.model});
+  const SignupLoadingScreen({Key? key, required this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

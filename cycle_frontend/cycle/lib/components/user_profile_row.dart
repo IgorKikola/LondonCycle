@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserProfileRow extends StatelessWidget {
-  const UserProfileRow({required this.value});
-
   final String value;
+
+  const UserProfileRow({Key? key, required this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

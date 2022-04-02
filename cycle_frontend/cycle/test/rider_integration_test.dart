@@ -1,13 +1,8 @@
-import 'package:cycle/pages/main_page.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:cycle/components/slide_up_widget.dart';
-import 'package:cycle/models/named_lat_lng.dart';
-import 'package:flutter/material.dart';
-import 'package:cycle/services/marker_location.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:cycle/main.dart' as app;
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -16,21 +11,21 @@ void main() {
     testWidgets('Check initial default capacity of riders',
         (WidgetTester tester) async {
       app.main();
-      final _SlideUpWidgetState = SlideUpWidget(
+      final _slideUpWidgetState = SlideUpWidget(
               mapRefreshCallback: () {}, controller: ScrollController())
           .createState();
-      int initialRiders = _SlideUpWidgetState.numOfRiders;
+      int initialRiders = _slideUpWidgetState.numOfRiders;
       expect(initialRiders, 1);
     });
 
     testWidgets('Check updating rider capacity with values',
         (WidgetTester tester) async {
-      final _SlideUpWidgetState = SlideUpWidget(
+      final _slideUpWidgetState = SlideUpWidget(
               mapRefreshCallback: () {}, controller: ScrollController())
           .createState();
-      dynamic initialRiders = _SlideUpWidgetState.numOfRiders;
+      dynamic initialRiders = _slideUpWidgetState.numOfRiders;
       expect(initialRiders, 1);
-      final riderInkwell = find.byKey(ValueKey('RiderInkwell'));
+      final riderInkwell = find.byKey(const ValueKey('RiderInkwell'));
       await tester.pumpWidget(MaterialApp(
           home: SlideUpWidget(
         controller: ScrollController(),
@@ -38,9 +33,9 @@ void main() {
       )));
       await tester.tap(riderInkwell);
       await tester.pump();
-      final textField = find.byKey(ValueKey('RiderTextField'));
+      final textField = find.byKey(const ValueKey('RiderTextField'));
       TextField field = tester.firstWidget(textField);
-      await tester.enterText(find.byKey(ValueKey('RiderTextField')), '0');
+      await tester.enterText(find.byKey(const ValueKey('RiderTextField')), '0');
       initialRiders = field.controller?.text;
       expect(int.parse(initialRiders), 0);
     });

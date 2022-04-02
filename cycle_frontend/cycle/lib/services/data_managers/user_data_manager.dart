@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:cycle/utilities/config.dart';
+import 'package:cycle/models/login_response_model.dart';
+import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/models/update_profile_request_model.dart';
 import 'package:cycle/models/update_profile_response_model.dart';
 import 'package:cycle/models/user_details_response_model.dart';
-import 'package:cycle/models/login_response_model.dart';
-import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/services/network_helper.dart';
 import 'package:cycle/services/user_details_helper.dart';
+import 'package:cycle/utilities/config.dart';
+
 import '../../models/login_request_model.dart';
 import '../../models/signup_response_model.dart';
 

@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../utilities/config.dart';
 import '../models/journey_stop.dart';
+import '../utilities/config.dart';
 
 class StopProvider with ChangeNotifier {
   StopProvider() {
@@ -36,7 +37,7 @@ class StopProvider with ChangeNotifier {
   }
 
   getStops() async {
-    final url = '${Config.stopsURL}';
+    const url = Config.stopsURL;
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body)['results'] as List;

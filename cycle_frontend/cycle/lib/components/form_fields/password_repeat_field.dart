@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../utilities/user_related_design_constants.dart';
 
 /// Password repeat field used in the sign-up form.
@@ -9,10 +10,12 @@ class PasswordRepeatField extends StatefulWidget {
   final String hint;
 
   const PasswordRepeatField(
-      {required this.passwordController,
+      {Key? key,
+      required this.passwordController,
       required this.repeatPasswordController,
       required this.label,
-      required this.hint});
+      required this.hint})
+      : super(key: key);
 
   @override
   PasswordRepeatFieldState createState() {

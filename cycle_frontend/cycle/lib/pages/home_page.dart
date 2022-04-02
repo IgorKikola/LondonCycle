@@ -1,10 +1,10 @@
+import 'package:cycle/components/menu.dart';
+import 'package:cycle/components/slide_up_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../utilities/home_page_design_contants.dart';
 import 'main_page.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:cycle/components/slide_up_widget.dart';
-import 'package:cycle/components/menu.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'home_page';
@@ -24,9 +24,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Menu(),
+      drawer: const Menu(),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Map',
           style: kAppBarTextStyle,
         ),
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           controller: controller,
           mapRefreshCallback: myHomePageMapRefresh,
         ),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class EditProfilePage extends StatefulWidget {
   static const String id = 'edit_profile';
   final UserDetailsResponseModel userData;
-  EditProfilePage({required this.userData});
+  const EditProfilePage({Key? key, required this.userData}) : super(key: key);
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
