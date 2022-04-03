@@ -1,5 +1,5 @@
 class Config {
-  static const String localhostURL = "localhost:8000";
+  static const String localhostURL = "agile-citadel-13372.herokuapp.com";
   static const String fullApiURL = "https://$backendURL/";
   static const String backendURL = 'agile-citadel-13372.herokuapp.com';
   static const String stopsURL = 'https://$backendURL$stopsPath?format=json';

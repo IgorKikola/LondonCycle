@@ -10,7 +10,7 @@ import 'package:cycle/services/my_route_provider.dart';
 import 'package:cycle/services/routing.dart';
 import 'package:flutter/material.dart';
 
-import '../services/route.dart';
+import '../services/my_route.dart';
 
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;

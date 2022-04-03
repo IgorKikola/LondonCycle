@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../services/data_managers/user_data_manager.dart';
-import '../home_page.dart';
 
 class LoginLoadingScreen extends StatefulWidget {
   final LoginRequestModel model;
@@ -28,7 +27,7 @@ class _LoginLoadingScreenState extends State<LoginLoadingScreen> {
     APIService.login(widget.model).then(
       (response) {
         if (response) {
-          Navigator.pushReplacementNamed(context, HomePage.id);
+          Navigator.popUntil(context, ModalRoute.withName('home_page'));
         } else {
           // If login was unsuccessful, show a bar for the user at the bottom of the screen.
           Navigator.pop(context);
