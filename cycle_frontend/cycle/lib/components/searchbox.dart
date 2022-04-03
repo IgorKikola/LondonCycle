@@ -1,7 +1,7 @@
 import 'package:cycle/models/named_lat_lng.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
-import 'package:cycle/services/route.dart';
+import 'package:cycle/services/my_route.dart';
 import 'package:cycle/services/search_suggestions.dart';
 import 'package:cycle/services/stop_location.dart';
 import 'package:cycle/utilities/home_page_design_contants.dart';
