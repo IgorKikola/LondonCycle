@@ -71,3 +71,4 @@ $ flutter test
 
 ## Sources
 The packages used by this application are specified in `pubspec.yaml` (frontend) and `requirements.txt` (backend)
+Application logo comes from:  https://pngtree.com/freepng/people-riding-tandem-bicycle_7310762.html?sol=downref&id=bef
