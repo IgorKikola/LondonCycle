@@ -1,17 +1,15 @@
-import 'package:cycle/main.dart';
 import 'package:cycle/pages/favorites.dart';
 import 'package:cycle/pages/home_page.dart';
 import 'package:cycle/pages/loading_screens/edit_profile_loading_screen.dart';
 import 'package:cycle/pages/settings.dart';
-import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:cycle/pages/starting_page.dart';
-import 'package:cycle/services/user_details_helper.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../utilities/constants.dart';
-import 'trip_history.dart';
-import 'profile.dart';
 import 'package:cycle/pages/trip_history.dart';
+import 'package:cycle/services/user_details_helper.dart';
 import 'package:flutter/material.dart';
+
+import '../utilities/constants.dart';
+import 'profile.dart';
+import 'trip_history.dart';
 
 class Menu extends StatelessWidget {
   @override
@@ -109,6 +107,7 @@ Widget buildFavorites(BuildContext context) => Container(
           splashColor: Colors.lightBlue,
           borderRadius: BorderRadius.circular(20),
           child: ListTile(
+            key: Key('FavoritesTab'),
             leading: Icon(Icons.favorite),
             title: Text(
               'Favorites',

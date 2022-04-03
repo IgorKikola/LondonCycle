@@ -346,6 +346,15 @@ void main() {
     expect(editProfileButton, findsWidgets);
   });
 
+  /*testWidgets('test that menu icons load correctly',
+      (WidgetTester tester) async {
+    final favButton = find.byKey(ValueKey('FavoritesTab'));
+    await tester.pumpWidget(MaterialApp(home: Menu()));
+    await tester.tap(favButton);
+    await tester.pumpAndSettle();
+    expect(find.byWidget(Favorites()), findsOneWidget);
+  });*/
+
   //tests for the favorites tab
   testWidgets('test that the favorites tab loads', (WidgetTester tester) async {
     final title = find.text('Favorites');
