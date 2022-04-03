@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cycle',
       theme: ThemeData.dark(),
-      initialRoute: StartingPage.id,
+      initialRoute: HomePage.id,
       routes: {
         SignupPage.id: (context) => const SignupPage(),
         TermsOfUsePage.id: (context) => const TermsOfUsePage(),

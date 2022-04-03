@@ -83,10 +83,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: "Log out",
                   onPressed: () {
                     UserDetailsHelper.logout(context);
-                    Navigator.pushAndRemoveUntil(context,
+                    Navigator.popUntil(context, ModalRoute.withName('home_page'));
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const StartingPage();
-                    }), (route) => false);
+                          return const StartingPage();
+                        }));
                   },
                 ),
               ],

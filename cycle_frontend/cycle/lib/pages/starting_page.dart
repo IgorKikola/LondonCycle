@@ -108,8 +108,7 @@ class _StartingPageState extends State<StartingPage>
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, HomePage.id, (route) => route.isFirst);
+                            Navigator.pop(context);
                           },
                       ),
                     ],

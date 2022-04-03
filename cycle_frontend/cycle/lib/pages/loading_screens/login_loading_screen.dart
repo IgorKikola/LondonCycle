@@ -28,7 +28,7 @@ class _LoginLoadingScreenState extends State<LoginLoadingScreen> {
     APIService.login(widget.model).then(
       (response) {
         if (response) {
-          Navigator.pushReplacementNamed(context, HomePage.id);
+          Navigator.popUntil(context, ModalRoute.withName('home_page'));
         } else {
           // If login was unsuccessful, show a bar for the user at the bottom of the screen.
           Navigator.pop(context);
