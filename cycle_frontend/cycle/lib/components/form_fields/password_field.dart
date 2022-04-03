@@ -21,11 +21,6 @@ class PasswordFieldState extends BaseFieldState {
   bool hidePassword = true;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: "Password must have at least 8 characters including 1 number, 1 "

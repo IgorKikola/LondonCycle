@@ -18,11 +18,6 @@ class EmailField extends BaseField {
 
 class EmailFieldState extends BaseFieldState {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,

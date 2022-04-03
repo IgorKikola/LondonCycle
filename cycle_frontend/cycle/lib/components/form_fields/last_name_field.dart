@@ -18,11 +18,6 @@ class LastNameField extends BaseField {
 
 class LastNameFieldState extends BaseFieldState {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
