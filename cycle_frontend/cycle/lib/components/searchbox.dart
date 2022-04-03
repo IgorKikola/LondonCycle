@@ -1,4 +1,5 @@
 import 'package:cycle/models/named_lat_lng.dart';
+import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/services/search_suggestions.dart';
@@ -7,6 +8,7 @@ import 'package:cycle/utilities/home_page_design_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../services/marker_location.dart';
@@ -28,10 +30,8 @@ class SearchBox extends StatelessWidget {
   void onSelected(String suggestion) {
     String suggestionFullName = suggestion.toString().split('|').elementAt(0);
 
-    if (suggestionFullName.length > maxLocationStringLength) {
-      suggestionFullName =
-          suggestionFullName.substring(0, maxLocationStringLength) + '...';
-    }
+    suggestionFullName = sanitiseSearchBoxString(suggestionFullName);
+
     String longitude = suggestion.toString().split('|').elementAt(2);
     String latitude = suggestion.toString().split('|').elementAt(3);
     double long = double.parse(longitude);
@@ -39,6 +39,37 @@ class SearchBox extends StatelessWidget {
     NamedLatLng selectedLocation =
         NamedLatLng(latitude: lat, longitude: long, name: suggestionFullName);
 
+    updateRouteData(selectedLocation);
+
+    typeAheadController.text = suggestionFullName;
+  }
+
+  Future<void> onCurrentLocationClicked() async {
+    String suggestionFullName = 'Current location';
+
+    suggestionFullName = sanitiseSearchBoxString(suggestionFullName);
+
+    Position myCurrentPosition = await getPosition();
+
+    double long = myCurrentPosition.longitude;
+    double lat = myCurrentPosition.latitude;
+    NamedLatLng selectedLocation =
+        NamedLatLng(latitude: lat, longitude: long, name: suggestionFullName);
+
+    updateRouteData(selectedLocation);
+
+    typeAheadController.text = suggestionFullName;
+  }
+
+  String sanitiseSearchBoxString(String suggestionFullName) {
+    if (suggestionFullName.length > maxLocationStringLength) {
+      suggestionFullName =
+          suggestionFullName.substring(0, maxLocationStringLength) + '...';
+    }
+    return suggestionFullName;
+  }
+
+  void updateRouteData(NamedLatLng selectedLocation) {
     switch (searchboxType) {
       case Waypoint.start:
         myRoute.setStartingLocation(selectedLocation);
@@ -57,8 +88,6 @@ class SearchBox extends StatelessWidget {
         stop.setStopLocation(selectedLocation);
         break;
     }
-
-    typeAheadController.text = suggestionFullName;
   }
 
   final MyRoute myRoute;
@@ -106,6 +135,16 @@ class SearchBox extends StatelessWidget {
           // style: const TextStyle(fontSize: 12.0, color: Colors.black),
           style: kSearchBoxTextStyle,
           decoration: InputDecoration(
+            suffixIcon: IconButton(
+              padding: EdgeInsets.zero,
+              alignment: const Alignment(1.0, 0.0),
+              constraints: const BoxConstraints(),
+              icon: const Icon(
+                Icons.my_location,
+                color: Colors.blue,
+              ),
+              onPressed: onCurrentLocationClicked,
+            ),
             hintText: hintText,
             hintStyle: const TextStyle(color: Colors.white),
             border: kOutlineInputBorder,
