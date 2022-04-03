@@ -1,4 +1,5 @@
 import 'package:cycle/components/slide_up_widget.dart';
+import 'package:cycle/services/my_route_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -90,6 +91,7 @@ void main() {
     testWidgets(
         'Testing the Cancel button only redirects to the SlideUpWidget ',
         (WidgetTester tester) async {
+      MyRouteProvider.myRoute.numOfRiders = 1; //reset the number of riders
       final riderInkwell = find.byKey(const ValueKey('RiderInkwell'));
       await tester.pumpWidget(MaterialApp(
           home: SlideUpWidget(
