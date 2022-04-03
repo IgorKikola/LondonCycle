@@ -84,6 +84,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     UserDetailsHelper.logout(context);
                     Navigator.popUntil(context, ModalRoute.withName('home_page'));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return const StartingPage();
+                        }));
                   },
                 ),
               ],
