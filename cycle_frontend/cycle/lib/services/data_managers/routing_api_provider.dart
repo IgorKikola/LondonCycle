@@ -1,17 +1,18 @@
 import 'dart:convert';
 
+import 'package:cycle/services/network_helper.dart';
 import 'package:cycle/services/route.dart';
 import 'package:cycle/utilities/config.dart';
-import 'package:http/http.dart' show Client;
 
-import '../models/route_coordinates.dart';
-import '../utilities/config.dart';
+import '../../models/route_coordinates.dart';
+import '../../utilities/config.dart';
 
+/// This class is created to use backend response that bases routing on Tfl,
+/// which is not satisfactory since this class is not used in the final scope of the project.
 class RoutingApiProvider {
-  Client client = Client();
   late RouteCoordinates routeCoordinates;
 
-  Future<RouteCoordinates> fetchCoordinates(MyRoute myRoute) async {
+  Future<RouteCoordinates> getCoordinates(MyRoute myRoute) async {
     String startingLocation = myRoute.startingLocation!.latitude.toString() +
         ',' +
         myRoute.startingLocation!.longitude.toString();
@@ -33,12 +34,14 @@ class RoutingApiProvider {
           '${Config.routingPath}from/$startingLocation/to/$finishingLocation/';
     }
 
-    var url = Uri.https(Config.backendURL, apiCallPath, {
-      'format': 'json',
-    });
+    final response = await NetworkHelper.get(
+        domain: Config.backendURL,
+        path: apiCallPath,
+        params: {
+          'format': 'json',
+        });
 
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
+    if (response!.statusCode == 200) {
       routeCoordinates = RouteCoordinates.fromJson(json.decode(response.body));
     } else {
       return RouteCoordinates(coordinatesList: [[]]);
