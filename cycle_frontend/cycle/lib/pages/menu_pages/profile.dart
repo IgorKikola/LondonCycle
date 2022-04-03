@@ -33,73 +33,64 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 80.0),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 7,
-                child: Column(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                    width: 100,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.network(
-                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                        width: 100,
-                      ),
+                    UserProfileRow(
+                      value: widget.userData.firstName,
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 5.0,
                     ),
-                    Column(
-                      children: [
-                        UserProfileRow(
-                          value: widget.userData.firstName,
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        UserProfileRow(
-                          value: widget.userData.lastName,
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        UserProfileRow(
-                          value: widget.userData.email,
-                        ),
-                      ],
+                    UserProfileRow(
+                      value: widget.userData.lastName,
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    UserProfileRow(
+                      value: widget.userData.email,
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  children: [
-                    CustomBlueButton(
-                      text: "Edit profile",
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const EditProfileLoadingScreen();
-                        }));
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    CustomBlueButton(
-                      text: "Log out",
-                      onPressed: () {
-                        UserDetailsHelper.logout(context);
-                        Navigator.pushAndRemoveUntil(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const StartingPage();
-                        }), (route) => false);
-                      },
-                    )
-                  ],
+                const SizedBox(
+                  height: 40.0,
                 ),
-              ),
-            ],
+                CustomBlueButton(
+                  text: "Edit profile",
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const EditProfileLoadingScreen();
+                    }));
+                  },
+                ),
+                const SizedBox(height: 10.0),
+                CustomBlueButton(
+                  text: "Log out",
+                  onPressed: () {
+                    UserDetailsHelper.logout(context);
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const StartingPage();
+                    }), (route) => false);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

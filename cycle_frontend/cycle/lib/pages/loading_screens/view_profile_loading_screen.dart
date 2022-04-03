@@ -23,16 +23,15 @@ class _ViewProfileLoadingScreenState extends State<ViewProfileLoadingScreen> {
 
   void getUserData() async {
     var userLoggedIn = await UserDetailsHelper.isLoggedIn();
-    Navigator.pop(context);
     if (userLoggedIn) {
       var userData = await UserDetailsHelper.userDetails();
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return ProfilePage(
           userData: userData!,
         );
       }));
     } else {
-      Navigator.pushNamed(context, SignupPage.id);
+      Navigator.pushReplacementNamed(context, SignupPage.id);
     }
   }
 

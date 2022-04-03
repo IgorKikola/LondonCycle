@@ -29,8 +29,8 @@ class _SignupLoadingScreenState extends State<SignupLoadingScreen> {
       (response) {
         if (response.statusCode == 200) {
           // Redirect user to the login page.
-          Navigator.popUntil(context, (route) => route.isFirst);
-          Navigator.pushNamed(context, LoginPage.id);
+          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, LoginPage.id);
           Flushbar(
             icon: const Icon(
               Icons.check,

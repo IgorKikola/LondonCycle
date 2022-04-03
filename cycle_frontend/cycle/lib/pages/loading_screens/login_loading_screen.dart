@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cycle/models/login_request_model.dart';
+import 'package:cycle/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -28,8 +29,7 @@ class _LoginLoadingScreenState extends State<LoginLoadingScreen> {
     APIService.login(widget.model).then(
       (response) {
         if (response) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, HomePage.id, (route) => false);
+          Navigator.pushReplacementNamed(context, HomePage.id);
         } else {
           // If login was unsuccessful, show a bar for the user at the bottom of the screen.
           Navigator.pop(context);
