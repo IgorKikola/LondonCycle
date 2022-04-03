@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:cycle/services/mapbox_api_provider.dart';
+import 'package:cycle/services/data_managers/mapbox_api_provider.dart';
+import 'package:cycle/services/network_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
@@ -9,7 +10,7 @@ void main() {
   test("Testing simple case for the MapBoxApiProvider with correct response",
       () async {
     final mapBoxApiProvider = MapBoxApiProvider();
-    mapBoxApiProvider.client = MockClient((request) async {
+    NetworkHelper.client = MockClient((request) async {
       final mockJson = {
         'routes': [
           {
@@ -24,7 +25,8 @@ void main() {
       };
       return Response(json.encode(mockJson), 200);
     });
-    final mapBoxRoute = await mapBoxApiProvider.fetchRoute('some input data');
+    final mapBoxRoute =
+        await mapBoxApiProvider.getRouteForLocations('some input data');
     expect(mapBoxRoute.geometry.coordinates.coordinatesList.length, 2);
     expect(mapBoxRoute.geometry.coordinates.coordinatesList[0],
         [-0.111985, 51.505482]);
@@ -34,7 +36,7 @@ void main() {
 
   test("Testing the MapBoxApiProvider with correct response", () async {
     final mapBoxApiProvider = MapBoxApiProvider();
-    mapBoxApiProvider.client = MockClient((request) async {
+    NetworkHelper.client = MockClient((request) async {
       final mockJson = {
         'routes': [
           {
@@ -78,7 +80,8 @@ void main() {
       };
       return Response(json.encode(mockJson), 200);
     });
-    final mapBoxRoute = await mapBoxApiProvider.fetchRoute('some input data');
+    final mapBoxRoute =
+        await mapBoxApiProvider.getRouteForLocations('some input data');
     expect(mapBoxRoute.geometry.coordinates.coordinatesList.length, 31);
     expect(mapBoxRoute.geometry.coordinates.coordinatesList[0],
         [-0.111985, 51.505482]);
@@ -93,11 +96,12 @@ void main() {
   test("Testing the MapBoxApiProvider with different status code", () async {
     //setup the test
     final mapBoxApiProvider = MapBoxApiProvider();
-    mapBoxApiProvider.client = MockClient((request) async {
+    NetworkHelper.client = MockClient((request) async {
       final mockJson = {};
       return Response(json.encode(mockJson), 404);
     });
-    final mapBoxRoute = await mapBoxApiProvider.fetchRoute('some input data');
+    final mapBoxRoute =
+        await mapBoxApiProvider.getRouteForLocations('some input data');
     expect(mapBoxRoute.geometry.coordinates.coordinatesList.first.length, 0);
   });
 }

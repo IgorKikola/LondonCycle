@@ -8,8 +8,8 @@ class NetworkHelper {
   static var client = http.Client();
 
   static Future<http.Response>? get(
-      {required String domain, required String path}) async {
-    var url = Uri.https(domain, path);
+      {required String domain, required String path, params}) async {
+    var url = Uri.https(domain, path, params);
     return await client.get(url);
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../models/map_box_route.dart';
-import 'mapbox_api_provider.dart';
+import 'data_managers/mapbox_api_provider.dart';
 
 class RoutingService {
   static List<LatLng> coordinates = [];
@@ -15,7 +15,7 @@ class RoutingService {
 
     MapBoxApiProvider mapBoxApiProvider = MapBoxApiProvider();
     MapBoxRoute mapBoxRoute =
-        await mapBoxApiProvider.fetchRoute(locationsToVisit);
+        await mapBoxApiProvider.getRouteForLocations(locationsToVisit);
     int numberOfCoordinates = mapBoxApiProvider.getNumberOfCoordinates();
 
     //TODO: decide which API to use
