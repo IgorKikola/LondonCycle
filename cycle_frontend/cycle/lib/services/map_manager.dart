@@ -4,6 +4,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+///Opens a bottom sheet of different mapping apps installed on the device. On
+///pressed it redirects to a route in the selected app using either cycling or
+///walking mode.
 class MapManager {
   dynamic context;
 

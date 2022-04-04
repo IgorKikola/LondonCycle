@@ -13,7 +13,7 @@ import '../services/marker_location.dart';
 import '../services/routing.dart';
 import '../utilities/map_box_config.dart';
 
-/// Page containing the map.
+/// The page containing the map.
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
   const MainPage({Key? key}) : super(key: key);
@@ -49,6 +49,8 @@ class MainPageState extends State<MainPage> {
   }
 }
 
+///Map widget that displays landmarks and bikepoints as markers. It also has several
+///buttons to center, zoom-in, and zoom-out.
 class MapWidget extends StatefulWidget {
   const MapWidget({
     Key? key,

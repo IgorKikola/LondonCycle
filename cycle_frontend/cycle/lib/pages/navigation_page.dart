@@ -7,6 +7,9 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../utilities/home_page_design_contants.dart';
 
+/// Navigation page displays a list of all stops in the route selected by the user.
+/// The stops already visited are not clickable, the next unvisited stop is clickable,
+/// while the rest are highlighted in green.
 class NavigationPage extends StatefulWidget {
   static const String id = 'navigation_page';
   const NavigationPage({Key? key}) : super(key: key);
@@ -75,6 +78,8 @@ class _NavigationPageState extends State<NavigationPage> {
   }
 }
 
+///Arguments of the navigation page that need to be pushed on to the navigator
+///along with the page itself for proper functionality.
 class NavigationPageArguments {
   final List<NamedLatLng> _stops;
   final dynamic _context;

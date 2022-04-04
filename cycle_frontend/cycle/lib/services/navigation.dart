@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart';
 
+///Navigation class responsible for splitting route into walking and cycling
+///sub-routes according to the number of riders and setting up navigators for them.
 class Navigation {
   final List<LatLng> _stops;
   final dynamic _context;
@@ -26,8 +28,6 @@ class Navigation {
 
   Future<void> buildRouteBetweenTwoPoints(
       LatLng start, LatLng stop, int numberOfRiders) async {
-    // await _getDockingStations(start, stop);
-
     await Navigator.push(_context, MaterialPageRoute(builder: (context) {
       return NavigationLoadingScreen(action: () async {
         await _getDockingStations(start, stop);

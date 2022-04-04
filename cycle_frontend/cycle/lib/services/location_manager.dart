@@ -1,6 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:restart_app/restart_app.dart';
 
+///Ensure that the app has all permissions necessary to run the location serice
+///and return the location of the user.
 Future<Position> getPosition() async {
   bool serviceEnabled;
   LocationPermission permission;
@@ -48,6 +50,8 @@ Future<bool> isLocationServiceAllowed() async {
       permission == LocationPermission.always);
 }
 
+///Class responsible for continuously ensuring that the location services are
+///allowed to run on the device.
 class LocationManager {
   bool stopped = false;
 
