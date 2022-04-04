@@ -19,23 +19,25 @@ class LastNameField extends BaseField {
 class LastNameFieldState extends BaseFieldState {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your surname';
-        }
-        ValidatorMessage message = StringValidator.isLastName(value);
-        if (message != ValidatorMessage.defaultMessage) {
-          return StringValidator.getText(message);
-        } else {
-          return null;
-        }
-      },
-      controller: widget.controller,
-      decoration: kTextFieldDecoration.copyWith(
-        labelText: widget.label,
-        hintText: widget.hint,
-        icon: const Icon(Icons.person),
+    return Material(
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your surname';
+          }
+          ValidatorMessage message = StringValidator.isLastName(value);
+          if (message != ValidatorMessage.defaultMessage) {
+            return StringValidator.getText(message);
+          } else {
+            return null;
+          }
+        },
+        controller: widget.controller,
+        decoration: kTextFieldDecoration.copyWith(
+          labelText: widget.label,
+          hintText: widget.hint,
+          icon: const Icon(Icons.person),
+        ),
       ),
     );
   }

@@ -46,31 +46,35 @@ class LoginFormState extends State<LoginForm> {
                 runSpacing: 20.0,
                 children: <Widget>[
                   // EMAIL FIELD
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: kTextFieldDecoration.copyWith(
-                      labelText: 'Email',
-                      hintText: 'Enter your email address',
+                  Material(
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      decoration: kTextFieldDecoration.copyWith(
+                        labelText: 'Email',
+                        hintText: 'Enter your email address',
+                      ),
                     ),
                   ),
                   // PASSWORD FIELD
-                  TextFormField(
-                    obscureText: hidePassword,
-                    controller: passwordController,
-                    decoration: kTextFieldDecoration.copyWith(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            hidePassword = !hidePassword;
-                          });
-                        },
-                        icon: Icon(
-                          hidePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                  Material(
+                    child: TextFormField(
+                      obscureText: hidePassword,
+                      controller: passwordController,
+                      decoration: kTextFieldDecoration.copyWith(
+                        labelText: 'Password',
+                        hintText: 'Enter your password',
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              hidePassword = !hidePassword;
+                            });
+                          },
+                          icon: Icon(
+                            hidePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
                         ),
                       ),
                     ),
@@ -106,6 +110,7 @@ class LoginFormState extends State<LoginForm> {
               padding: const EdgeInsets.only(top: 20.0),
               child: CustomBlueButton(
                 text: 'Login',
+                key: const Key('LoginButton'),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // If email and password fields are valid (not empty in this case)

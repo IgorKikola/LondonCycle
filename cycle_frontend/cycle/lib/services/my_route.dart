@@ -82,7 +82,7 @@ class MyRoute {
             ';';
       }
       waypointsFormatted =
-          waypointsFormatted.substring(0, waypointsFormatted.length - 2);
+          waypointsFormatted.substring(0, waypointsFormatted.length - 1);
     }
     return waypointsFormatted;
   }

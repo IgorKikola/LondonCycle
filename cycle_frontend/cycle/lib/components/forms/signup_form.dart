@@ -8,7 +8,6 @@ import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/models/signup_request_model.dart';
 import 'package:cycle/pages/loading_screens/signup_loading_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../custom_blue_button.dart';
 
 /// Form for a sign-up.
@@ -90,16 +89,18 @@ class SignupFormState extends State<SignupForm> {
                     builder: (state) {
                       return Row(
                         children: <Widget>[
-                          Checkbox(
-                            activeColor: Colors.blueAccent,
-                            value: termsAndPolicyAccepted,
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  termsAndPolicyAccepted = value!;
-                                },
-                              );
-                            },
+                          Material(
+                            child: Checkbox(
+                              activeColor: Colors.blueAccent,
+                              value: termsAndPolicyAccepted,
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    termsAndPolicyAccepted = value!;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                           Flexible(
                             child: CheckboxText(
