@@ -19,69 +19,38 @@ import requests
 import json
 import re
 
-@api_view()
-@permission_classes([])
-def get_route(request, fromPlace, toPlace):
-    coordinatesString=""
-    base_leg=0
-    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'
-    base_response = urlopen(base)
-    base_json = json.loads(base_response.read())
-    while base_leg < len(base_json['journeys'][0]['legs']):
-        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
-        base_leg+=1
-    coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
-    coordinatesString=coordinatesString[1:]
-    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
-    splitList=[item.split(',') for item in filteredCoordinates]
-    splitList = [list(map(float, lst)) for lst in splitList]
-    return Response(splitList)
 
-@api_view()
-@permission_classes([])
-def get_route_single_stop(request, fromPlace, firstStop, toPlace):
-    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
+""" GENERAL OBJECT VIEWSETS """
 
-@api_view()
-@permission_classes([])
-def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
-    coordinatesString=""
-    splitList=[]
-    currentStop=[]
-    nextStop=[]
-    listStops = stringOfStops.split(";")
-    i = 0
-    base_leg=0
-    result_leg=0
-    end_leg=0
-    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'
-    base_response = urlopen(base)
-    base_json = json.loads(base_response.read())
-    while base_leg < len(base_json['journeys'][0]['legs']):
-        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
-        base_leg+=1
-    while i+1 < len(listStops):
-        currentStop = listStops[i]
-        nextStop = listStops[i+1]
-        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'
-        result_response = urlopen(result)
-        result_json = json.loads(result_response.read())
-        while result_leg < len(result_json['journeys'][0]['legs']):
-            coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][result_leg]['path']['lineString']
-            result_leg+=1
-        i+=1
-    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'
-    end_response = urlopen(end)
-    end_json = json.loads(end_response.read())
-    while end_leg < len(end_json['journeys'][0]['legs']):
-        coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][end_leg]['path']['lineString']
-        end_leg+=1
-    coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
-    coordinatesString=coordinatesString[1:]
-    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
-    splitList=[item.split(',') for item in filteredCoordinates]
-    splitList = [list(map(float, lst)) for lst in splitList]
-    return Response(splitList)
+
+class PlaceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows places to be viewed or edited.
+    """
+    queryset = Place.objects.all()
+    serializer_class = PlaceSerializer
+    permission_classes = []
+
+
+class BikePointViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows bikepoints to be viewed or edited.
+    """
+    queryset = Place.objects.filter(id__startswith='BikePoints')
+    serializer_class = PlaceSerializer
+    permission_classes = []
+
+
+class LandmarkViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows landmarks to be viewed or edited.
+    """
+    queryset = Place.objects.filter(id__startswith='Landmark')
+    serializer_class = PlaceSerializer
+    permission_classes = []
+
+
+""" BIKEPOINT/LANDMARK PROPERTY/DISTANCE VIEWS """
 
 
 @api_view()
@@ -153,31 +122,7 @@ def get_closest_bikepoint_with_at_least_n_empty_docks(request, n, lat, lon):
     return Response(return_data)
 
 
-class PlaceViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows places to be viewed or edited.
-    """
-    queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
-    permission_classes = []
-
-
-class BikePointViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows bikepoints to be viewed or edited.
-    """
-    queryset = Place.objects.filter(id__startswith='BikePoints')
-    serializer_class = PlaceSerializer
-    permission_classes = []
-
-
-class LandmarkViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows landmarks to be viewed or edited.
-    """
-    queryset = Place.objects.filter(id__startswith='Landmark')
-    serializer_class = PlaceSerializer
-    permission_classes = []
+""" AUTHENTICATION FUNCTIONS """
 
 
 # Signup view
@@ -244,10 +189,10 @@ def get_user_details_view(request):
     return Response(response_data, content_type="application/json")
 
 
-""" Used to update user and return a response containing his updated information """
-
-
 def update_user(user, data):
+    """
+    Used to update user and return a response containing his updated information
+    """
     user.first_name = data['first_name']
     user.last_name = data['last_name']
     user.email = data['email']
@@ -270,3 +215,82 @@ def update_user(user, data):
 #   ...
 #
 # Each call to the api view must have a  token in the header: "Authorization" : "Token {actual_token}"
+
+
+""" ROUTING FUNCTIONS """
+
+@api_view()
+@permission_classes([])
+def get_route(request, fromPlace, toPlace):
+    """
+    Returns a route from one place to another.
+    Deprecated because the TFL API does not work as intended.
+    """
+    coordinatesString=""
+    base_leg=0
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?/mode=cycle'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    while base_leg < len(base_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
+        base_leg+=1
+    coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
+    coordinatesString=coordinatesString[1:]
+    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
+    splitList=[item.split(',') for item in filteredCoordinates]
+    splitList = [list(map(float, lst)) for lst in splitList]
+    return Response(splitList)
+
+@api_view()
+@permission_classes([])
+def get_route_single_stop(request, fromPlace, firstStop, toPlace):
+    """
+    Returns a route from one place to another, via one stop.
+    Deprecated because the TFL API does not work as intended.
+    """
+    return Response(requests.get(f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{toPlace}?via={firstStop}&mode=cycle'))
+
+@api_view()
+@permission_classes([])
+def get_route_multiple_stop(request, fromPlace, stringOfStops, toPlace):
+    """
+    Returns a route from one place to another, via multiple stops.
+    Deprecated because the TFL API does not work as intended.
+    """
+    coordinatesString=""
+    splitList=[]
+    currentStop=[]
+    nextStop=[]
+    listStops = stringOfStops.split(";")
+    i = 0
+    base_leg=0
+    result_leg=0
+    end_leg=0
+    base = f'https://api.tfl.gov.uk/Journey/JourneyResults/{fromPlace}/to/{listStops[i]}?/mode=cycle'
+    base_response = urlopen(base)
+    base_json = json.loads(base_response.read())
+    while base_leg < len(base_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+base_json['journeys'][0]['legs'][base_leg]['path']['lineString']
+        base_leg+=1
+    while i+1 < len(listStops):
+        currentStop = listStops[i]
+        nextStop = listStops[i+1]
+        result = f'https://api.tfl.gov.uk/Journey/JourneyResults/{currentStop}/to/{nextStop}?/mode=cycle'
+        result_response = urlopen(result)
+        result_json = json.loads(result_response.read())
+        while result_leg < len(result_json['journeys'][0]['legs']):
+            coordinatesString=coordinatesString+","+result_json['journeys'][0]['legs'][result_leg]['path']['lineString']
+            result_leg+=1
+        i+=1
+    end= f'https://api.tfl.gov.uk/Journey/JourneyResults/{nextStop}/to/{toPlace}?/mode=cycle'
+    end_response = urlopen(end)
+    end_json = json.loads(end_response.read())
+    while end_leg < len(end_json['journeys'][0]['legs']):
+        coordinatesString=coordinatesString+","+end_json['journeys'][0]['legs'][end_leg]['path']['lineString']
+        end_leg+=1
+    coordinatesString=coordinatesString.replace(" ","").replace("[","").replace("]","")
+    coordinatesString=coordinatesString[1:]
+    filteredCoordinates=re.sub('(,[^,]*),', r'\1 ', coordinatesString).split()
+    splitList=[item.split(',') for item in filteredCoordinates]
+    splitList = [list(map(float, lst)) for lst in splitList]
+    return Response(splitList)
