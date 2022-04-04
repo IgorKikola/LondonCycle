@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-
-  testWidgets('Test for login text on scaffold appbar', (WidgetTester tester) async {
+  testWidgets('Test for login text on scaffold appbar',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginPage()));
     await tester.pump();
     expect(find.byKey(ValueKey('LoginScaffold')), findsOneWidget);
     expect(find.text('Login'), findsNWidgets(2));
   });
 
-  testWidgets('Test for text on LoginPage and font', (WidgetTester tester) async {
+  testWidgets('Test for text on LoginPage and font',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginPage()));
     await tester.pump();
     Text font = tester.firstWidget(find.text('Login to your account'));
@@ -24,5 +25,4 @@ void main() {
     await tester.pump();
     expect(find.byType(Divider), findsOneWidget);
   });
-
 }

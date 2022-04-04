@@ -18,7 +18,8 @@ void main() {
     expect(find.byType(TextFormField), findsNWidgets(2));
     expect(find.text('Password'), findsOneWidget);
     expect(find.text('Enter your password'), findsOneWidget);
-    expect(find.text("I forgot my password", findRichText: true), findsOneWidget);
+    expect(
+        find.text("I forgot my password", findRichText: true), findsOneWidget);
     expect(find.byIcon(Icons.visibility_off), findsOneWidget);
   });
 
@@ -30,5 +31,4 @@ void main() {
     expect(find.text('Login'), findsOneWidget);
     expect(font.style?.fontFamily, 'Lobster');
   });
-
 }
