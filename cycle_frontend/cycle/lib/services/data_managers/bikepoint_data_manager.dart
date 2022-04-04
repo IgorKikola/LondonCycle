@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cycle/models/docking_station.dart';
-import 'package:cycle/models/journey_stop.dart';
 import 'package:cycle/models/landmark.dart';
 import 'package:cycle/services/network_helper.dart';
 import 'package:cycle/utilities/config.dart';
@@ -49,11 +48,3 @@ Future<List<Landmark>> getLandmarks() async {
   return landmarks;
 }
 
-Future<List<JourneyStop>> getStops() async {
-  List<JourneyStop> journeyStops = (await NetworkHelper.getJsonList(
-          domain: Config.backendURL, path: Config.landmarksPath))
-      .map((journeyStop) => JourneyStop.fromJson(journeyStop))
-      .toList();
-
-  return journeyStops;
-}
