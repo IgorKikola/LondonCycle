@@ -15,8 +15,19 @@ The members of the team are:
 The project is called `cycles`.
 
 ## Deployed version of the application
-The deployed version of the Backend application can be found at
-https://agile-citadel-13372.herokuapp.com/
+The deployed version of the Backend application can be found at:
+
+```
+$ https://agile-citadel-13372.herokuapp.com/
+```
+
+Admin credentials:
+
+```
+$ email: admin@admin.admin
+$ password: admin
+```
+
 
 ## Installation instructions Backend
 To install the software and use it in your local development environment, you must first set up and activate a local development environment.  From the root of the backend project:
