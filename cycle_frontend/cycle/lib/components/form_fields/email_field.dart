@@ -19,23 +19,25 @@ class EmailField extends BaseField {
 class EmailFieldState extends BaseFieldState {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your email';
-        }
-        if (!isEmail(value)) {
-          return "Your provided email is invalid.";
-        } else {
-          return null;
-        }
-      },
-      controller: widget.controller,
-      decoration: kTextFieldDecoration.copyWith(
-        icon: const Icon(Icons.mail),
-        labelText: widget.label,
-        hintText: widget.hint,
+    return Material(
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your email';
+          }
+          if (!isEmail(value)) {
+            return "Your provided email is invalid.";
+          } else {
+            return null;
+          }
+        },
+        controller: widget.controller,
+        decoration: kTextFieldDecoration.copyWith(
+          icon: const Icon(Icons.mail),
+          labelText: widget.label,
+          hintText: widget.hint,
+        ),
       ),
     );
   }

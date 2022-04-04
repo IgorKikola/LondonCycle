@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cycle/components/searchbox.dart';
 import 'package:cycle/pages/journey_stop_pages/stored_stops.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('Test text on scaffold appbar', (WidgetTester tester) async {
+  testWidgets('Test for Stops text on scaffold appbar',
+      (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({'stop': jsonEncode([])});
     await tester.pumpWidget(const MaterialApp(home: Stops()));
     await tester.pump();
