@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+///Loading screen for the navigation page. When created, it computes the action passed
+///to it and when this is finished, it gets popped.
 class NavigationLoadingScreen extends StatefulWidget {
   final Function action;
   const NavigationLoadingScreen({Key? key, required this.action})
