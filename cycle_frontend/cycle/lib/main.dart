@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cycle',
       theme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
       initialRoute: HomePage.id,
       routes: {
         SignupPage.id: (context) => const SignupPage(),
