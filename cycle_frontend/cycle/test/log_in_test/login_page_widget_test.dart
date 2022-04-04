@@ -7,7 +7,7 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginPage()));
     await tester.pump();
-    expect(find.byKey(ValueKey('LoginScaffold')), findsOneWidget);
+    expect(find.byKey(const ValueKey('LoginScaffold')), findsOneWidget);
     expect(find.text('Login'), findsNWidgets(2));
   });
 
