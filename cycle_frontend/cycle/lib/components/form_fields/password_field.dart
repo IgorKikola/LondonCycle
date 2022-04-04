@@ -28,32 +28,34 @@ class PasswordFieldState extends BaseFieldState {
       decoration: kFormFieldTooltipDecoration,
       textStyle: kFormFieldTooltipTextStyle,
       padding: const EdgeInsets.all(15.0),
-      child: TextFormField(
-        obscureText: hidePassword,
-        controller: widget.controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter your password';
-          }
-          ValidatorMessage message = StringValidator.isValidPassword(value);
-          if (message != ValidatorMessage.defaultMessage) {
-            return StringValidator.getText(message);
-          } else {
-            return null;
-          }
-        },
-        decoration: kTextFieldDecoration.copyWith(
-          icon: const Icon(Icons.lock),
-          labelText: widget.label,
-          hintText: widget.hint,
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                hidePassword = !hidePassword;
-              });
-            },
-            icon: Icon(
-              hidePassword ? Icons.visibility_off : Icons.visibility,
+      child: Material(
+        child: TextFormField(
+          obscureText: hidePassword,
+          controller: widget.controller,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            }
+            ValidatorMessage message = StringValidator.isValidPassword(value);
+            if (message != ValidatorMessage.defaultMessage) {
+              return StringValidator.getText(message);
+            } else {
+              return null;
+            }
+          },
+          decoration: kTextFieldDecoration.copyWith(
+            icon: const Icon(Icons.lock),
+            labelText: widget.label,
+            hintText: widget.hint,
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  hidePassword = !hidePassword;
+                });
+              },
+              icon: Icon(
+                hidePassword ? Icons.visibility_off : Icons.visibility,
+              ),
             ),
           ),
         ),
