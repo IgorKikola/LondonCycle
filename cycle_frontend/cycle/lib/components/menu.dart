@@ -98,4 +98,3 @@ Widget buildMap(BuildContext context) => SizedBox(
         ),
       ),
     );
-

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cycle/services/data_managers/bikepoint_data_manager.dart';
 import 'package:cycle/services/location_manager.dart';
 import 'package:cycle/services/mapcontroller_provider.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-
 import '../services/mapcontroller_provider.dart';
 import '../services/marker_location.dart';
 import '../services/routing.dart';
@@ -107,12 +105,6 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: Menu(),
-      // appBar: AppBar(
-      //   title: Text('Map',
-      //       style: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 20)),
-      //   backgroundColor: Colors.lightBlue,
-      // ),
       body: Stack(
         children: [
           FlutterMap(
