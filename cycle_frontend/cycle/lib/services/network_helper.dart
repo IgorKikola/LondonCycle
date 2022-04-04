@@ -1,33 +1,57 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 /// This class is used to handle API calls, decode JSON files and return data contained in them.
 class NetworkHelper {
-  final String url;
+  static var client = http.Client();
 
-  NetworkHelper(this.url);
-
-  Future<dynamic> getData() async {
-    // Retrieve JSON data using http GET call.
-    http.Response response = await http.get(Uri.parse(url));
-
-    // If retrieval was successful, decode data and return it.
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      // print(response.statusCode);
-    }
+  static Future<http.Response>? get(
+      {required String domain, required String path, params}) async {
+    var url = Uri.https(domain, path, params);
+    return await client.get(url);
   }
 
-  Future<Map> postData(Map data) async {
-    http.Response response = await http.post(Uri.parse(url), body: data);
-    var responseData = jsonDecode(response.body);
+  static Future<List<dynamic>> getJsonList(
+      {required String domain, required String path}) async {
+    var response = (await get(
+      domain: domain,
+      path: path,
+    ));
+    if (response!.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      if (data == null) {
+        return List.empty();
+      }
+      return data['results'] as List;
+    }
+    return List.empty();
+  }
 
-    // Returns a map that contains the status code of the POST action
-    // and the message received.
-    Map result = {'statusCode': responseData.statusCode, 'body': responseData};
+  // HTTP METHODS FOR TESTING PURPOSES. USED WITH THE LOCALHOST CALLS
 
-    return result;
+  static Future<http.Response>? httpGet(
+      {required String domain, required String path, required headers}) async {
+    var url = Uri.http(domain, path);
+    return await client.get(url, headers: headers);
+  }
+
+  static Future<http.Response>? httpPost(
+      {required String domain,
+      required String path,
+      required body,
+      required headers}) async {
+    var url = Uri.http(domain, path);
+    return await client.post(url, headers: headers, body: body);
+  }
+
+  static Future<http.Response>? httpPut(
+      {required String domain,
+      required String path,
+      required body,
+      required headers}) async {
+    var url = Uri.http(domain, path);
+    return await client.put(url, headers: headers, body: body);
   }
 }

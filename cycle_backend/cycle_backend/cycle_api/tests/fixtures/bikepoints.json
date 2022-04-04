@@ -1,0 +1,47 @@
+[
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "BikePoints_86",
+      "name": "Sancroft Street, Vauxhall",
+      "lat": 51.489479,
+      "lon": -0.115156
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "BikePoints_88",
+      "name": "Bayley Street , Bloomsbury",
+      "lat": 51.518587,
+      "lon": -0.132053
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "BikePoints_89",
+      "name": "Tavistock Place, Bloomsbury",
+      "lat": 51.52625,
+      "lon": -0.123509
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "BikePoints_90",
+      "name": "Harrington Square 1, Camden Town",
+      "lat": 51.533019,
+      "lon": -0.139174
+    }
+  },
+  {
+    "model": "cycle_api.Place",
+    "fields": {
+      "id": "BikePoints_91",
+      "name": "Walnut Tree Walk, Vauxhall",
+      "lat": 51.493686,
+      "lon": -0.111014
+    }
+  }
+]
