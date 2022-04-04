@@ -14,7 +14,7 @@ void main() {
   testWidgets('test that menu loads correctly', (WidgetTester tester) async {
     final profileButton = find.text('My Profile');
     final mapButton = find.text('Map');
-    await tester.pumpWidget(MaterialApp(home: Menu()));
+    await tester.pumpWidget(const MaterialApp(home: Menu()));
     await tester.pump();
     expect(profileButton, findsOneWidget);
     expect(mapButton, findsOneWidget);
@@ -24,7 +24,7 @@ void main() {
       (WidgetTester tester) async {
     final profileButton = find.byIcon(Icons.contacts);
     final mapButton = find.byIcon(Icons.map);
-    await tester.pumpWidget(MaterialApp(home: Menu()));
+    await tester.pumpWidget(const MaterialApp(home: Menu()));
     await tester.pump();
     expect(profileButton, findsOneWidget);
     expect(mapButton, findsOneWidget);
