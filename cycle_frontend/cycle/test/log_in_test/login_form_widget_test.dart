@@ -2,6 +2,7 @@ import 'package:cycle/components/custom_blue_button.dart';
 import 'package:cycle/components/forms/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 void main() {
   testWidgets('Test for Email Field in Login', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginForm()));
@@ -17,10 +18,10 @@ void main() {
     expect(find.byType(TextFormField), findsNWidgets(2));
     expect(find.text('Password'), findsOneWidget);
     expect(find.text('Enter your password'), findsOneWidget);
-    expect(find.text("I forgot my password", findRichText: true), findsOneWidget);
+    expect(
+        find.text("I forgot my password", findRichText: true), findsOneWidget);
     expect(find.byIcon(Icons.visibility_off), findsOneWidget);
   });
-
 
   testWidgets('Test for Login button', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginForm()));
@@ -30,6 +31,4 @@ void main() {
     expect(find.text('Login'), findsOneWidget);
     expect(font.style?.fontFamily, 'Lobster');
   });
-
-
 }

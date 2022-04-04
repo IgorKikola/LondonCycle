@@ -47,4 +47,3 @@ Future<List<Landmark>> getLandmarks() async {
 
   return landmarks;
 }
-

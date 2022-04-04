@@ -110,7 +110,7 @@ class LoginFormState extends State<LoginForm> {
               padding: const EdgeInsets.only(top: 20.0),
               child: CustomBlueButton(
                 text: 'Login',
-                key: Key('LoginButton'),
+                key: const Key('LoginButton'),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // If email and password fields are valid (not empty in this case)

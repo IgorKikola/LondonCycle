@@ -8,6 +8,7 @@ import 'package:cycle/components/form_fields/password_repeat_field.dart';
 import 'package:cycle/components/forms/signup_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 void main() {
   testWidgets('Test for FirstName Field', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: SignupForm()));
@@ -57,6 +58,4 @@ void main() {
     expect(find.byType(CustomBlueButton), findsOneWidget);
     expect(find.text('Submit'), findsOneWidget);
   });
-
-
 }
