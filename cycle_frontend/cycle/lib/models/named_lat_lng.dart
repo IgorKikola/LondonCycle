@@ -1,5 +1,6 @@
 import 'package:latlong2/latlong.dart';
 
+/// Extension of the LatLng class, which includes name to help identify the location.
 class NamedLatLng extends LatLng {
   String name;
 

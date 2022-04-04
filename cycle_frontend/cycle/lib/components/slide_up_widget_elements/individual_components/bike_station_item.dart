@@ -7,6 +7,7 @@ import '../../../services/search_suggestions.dart';
 import '../../../services/string_sanitizer.dart';
 import '../../../utilities/home_page_design_contants.dart';
 
+/// Container widget that contains individual bike station information
 class BikeStationItemWidget extends StatefulWidget {
   const BikeStationItemWidget({
     Key? key,

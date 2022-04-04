@@ -5,6 +5,7 @@ import '../../services/my_route_provider.dart';
 import '../../services/my_route.dart';
 import '../../utilities/home_page_design_contants.dart';
 
+/// Widget with information about rider for a given trip.
 class RidersWidget extends StatefulWidget {
   const RidersWidget({
     Key? key,

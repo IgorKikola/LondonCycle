@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 
 import '../services/my_route.dart';
 
+/// The widget that slides from the bottom of the page and contains most of
+/// the functional widgets of the app.
 class SlideUpWidget extends StatefulWidget {
   final ScrollController controller;
   final dynamic mapRefreshCallback;

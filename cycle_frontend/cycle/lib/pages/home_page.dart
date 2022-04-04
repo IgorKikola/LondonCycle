@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+/// The home page of our app that consists of a map with an overlapping slide-up widget.
 class _HomePageState extends State<HomePage> {
   final GlobalKey<MainPageState> _myMainPageState = GlobalKey<MainPageState>();
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Container for the search bar.
 class SearchBoxWidget extends StatelessWidget {
   const SearchBoxWidget({
     Key? key,

@@ -4,6 +4,7 @@ import 'package:cycle/models/map_box_route.dart';
 import 'package:cycle/services/network_helper.dart';
 import 'package:cycle/utilities/map_box_config.dart';
 
+/// Class used to retrieve routing path from MapBox server.
 class MapBoxApiProvider {
   late MapBoxRoute mapBoxRoute;
 

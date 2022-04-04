@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import '../models/map_box_route.dart';
 import 'data_managers/mapbox_api_provider.dart';
 
+/// Displays the set of coordinates on the map that are connected using polyline.
 class RoutingService {
   static List<LatLng> coordinates = [];
 

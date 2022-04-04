@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../pages/navigation_page.dart';
 import '../../../services/my_route_provider.dart';
 
+/// Button to take user to navigation page.
 class NavigateButton extends StatelessWidget {
   const NavigateButton({
     Key? key,

@@ -6,6 +6,7 @@ import '../../searchbox.dart';
 final TextEditingController startingPointSearchboxTypeAheadController =
     TextEditingController();
 
+/// Specific searchbar for starting location.
 class StartingLocationSearchBar extends StatelessWidget {
   const StartingLocationSearchBar({
     Key? key,

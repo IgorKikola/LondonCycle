@@ -6,6 +6,7 @@ import '../../searchbox.dart';
 final TextEditingController finishingPointSearchboxTypeAheadController =
     TextEditingController();
 
+/// Specific searchbar for finishing location.
 class FinishingLocationSearchBar extends StatelessWidget {
   const FinishingLocationSearchBar({
     Key? key,

@@ -28,6 +28,7 @@ void main() async {
   runApp(const MyApp());
 }
 
+/// The core of the cycles app.
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

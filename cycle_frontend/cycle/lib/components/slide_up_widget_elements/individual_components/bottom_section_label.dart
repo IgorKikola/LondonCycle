@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utilities/home_page_design_contants.dart';
 
+/// Description for the bottom part of the slide up widget.
 class BottomSectionLabel extends StatelessWidget {
   const BottomSectionLabel(
       {Key? key,
