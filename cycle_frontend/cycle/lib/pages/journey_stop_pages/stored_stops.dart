@@ -8,6 +8,7 @@ import '../../services/my_route.dart';
 import '../../services/stop_location.dart';
 import '../../utilities/home_page_design_contants.dart';
 
+/// Stops page where user can add and delete stops for journey
 class Stops extends StatefulWidget {
   const Stops({Key? key}) : super(key: key);
 

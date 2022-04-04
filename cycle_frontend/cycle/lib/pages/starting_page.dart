@@ -4,6 +4,7 @@ import 'package:cycle/pages/signup_login_pages/signup_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+///Landing page after user logs out
 class StartingPage extends StatefulWidget {
   static const String id = 'starting_page';
 

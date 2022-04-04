@@ -1,3 +1,4 @@
+///Model for stops
 class Stop {
   int id;
   String name;
