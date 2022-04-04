@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+
   testWidgets('Test for login text on scaffold appbar', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: LoginPage()));
     await tester.pump();
@@ -23,6 +24,5 @@ void main() {
     await tester.pump();
     expect(find.byType(Divider), findsOneWidget);
   });
-
 
 }

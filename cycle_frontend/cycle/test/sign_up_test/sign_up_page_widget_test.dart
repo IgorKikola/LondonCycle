@@ -9,6 +9,8 @@ void main() {
     expect(find.text('Sign-up'), findsOneWidget);
   });
 
+
+
   testWidgets('Test for all text on SignupPage and font', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: SignupPage()));
     await tester.pump();
