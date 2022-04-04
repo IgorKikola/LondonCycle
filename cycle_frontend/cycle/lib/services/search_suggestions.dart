@@ -19,6 +19,7 @@ const String kBoundingBoxMaxLatitude = '55.0';
 const String kProximityCenterLongitude = '-0.12463613127872614';
 const String kProximityCenterLatitude = '51.50072917963769';
 
+/// Gets suggestions from MapBox geocoding API.
 class BackendService {
   static Future<List<String>> getSuggestionsFromGeocoding(
       String pattern) async {

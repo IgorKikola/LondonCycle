@@ -2,6 +2,7 @@ import '../models/named_lat_lng.dart';
 
 enum Waypoint { start, midpoint, finish }
 
+/// Class facilitating easy access to the current route picked by the user.
 class MyRoute {
   NamedLatLng? startingLocation;
   NamedLatLng? finishingLocation;

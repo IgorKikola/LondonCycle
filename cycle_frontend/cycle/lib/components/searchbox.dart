@@ -18,6 +18,8 @@ const kOutlineInputBorder = OutlineInputBorder(
   borderSide: BorderSide.none,
 );
 
+/// The search widget that allows user to choose a suitable
+/// suggestion, based on what is typed into the text field.
 class SearchBox extends StatelessWidget {
   final TextEditingController typeAheadController;
 

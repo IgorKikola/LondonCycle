@@ -1,3 +1,4 @@
+/// Class that parses the MapBox API response into a model, later used for routing.
 class MapBoxRoute {
   late Geometry geometry;
 

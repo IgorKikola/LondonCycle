@@ -13,6 +13,7 @@ import '../services/marker_location.dart';
 import '../services/routing.dart';
 import '../utilities/map_box_config.dart';
 
+/// Page containing the map.
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
   const MainPage({Key? key}) : super(key: key);

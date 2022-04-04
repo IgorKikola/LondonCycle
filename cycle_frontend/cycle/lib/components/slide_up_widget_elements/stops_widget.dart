@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../pages/journey_stop_pages/stored_stops.dart';
 import '../../utilities/home_page_design_contants.dart';
 
+/// Button that takes the user to page with stops.
 class StopsWidget extends StatelessWidget {
   const StopsWidget({
     Key? key,
