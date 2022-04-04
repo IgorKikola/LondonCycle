@@ -245,6 +245,7 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 
+  ///Method to dynamically update the markers position
   void adjustMarker() {
     setState(() {
       searchMarker.getStartingLocation();
@@ -252,6 +253,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  ///Method to pan the map to the destination marker based on user input.
   void moveToDestination() {
     setState(() {
       if (searchMarker.getDestination().latitude != 0.0) {
@@ -263,6 +265,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  ///Method to pan the map to the starting location marker based on user input.
   void moveToStart() {
     setState(() {
       if (searchMarker.getStartingLocation().latitude != 0.0) {
@@ -274,12 +277,14 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  ///Utility button to zoom in with one level of precision on the map
   void zoomIn() {
     setState(() {
       mapController.move(mapController.center, (mapController.zoom + 1));
     });
   }
 
+  ///Utility button to zoom out with one level of precision on the map
   void zoomOut() {
     setState(() {
       mapController.move(mapController.center, (mapController.zoom - 1));
